@@ -1,0 +1,30 @@
+{
+  "name": "arcana-tarot",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Arcana - Daily Tarot Reading (global)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "build:single": "vite build --config vite.single.config.js && node tools/build-single.mjs",
+    "check:i18n": "node tools/check-i18n.mjs",
+    "icons": "node tools/make-icons.mjs && npx @capacitor/assets generate --android",
+    "android:sync": "npm run build && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor-community/admob": "^8.1.0",
+    "@capacitor/android": "^8.5.1",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/cli": "^8.5.1",
+    "@capacitor/core": "^8.5.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}

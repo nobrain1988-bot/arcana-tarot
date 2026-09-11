@@ -1,0 +1,8 @@
+{
+  "appId": "com.obok.arcana",
+  "appName": "Arcana",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#0b0918"
+  }
+}
