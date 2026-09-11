@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arcana — Daily Tarot Reading</title>
+<meta name="description" content="A complete 78-card tarot deck. Daily card, five classic spreads, nine languages. No account, no server, works offline.">
+<style>
+  :root {
+    --bg: #0b0918; --lift: #16123099; --line: #2e2757;
+    --gold: #d8b26b; --gold-hi: #e3c07c; --gold-dim: #8d7a4f;
+    --ink: #ece9f6; --muted: #948cb5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-image: radial-gradient(ellipse 80% 50% at 50% -10%, #2a1f57 0%, transparent 70%);
+    background-repeat: no-repeat;
+  }
+  main { max-width: 680px; margin: 0 auto; padding: 72px 20px 64px; }
+  header { text-align: center; margin-bottom: 64px; }
+  .icon { width: 104px; height: 104px; margin-bottom: 22px; }
+  h1 {
+    font-size: 42px; margin: 0 0 10px; letter-spacing: .01em; font-weight: 600;
+    background: linear-gradient(135deg, var(--gold-hi), var(--gold-dim));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .tagline { color: var(--muted); font-size: 17px; margin: 0; }
+  h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .14em;
+    color: var(--gold-dim); margin: 48px 0 16px; font-weight: 600;
+  }
+  p { color: #c8c3dd; }
+  .lead { font-size: 17px; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .card {
+    background: var(--lift); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px 18px;
+  }
+  .card h3 { margin: 0 0 5px; font-size: 15px; color: var(--gold); font-weight: 600; }
+  .card p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .langs {
+    display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0;
+  }
+  .langs li {
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 5px 13px; font-size: 14px; color: #bfb8db;
+  }
+  a { color: var(--gold); }
+  a:hover { color: var(--gold-hi); }
+  footer {
+    margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 13.5px; line-height: 1.8;
+  }
+  @media (max-width: 560px) {
+    main { padding: 48px 18px 48px; }
+    h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header>
+    <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-label="Arcana">
+      <defs>
+        <radialGradient id="bg" cx="50%" cy="42%" r="72%">
+          <stop offset="0%" stop-color="#2a1f57"/><stop offset="100%" stop-color="#0b0918"/>
+        </radialGradient>
+        <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e3c07c"/><stop offset="55%" stop-color="#d8b26b"/>
+          <stop offset="100%" stop-color="#c9a15c"/>
+        </linearGradient>
+      </defs>
+      <rect width="1024" height="1024" rx="228" fill="url(#bg)"/>
+      <circle cx="512" cy="512" r="435.2" fill="none" stroke="url(#g)" stroke-width="11.3" opacity="0.55"/>
+      <path fill="url(#g)" d="M 512 204.80 L 595.37 428.63 L 729.28 324.72 L 625.37 458.63 L 849.20 512 L 625.37 565.37 L 729.28 699.28 L 595.37 595.37 L 512 819.20 L 428.63 595.37 L 294.72 699.28 L 398.63 565.37 L 174.80 512 L 398.63 458.63 L 294.72 324.72 L 428.63 428.63 Z"/>
+      <circle cx="512" cy="512" r="53.2" fill="#0b0918" opacity="0.92"/>
+    </svg>
+    <h1>Arcana</h1>
+    <p class="tagline">A complete tarot deck in your pocket.</p>
+  </header>
+
+  <p class="lead">All 78 cards, drawn and read the traditional way. No account, no subscription,
+    no paywall in the middle of a reading. Your daily card is fixed for the day — draw it in the
+    morning, come back at night, and it is still your card.</p>
+
+  <h2>Five spreads</h2>
+  <div class="grid">
+    <div class="card"><h3>Daily Card</h3><p>One card for today, fixed until tomorrow.</p></div>
+    <div class="card"><h3>Past · Present · Future</h3><p>The classic three-card spread.</p></div>
+    <div class="card"><h3>Yes or No</h3><p>A single card, and the reasoning behind it.</p></div>
+    <div class="card"><h3>Love Reading</h3><p>You / The other / Between you.</p></div>
+    <div class="card"><h3>Work &amp; Money</h3><p>Where you are, what blocks it, how it opens.</p></div>
+  </div>
+
+  <h2>Calculated, not invented</h2>
+  <p>Most tarot apps pick a sentence at random. Arcana builds every reading from what was
+    actually drawn — the card and its orientation, the position it landed in, how many Major
+    Arcana appeared, how many cards are reversed, and the balance of the four elements across
+    the spread. Yes-or-No answers follow each card's traditional polarity, not a coin flip.
+    Interpretations follow the Rider–Waite tradition.</p>
+
+  <h2>Nine languages, fully translated</h2>
+  <ul class="langs">
+    <li>English</li><li>Español</li><li>Português</li><li>한국어</li><li>日本語</li>
+    <li>Русский</li><li>Türkçe</li><li>Français</li><li>Deutsch</li>
+  </ul>
+  <p>Not just the buttons — all 78 cards are translated in both upright and reversed meanings,
+    with card names following each language's own grammar.</p>
+
+  <h2>Privacy by design</h2>
+  <p>There is no server and no login. Your daily card, your journal, and your settings live on
+    your phone and nowhere else. <strong>The question you type is never saved and never leaves
+    your device.</strong> Readings work with no connection at all.</p>
+  <p><a href="privacy.html">Read the full privacy policy →</a></p>
+
+  <footer>
+    Arcana · <code>com.obok.arcana</code><br>
+    Published by JBRO Company (주식회사 제이브로컴패니) · Incheon, Republic of Korea<br>
+    <a href="mailto:leejiwon44@nate.com">leejiwon44@nate.com</a> ·
+    <a href="privacy.html">Privacy Policy</a>
+  </footer>
+
+</main>
+</body>
+</html>
