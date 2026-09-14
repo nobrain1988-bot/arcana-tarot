@@ -216,6 +216,7 @@ function ReadingsView({ reversals }) {
 
   if (phase === 'ask') {
     const yesno = spread.id === 'yesno'
+    const examples = (ui.spreads?.[spread.id]?.examples) || []
     return (
       <div className="screen">
         <button className="link row" onClick={reset} style={{ marginBottom: 14 }}>
@@ -231,7 +232,32 @@ function ReadingsView({ reversals }) {
           onChange={(e) => setQuestion(e.target.value)}
           placeholder={yesno ? ui.read.askPlaceholder : ui.read.focusPlaceholder}
         />
-        <div style={{ height: 16 }} />
+
+        {/* 질문 던지는 법 안내.
+            해외 타로 교육(Biddy Tarot·Labyrinthos)이 공통으로 가장 강조하는 것이
+            "언제/~될까요" 가 아니라 "무엇을/어떻게" 로 물으라는 것이다.
+            닫힌 질문에서는 짐작밖에 안 나온다.
+
+            설명만 적어두면 아무도 안 읽는다. 눌러서 바로 입력되는 예시가 훨씬 잘 가르치고,
+            빈 입력칸 앞에서 뭘 쓸지 몰라 이탈하는 것도 같이 막는다. */}
+        <p className="small muted" style={{ margin: '10px 2px 0' }}>
+          {yesno ? ui.read.askTip : ui.read.focusTip}
+        </p>
+
+        {examples.length > 0 && (
+          <>
+            <div className="eyebrow" style={{ margin: '18px 0 8px' }}>{ui.read.tryAsking}</div>
+            <div className="q-examples">
+              {examples.map((q, i) => (
+                <button key={i} type="button" className="q-example" onClick={() => setQuestion(q)}>
+                  {q}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        <div style={{ height: 18 }} />
         <button className="btn" onClick={() => runDraw(spread)}>{ui.read.draw}</button>
         {/* 실제 타로는 고민을 '머릿속으로' 떠올릴 뿐 적지 않는다.
             비워둬도 뽑히지만, 입력칸만 있으면 써야 하는 줄 알고 여기서 이탈한다. */}

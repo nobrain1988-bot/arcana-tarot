@@ -479,3 +479,20 @@ h3 { font-size: 17px; }
   color: var(--ink);
   line-height: 1;
 }
+
+/* 질문 예시 — 눌러서 입력칸에 바로 들어간다.
+   설명문보다 예시가 질문 던지는 법을 훨씬 잘 가르친다.
+   빈 입력칸 앞에서 뭘 쓸지 몰라 나가버리는 것도 같이 막는다. */
+.q-examples { display: flex; flex-direction: column; gap: 8px; }
+.q-example {
+  width: 100%; text-align: left; cursor: pointer;
+  border: 0; background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  border-radius: 12px; padding: 11px 13px;
+  color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.45;
+  transition: transform .12s ease, box-shadow .15s ease;
+}
+.q-example:active {
+  transform: scale(.985);
+  box-shadow: inset 0 0 0 1px var(--ink-soft);
+}

@@ -44,6 +44,9 @@ export default {
     chooseTitle: 'Choose your cards',
     chooseBlurb: 'Hold your question in mind as you pick.',
     skip: 'Skip — just draw',
+    focusTip: 'Questions starting with What or How give you something you can use. When and Will only give you a guess.',
+    askTip: 'One question at a time, and make it specific.',
+    tryAsking: 'Try asking',
     shuffling: 'Shuffling',
     newReading: 'New reading',
   },
@@ -116,11 +119,21 @@ export default {
     yesno: {
       title: 'Yes or No',
       blurb: 'Ask something with a yes-or-no answer. One card decides.',
+      examples: [
+        'Should I take the offer?',
+        'Is now the right time to say it?',
+        'Do I go ahead with this plan?',
+      ],
       pos: { answer: { label: 'The answer', lead: 'The reason behind the answer.' } },
     },
     love: {
       title: 'Love Reading',
       blurb: 'Three cards on a relationship — yours, theirs, and what sits between you.',
+      examples: [
+        'What am I bringing into this right now?',
+        'What am I not saying out loud?',
+        'What would make this steadier this week?',
+      ],
       pos: {
         you:     { label: 'You',         lead: 'What you bring to this.' },
         them:    { label: 'The other',   lead: 'Where the other person is standing.' },
@@ -130,6 +143,11 @@ export default {
     career: {
       title: 'Work & Money',
       blurb: 'Where you stand, what is blocking you, and what moves it forward.',
+      examples: [
+        'What is actually blocking this?',
+        'What am I avoiding about this work?',
+        'What would move this forward this month?',
+      ],
       pos: {
         now:   { label: 'Where you are',   lead: 'The situation as it stands.' },
         block: { label: 'The block',       lead: 'What is holding it up.' },

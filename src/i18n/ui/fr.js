@@ -30,6 +30,9 @@ export default {
     chooseTitle: 'Choisissez vos cartes',
     chooseBlurb: 'Gardez votre question à l’esprit en choisissant.',
     skip: 'Passer — tirer directement',
+    focusTip: 'Les questions en Quoi ou Comment donnent une réponse utilisable. Quand et Est-ce que ne laissent qu’une supposition.',
+    askTip: 'Une seule question à la fois, et la plus concrète possible.',
+    tryAsking: 'Essayez de demander',
     shuffling: 'Mélange en cours',
     newReading: 'Nouveau tirage',
   },
@@ -93,11 +96,21 @@ export default {
     yesno: {
       title: 'Oui ou Non',
       blurb: 'Posez une question qui se répond par oui ou non. Une carte décide.',
+      examples: [
+        'Dois-je accepter cette proposition ?',
+        'Est-ce le bon moment pour en parler ?',
+        'Dois-je poursuivre ce plan ?',
+      ],
       pos: { answer: { label: 'La réponse', lead: 'La raison derrière la réponse.' } },
     },
     love: {
       title: 'Tirage amour',
       blurb: 'Trois cartes sur une relation — la vôtre, la sienne, et ce qui se trouve entre vous.',
+      examples: [
+        'Qu’est-ce que j’apporte à cette relation en ce moment ?',
+        'Qu’est-ce que je ne dis pas à voix haute ?',
+        'Qu’est-ce qui rendrait cela plus solide cette semaine ?',
+      ],
       pos: {
         you:     { label: 'Vous',        lead: 'Ce que vous apportez à cette relation.' },
         them:    { label: 'L’autre',     lead: 'Où se tient l’autre personne.' },
@@ -107,6 +120,11 @@ export default {
     career: {
       title: 'Travail et argent',
       blurb: 'Où vous en êtes, ce qui bloque, et ce qui fait avancer les choses.',
+      examples: [
+        'Qu’est-ce qui bloque vraiment cela ?',
+        'Qu’est-ce que j’évite dans ce travail ?',
+        'Qu’est-ce qui ferait avancer cela ce mois-ci ?',
+      ],
       pos: {
         now:   { label: 'Où vous en êtes', lead: 'La situation telle qu’elle est.' },
         block: { label: 'Le blocage',      lead: 'Ce qui retient les choses.' },

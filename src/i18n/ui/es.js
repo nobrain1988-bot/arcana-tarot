@@ -30,6 +30,9 @@ export default {
     chooseTitle: 'Elige tus cartas',
     chooseBlurb: 'Piensa en tu pregunta mientras eliges.',
     skip: 'Omitir — solo sacar',
+    focusTip: 'Preguntar con Qué o Cómo te da algo que puedes usar. Cuándo y Será que solo dan una conjetura.',
+    askTip: 'Una pregunta a la vez, y que sea concreta.',
+    tryAsking: 'Prueba a preguntar',
     shuffling: 'Barajando',
     newReading: 'Nueva tirada',
   },
@@ -93,11 +96,21 @@ export default {
     yesno: {
       title: 'Sí o No',
       blurb: 'Pregunta algo que se responda con un sí o un no. Una carta decide.',
+      examples: [
+        '¿Debería aceptar la oferta?',
+        '¿Es buen momento para decirlo?',
+        '¿Sigo adelante con este plan?',
+      ],
       pos: { answer: { label: 'La respuesta', lead: 'El motivo detrás de la respuesta.' } },
     },
     love: {
       title: 'Tirada de amor',
       blurb: 'Tres cartas sobre una relación: la tuya, la suya y lo que hay entre ambos.',
+      examples: [
+        '¿Qué estoy aportando yo a esto ahora?',
+        '¿Qué no estoy diciendo en voz alta?',
+        '¿Qué haría esto más firme esta semana?',
+      ],
       pos: {
         you:     { label: 'Tú',           lead: 'Lo que tú aportas a esto.' },
         them:    { label: 'La otra parte', lead: 'Dónde está la otra persona.' },
@@ -107,6 +120,11 @@ export default {
     career: {
       title: 'Trabajo y dinero',
       blurb: 'Dónde estás, qué te está bloqueando y qué hace que avance.',
+      examples: [
+        '¿Qué está bloqueando esto realmente?',
+        '¿Qué estoy evitando en este trabajo?',
+        '¿Qué haría avanzar esto este mes?',
+      ],
       pos: {
         now:   { label: 'Dónde estás',  lead: 'La situación tal como está.' },
         block: { label: 'El bloqueo',   lead: 'Lo que lo está frenando.' },

@@ -30,6 +30,9 @@ export default {
     chooseTitle: 'Wähle deine Karten',
     chooseBlurb: 'Behalte deine Frage im Sinn, während du wählst.',
     skip: 'Überspringen — einfach ziehen',
+    focusTip: 'Fragen mit Was oder Wie geben dir etwas, womit du arbeiten kannst. Wann und Wird es geben nur eine Vermutung.',
+    askTip: 'Eine Frage auf einmal, und so konkret wie möglich.',
+    tryAsking: 'Frag zum Beispiel',
     shuffling: 'Wird gemischt',
     newReading: 'Neue Legung',
   },
@@ -93,11 +96,21 @@ export default {
     yesno: {
       title: 'Ja oder Nein',
       blurb: 'Frag etwas, das sich mit Ja oder Nein beantworten lässt. Eine Karte entscheidet.',
+      examples: [
+        'Soll ich das Angebot annehmen?',
+        'Ist jetzt der richtige Moment, es zu sagen?',
+        'Soll ich diesen Plan weiterverfolgen?',
+      ],
       pos: { answer: { label: 'Die Antwort', lead: 'Der Grund hinter der Antwort.' } },
     },
     love: {
       title: 'Liebeslegung',
       blurb: 'Drei Karten zu einer Beziehung – deine, seine oder ihre, und was zwischen euch liegt.',
+      examples: [
+        'Was bringe ich gerade in diese Beziehung ein?',
+        'Was spreche ich nicht aus?',
+        'Was würde das diese Woche stabiler machen?',
+      ],
       pos: {
         you:     { label: 'Du',            lead: 'Was du hier einbringst.' },
         them:    { label: 'Die andere Seite', lead: 'Wo die andere Person steht.' },
@@ -107,6 +120,11 @@ export default {
     career: {
       title: 'Arbeit und Geld',
       blurb: 'Wo du stehst, was blockiert, und was es wirklich voranbringt.',
+      examples: [
+        'Was blockiert das wirklich?',
+        'Wovor drücke ich mich bei dieser Arbeit?',
+        'Was würde das diesen Monat voranbringen?',
+      ],
       pos: {
         now:   { label: 'Wo du stehst', lead: 'Die Lage, wie sie ist.' },
         block: { label: 'Die Blockade', lead: 'Was es aufhält.' },

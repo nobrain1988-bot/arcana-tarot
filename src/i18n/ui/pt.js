@@ -30,6 +30,9 @@ export default {
     chooseTitle: 'Escolha suas cartas',
     chooseBlurb: 'Mantenha sua pergunta em mente ao escolher.',
     skip: 'Pular — apenas tirar',
+    focusTip: 'Perguntas que começam com O que ou Como dão algo que você pode usar. Quando e Será que só dão um palpite.',
+    askTip: 'Uma pergunta por vez, e bem específica.',
+    tryAsking: 'Experimente perguntar',
     shuffling: 'Embaralhando',
     newReading: 'Nova tiragem',
   },
@@ -93,11 +96,21 @@ export default {
     yesno: {
       title: 'Sim ou Não',
       blurb: 'Pergunte algo que se responda com sim ou não. Uma carta decide.',
+      examples: [
+        'Devo aceitar a proposta?',
+        'É hora de falar sobre isso?',
+        'Sigo em frente com esse plano?',
+      ],
       pos: { answer: { label: 'A resposta', lead: 'O motivo por trás da resposta.' } },
     },
     love: {
       title: 'Tiragem do amor',
       blurb: 'Três cartas sobre uma relação — a sua, a da outra pessoa e o que existe entre vocês.',
+      examples: [
+        'O que eu estou trazendo para isso agora?',
+        'O que eu não estou dizendo em voz alta?',
+        'O que deixaria isso mais firme esta semana?',
+      ],
       pos: {
         you:     { label: 'Você',         lead: 'O que você traz para isso.' },
         them:    { label: 'A outra pessoa', lead: 'Onde a outra pessoa está.' },
@@ -107,6 +120,11 @@ export default {
     career: {
       title: 'Trabalho e dinheiro',
       blurb: 'Onde você está, o que está travando e o que faz andar.',
+      examples: [
+        'O que está realmente travando isso?',
+        'O que eu estou evitando neste trabalho?',
+        'O que faria isso avançar este mês?',
+      ],
       pos: {
         now:   { label: 'Onde você está', lead: 'A situação como ela está.' },
         block: { label: 'O bloqueio',     lead: 'O que está segurando isso.' },

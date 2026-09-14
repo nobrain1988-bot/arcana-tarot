@@ -30,6 +30,9 @@ export default {
     chooseTitle: 'Kartlarınızı seçin',
     chooseBlurb: 'Seçerken sorunuzu aklınızda tutun.',
     skip: 'Atla — sadece çek',
+    focusTip: 'Ne ve Nasıl ile başlayan sorular işe yarar bir cevap verir. Ne zaman ve Olacak mı yalnızca tahmin bırakır.',
+    askTip: 'Tek seferde tek soru, olabildiğince somut olsun.',
+    tryAsking: 'Şöyle sormayı deneyin',
     shuffling: 'Karıştırılıyor',
     newReading: 'Yeni açılım',
   },
@@ -93,11 +96,21 @@ export default {
     yesno: {
       title: 'Evet ya da Hayır',
       blurb: 'Evet ya da hayırla yanıtlanacak bir şey sor. Tek kart karar verir.',
+      examples: [
+        'Bu teklifi kabul etmeli miyim?',
+        'Şimdi söylemek için doğru zaman mı?',
+        'Bu planla devam edeyim mi?',
+      ],
       pos: { answer: { label: 'Cevap', lead: 'Bu cevabın arkasındaki sebep.' } },
     },
     love: {
       title: 'Aşk açılımı',
       blurb: 'Bir ilişki üzerine üç kart — sen, o ve aranızdaki.',
+      examples: [
+        'Şu anda bu ilişkiye ne katıyorum?',
+        'Yüksek sesle söylemediğim şey ne?',
+        'Bu hafta bunu ne sağlamlaştırır?',
+      ],
       pos: {
         you:     { label: 'Sen',       lead: 'Bu ilişkiye senin getirdiğin.' },
         them:    { label: 'Karşı taraf', lead: 'Diğer kişinin durduğu yer.' },
@@ -107,6 +120,11 @@ export default {
     career: {
       title: 'İş ve para',
       blurb: 'Nerede durduğun, seni ne tıkadığı ve neyin işi ilerlettiği.',
+      examples: [
+        'Bunu gerçekte ne engelliyor?',
+        'Bu işte neden kaçınıyorum?',
+        'Bu ay bunu ne ilerletir?',
+      ],
       pos: {
         now:   { label: 'Bulunduğun yer', lead: 'Durum olduğu gibi.' },
         block: { label: 'Tıkanıklık',     lead: 'İşi ne tutuyor.' },
