@@ -7,6 +7,7 @@ import * as store from './lib/storage.js'
 import { useLang } from './i18n/context.jsx'
 import { CardArt, CardBack } from './components/CardArt.jsx'
 import ResultView from './components/ResultView.jsx'
+import ChooseCards from './components/ChooseCards.jsx'
 import Settings from './components/Settings.jsx'
 import { IconSun, IconCards, IconBook, IconMoonList, IconBack, IconSpread, IconGear } from './components/icons.jsx'
 
@@ -43,15 +44,21 @@ function useText() {
 // ──────────────────────────────────────────────────────────────
 // 셔플 화면
 // ──────────────────────────────────────────────────────────────
+// 카드 7장이 서로 엇갈리며 섞이는 연출.
+// 3장짜리 흔들기로는 '섞는다'가 안 읽혔다 — 장수가 적으면 그냥 떨리는 것처럼 보인다.
+const SHUFFLE_CARDS = 7
+
 function Shuffling({ label }) {
   const { ui } = useLang()
   return (
     <div className="shuffling">
       <div>
         <div className="shuffle-stack">
-          <div><CardBack /></div>
-          <div><CardBack /></div>
-          <div><CardBack /></div>
+          {Array.from({ length: SHUFFLE_CARDS }, (_, i) => (
+            <div key={i} style={{ animationDelay: `${i * 0.085}s`, zIndex: i }}>
+              <CardBack />
+            </div>
+          ))}
         </div>
         <div className="eyebrow" style={{ marginBottom: 4 }}>{ui.read.shuffling}</div>
         <p className="small muted" style={{ margin: 0 }}>{label}</p>
@@ -97,9 +104,14 @@ function TodayView({ reversals }) {
     return interpret(SPREADS.daily, applied, ui, t)
   }, [drawn, reversals, ui, t])
 
+  // 방금 뒤집었을 때만 뒤집기 연출을 준다.
+  // 이미 본 날 앱을 다시 켰는데 매번 뒤집히면 연출이 아니라 방해가 된다.
+  const [justRevealed, setJustRevealed] = useState(false)
+
   const reveal = useCallback(async () => {
     await showInterstitialBeforeResult()
     setRevealed(true)
+    setJustRevealed(true)
     store.markDailyRevealed()
     if (drawn) store.addJournal({ spreadId: 'daily', cards: drawn })
   }, [drawn])
@@ -122,7 +134,7 @@ function TodayView({ reversals }) {
           <button className="btn" onClick={reveal}>{ui.today.reveal}</button>
         </>
       ) : (
-        <ResultView reading={reading} onShare={() => shareReading(reading, ui)} />
+        <ResultView reading={reading} reveal={justRevealed} onShare={() => shareReading(reading, ui)} />
       )}
     </div>
   )
@@ -136,7 +148,7 @@ function ReadingsView({ reversals }) {
   const t = useText()
   const [spread, setSpread] = useState(null)
   const [question, setQuestion] = useState('')
-  const [phase, setPhase] = useState('pick')   // pick | ask | shuffling | result
+  const [phase, setPhase] = useState('pick')   // pick | ask | shuffling | choosing | result
   const [drawn, setDrawn] = useState(null)
 
   const reading = useMemo(
@@ -146,17 +158,27 @@ function ReadingsView({ reversals }) {
 
   const reset = () => { setSpread(null); setQuestion(''); setPhase('pick'); setDrawn(null) }
 
+  // 의식은 세 박자다: 섞는다 → 펼친 카드에서 직접 고른다 → 순서대로 뒤집힌다.
+  // 앱이 알아서 뽑아주면 '내가 고른 카드'라는 감각이 없어서 그냥 랜덤 화면이 된다.
   const runDraw = useCallback(async (s) => {
+    setDrawn(null)
     setPhase('shuffling')
-    // 셔플 연출 — 즉시 결과가 나오면 '계산된 느낌'이 들어 무게가 사라진다
-    await new Promise((r) => setTimeout(r, 1700))
-    // 시드를 안 준다 = 매번 다른 결과 (오늘의 카드만 고정)
-    const list = draw(s.count, { reversals })
+    // 즉시 넘어가면 '계산된 느낌'이 들어 무게가 사라진다
+    await new Promise((r) => setTimeout(r, 1900))
+    setPhase('choosing')
+  }, [])
+
+  // 사용자가 마지막 장을 고른 뒤. 이때 비로소 실제로 뽑는다.
+  // 어느 카드를 골랐는지는 결과에 영향이 없지만(뒷면이라 알 수 없다),
+  // 고르는 행위가 먼저 오고 결과가 뒤따라야 순서가 납득된다.
+  const onChosen = useCallback(async () => {
+    if (!spread) return
+    const list = draw(spread.count, { reversals })
     await showInterstitialBeforeResult()
-    store.addJournal({ spreadId: s.id, cards: list })
+    store.addJournal({ spreadId: spread.id, cards: list })
     setDrawn(list)
     setPhase('result')
-  }, [reversals])
+  }, [spread, reversals])
 
   const start = (s) => {
     setSpread(s)
@@ -206,11 +228,33 @@ function ReadingsView({ reversals }) {
         />
         <div style={{ height: 16 }} />
         <button className="btn" onClick={() => runDraw(spread)}>{ui.read.draw}</button>
+        {/* 실제 타로는 고민을 '머릿속으로' 떠올릴 뿐 적지 않는다.
+            비워둬도 뽑히지만, 입력칸만 있으면 써야 하는 줄 알고 여기서 이탈한다. */}
+        <button className="link center" style={{ display: 'block', margin: '14px auto 0' }}
+                onClick={() => { setQuestion(''); runDraw(spread) }}>
+          {ui.read.skip}
+        </button>
       </div>
     )
   }
 
-  if (phase === 'shuffling' || !reading) {
+  if (phase === 'shuffling') {
+    return (
+      <div className="screen">
+        <Shuffling label={question.trim() || spreadText(ui, spread).title} />
+      </div>
+    )
+  }
+
+  if (phase === 'choosing') {
+    return (
+      <div className="screen">
+        <ChooseCards count={spread.count} onDone={onChosen} />
+      </div>
+    )
+  }
+
+  if (!reading) {
     return (
       <div className="screen">
         <Shuffling label={question.trim() || spreadText(ui, spread).title} />
@@ -229,6 +273,7 @@ function ReadingsView({ reversals }) {
       )}
       <ResultView
         reading={reading}
+        reveal
         onShare={() => shareReading(reading, ui)}
         onAgain={() => runDraw(spread)}
       />

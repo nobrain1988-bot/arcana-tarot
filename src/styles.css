@@ -231,15 +231,36 @@ h3 { font-size: 17px; }
 }
 
 /* ── 셔플 중 ─────────────────────────────────────────────── */
+/* 섞기 — 카드 7장이 좌우로 갈렸다 다시 모인다.
+   지연을 조금씩 어긋나게 줘서 한 덩어리가 아니라 '한 장씩 스치는' 것으로 읽히게 한다. */
 .shuffling { display: grid; place-items: center; min-height: 58vh; text-align: center; }
-.shuffle-stack { position: relative; width: 132px; height: 211px; margin-bottom: 26px; }
-.shuffle-stack > div { position: absolute; inset: 0; }
-.shuffle-stack > div:nth-child(1) { animation: sh1 1.1s ease-in-out infinite; }
-.shuffle-stack > div:nth-child(2) { animation: sh2 1.1s ease-in-out infinite; }
-.shuffle-stack > div:nth-child(3) { animation: sh3 1.1s ease-in-out infinite; }
-@keyframes sh1 { 0%,100% { transform: translate(-14px,4px) rotate(-7deg); } 50% { transform: translate(10px,-4px) rotate(5deg); } }
-@keyframes sh2 { 0%,100% { transform: translate(0,0) rotate(1deg); }        50% { transform: translate(-12px,5px) rotate(-5deg); } }
-@keyframes sh3 { 0%,100% { transform: translate(13px,3px) rotate(6deg); }   50% { transform: translate(4px,-5px) rotate(-2deg); } }
+.shuffle-stack {
+  position: relative; width: 132px; height: 211px; margin: 0 auto 28px;
+  filter: drop-shadow(0 14px 28px rgba(0,0,0,.55));
+}
+.shuffle-stack > div {
+  position: absolute; inset: 0;
+  transform-origin: 50% 125%;
+  animation: riffle 1.4s cubic-bezier(.45,.05,.35,1) infinite;
+}
+@keyframes riffle {
+  0%   { transform: translateX(0)     rotate(0deg); }
+  26%  { transform: translateX(-44px) rotate(-14deg); }
+  54%  { transform: translateX(38px)  rotate(12deg); }
+  100% { transform: translateX(0)     rotate(0deg); }
+}
+/* 뒤에서 은은하게 도는 빛. 카드만 움직이면 화면이 허전하다. */
+.shuffle-stack::after {
+  content: ''; position: absolute; z-index: -1;
+  left: 50%; top: 50%; width: 210px; height: 210px; margin: -105px 0 0 -105px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216,178,107,.22), transparent 68%);
+  animation: shuffleGlow 1.4s ease-in-out infinite;
+}
+@keyframes shuffleGlow {
+  0%,100% { opacity: .45; transform: scale(.88); }
+  50%     { opacity: 1;   transform: scale(1.1); }
+}
 
 /* ── 결과 스프레드 배치 ──────────────────────────────────── */
 .spread-row { display: flex; gap: 9px; justify-content: center; margin-bottom: 6px; }
@@ -280,4 +301,73 @@ h3 { font-size: 17px; }
 .link {
   background: none; border: 0; padding: 0; cursor: pointer;
   color: var(--ink); font-size: 13.5px; font-weight: 600; font-family: var(--sans);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   카드 고르기 — 뒷면 카드를 부채꼴로 펼치고 직접 고른다.
+   실제 타로의 "쫙 펼쳐주면 고민을 떠올리며 뽑는" 단계에 해당한다.
+   ────────────────────────────────────────────────────────────── */
+.choose-count {
+  display: flex; align-items: baseline; justify-content: center; gap: 5px;
+  margin: 20px 0 2px; font-family: var(--serif);
+}
+.cc-now { font-size: 36px; line-height: 1; color: var(--ink); }
+.cc-sep, .cc-all { font-size: 18px; color: var(--muted); }
+
+/* 부채를 남은 세로 공간의 가운데에 둔다.
+   고정 높이로 두면 화면 위쪽에 몰려서 아래가 휑하게 빈다. */
+.choose { display: flex; flex-direction: column; min-height: 72vh; }
+.fan { position: relative; flex: 1; min-height: 296px; margin-top: 14px; }
+.fan-card {
+  position: absolute; bottom: 16%; left: 50%;
+  width: 104px; margin-left: -52px;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  border-radius: 8px;
+  /* 회전축을 카드 아래쪽 바깥에 두면 같은 각도만 줘도 부채가 된다.
+     축이 멀수록 반지름이 커져 같은 각도에서도 더 넓게 퍼진다. */
+  transform-origin: 50% 148%;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.5));
+  transition: transform .34s cubic-bezier(.2,.8,.25,1),
+              filter .25s ease, opacity .4s ease;
+  animation: fanIn .5s cubic-bezier(.2,.8,.25,1) both;
+}
+/* to 를 안 쓴다 — 각 카드의 최종 transform 은 인라인(각도)이고,
+   fill-mode both 가 그 값을 도착점으로 삼는다. */
+@keyframes fanIn { from { opacity: 0; transform: translateY(46px) scale(.9); } }
+
+.fan-card.on {
+  filter: drop-shadow(0 0 15px rgba(216,178,107,.8)) drop-shadow(0 10px 20px rgba(0,0,0,.5));
+}
+.fan-card.gone {
+  opacity: 0; pointer-events: none;
+  transform: translateY(28px) scale(.9) !important;   /* 인라인 각도를 덮어야 한다 */
+}
+
+/* ──────────────────────────────────────────────────────────────
+   뒤집기 — 뒷면으로 놓였다가 왼쪽부터 한 장씩 돌아간다.
+   지연은 JSX 에서 인라인으로 준다(장수마다 달라서).
+   ────────────────────────────────────────────────────────────── */
+.spread-row .flip { flex: 1; min-width: 0; }
+.flip { perspective: 1100px; }
+.flip-inner {
+  position: relative; transform-style: preserve-3d;
+  animation: flipIn .75s cubic-bezier(.25,.75,.3,1) both;
+}
+@keyframes flipIn { from { transform: rotateY(0deg); } to { transform: rotateY(180deg); } }
+.flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-back { position: relative; }
+.flip-front { position: absolute; inset: 0; transform: rotateY(180deg); }
+
+/* 카드가 다 뒤집힌 뒤 해설이 올라온다 */
+.reveal-late { animation: fadeUp .55s cubic-bezier(.2,.8,.25,1) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } }
+
+/* 움직임을 줄여달라고 설정한 사용자 — 연출은 끄되 결과는 그대로 보이게 한다 */
+@media (prefers-reduced-motion: reduce) {
+  .shuffle-stack > div, .shuffle-stack::after,
+  .fan-card, .flip-inner, .reveal-late, .card-enter {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .fan-card { transition: none; }
 }
