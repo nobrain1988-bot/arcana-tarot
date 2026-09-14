@@ -124,6 +124,52 @@ for (const { code, label } of LANGS) {
     if (strays.length) problems.push(`다른 언어 글자가 섞임 → ${strays.slice(0, 4).join(' / ')}`)
   }
 
+  // ── 말투(높임 단계) 일관성 ──────────────────────────────────
+  //
+  // 번역이 틀리지 않아도 한 문단 안에서 말투가 오가면 읽는 사람은 바로 어색해한다.
+  // 실제로 한국어 본문 156개 중 49개가 합쇼체(~습니다)와 해요체(~예요)를 섞어 쓰고 있었다.
+  // 뜻은 다 맞는데 "번역기 돌린 것 같다"는 인상이 여기서 나온다.
+  //
+  // 이 앱의 목소리는 해요체다 — 타로는 한 사람에게 말을 거는 형식이라
+  // 합쇼체는 거리가 너무 멀다. UI 문구도 전부 해요체로 되어 있다.
+  //
+  // 기계로 잡을 수 있는 언어만 검사한다. 러시아어처럼 대명사를 생략하는 언어는
+  // 이 방식으로 판정할 수 없어서 넣지 않았다 — 못 잡는 걸 잡은 척하면 더 나쁘다.
+  // 주의: '~ㅂ니다'(무너집니다·가져갑니다)의 ㅂ은 앞 글자의 받침이라
+  // 'ㅂ니다' 라는 문자열로는 절대 안 잡힌다. 처음에 그렇게 썼다가 48문장을 놓쳤다.
+  // 합쇼체 서술형은 사실상 전부 '…니다' 로 끝나므로 그것으로 잡는다.
+  //
+  // 한국어만 검사한다. 다른 언어는 어미만 보고는 판정이 안 되기 때문이다:
+  //   · 일본어 — だ 로 끝나는 보통체를 잡으려 했더니 '二人のあいだ(두 사람 사이)',
+  //     'まだ(아직)' 같은 명사·부사까지 걸렸다. 못 잡는 것보다 헛경보가 나쁘다.
+  //   · 러시아어 — 동사 어미에 인칭이 들어 있어 대명사(ты/вы)를 아예 안 쓴다.
+  //   · 스페인어·프랑스어 — tu/su/le 가 3인칭과 겹쳐 구분이 안 된다.
+  // 기계가 확실히 아는 것만 검사하고, 나머지는 사람이 봐야 한다고 정직하게 남겨둔다.
+  const TONE = {
+    ko: { want: '해요체', bad: /(니다|십시오)[.!?]?$/ },
+  }
+  if (TONE[code]) {
+    const { want, bad } = TONE[code]
+    const hits = []
+    const checkText = (where, text) => {
+      if (!text) return
+      for (const s of String(text).split(/(?<=[.!?。！？])\s+/)) {
+        if (bad.test(s.trim())) { hits.push(where); return }
+      }
+    }
+    for (const id of ID_LIST) {
+      const c = pack.cards && pack.cards[id]
+      if (!c) continue
+      for (const o of ['up', 'rev']) checkText(`${id}.${o}`, c[o] && c[o].t)
+    }
+    // 화면 문구도 같이 본다. 특히 engine.* 은 3장 리딩마다 나오는 문장이라
+    // 여기 말투가 어긋나면 카드 해설을 아무리 고쳐도 티가 난다.
+    for (const k of EN_KEYS) checkText(`ui.${k}`, at(ui, k))
+    if (hits.length) {
+      problems.push(`말투가 ${want}가 아닌 문장 ${hits.length}곳 → ${hits.slice(0, 5).join(', ')}${hits.length > 5 ? ' …' : ''}`)
+    }
+  }
+
   if (problems.length) failed = true
   rows.push({ code, label, namesDone, cardsDone, problems })
 }
