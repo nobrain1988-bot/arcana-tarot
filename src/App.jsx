@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { DECK, cardById, draw, todayKey } from './lib/deck.js'
 import { SPREADS, SPREAD_LIST, ASKS_QUESTION, spreadText } from './lib/spreads.js'
+import { CATEGORIES, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
 import { initAds, showInterstitialBeforeResult } from './lib/ads.js'
 import * as store from './lib/storage.js'
@@ -155,6 +156,11 @@ function ReadingsView({ reversals }) {
   const [question, setQuestion] = useState('')
   const [phase, setPhase] = useState('pick')   // pick | ask | shuffling | choosing | result
   const [drawn, setDrawn] = useState(null)
+  // 고르는 화면의 두 가지 모드.
+  //   topics  — 주제별 질문 목록 (기본). 국내 앱들이 쓰는 방식이고 처음 온 사람이 고를 수 있다.
+  //   spreads — 스프레드를 직접 고르고 질문을 직접 쓴다. 타로를 아는 사람용.
+  const [mode, setMode] = useState('topics')
+  const [cat, setCat] = useState(CATEGORIES[0])
 
   const reading = useMemo(
     () => (drawn && spread ? interpret(spread, drawn, ui, t) : null),
@@ -191,9 +197,68 @@ function ReadingsView({ reversals }) {
     else runDraw(s)
   }
 
+  // 주제를 고른 경우 — 질문은 이미 정해졌으니 질문칸을 건너뛰고 바로 섞는다.
+  // 고른 질문은 결과 화면 위에 그대로 보여서 무엇을 물었는지 남는다.
+  // 인자 이름을 topic 으로 둔다. t 로 받으면 위쪽의 번역 함수 t 를 가려서,
+  // 나중에 이 안에서 번역을 쓰려는 순간 조용히 엉뚱한 값이 잡힌다.
+  const startTopic = (topic) => {
+    const s = SPREADS[topic.spread]
+    setSpread(s)
+    setQuestion(topicText(ui, topic.id))
+    runDraw(s)
+  }
+
   if (phase === 'pick') {
+    // 주제별 질문 — 무엇이 궁금한지로 고른다.
+    //
+    // 전에는 스프레드 이름('과거 · 현재 · 미래')으로 고르게 했다. 그건 타로를 아는 사람의
+    // 언어다. 처음 온 사람에게는 고를 근거가 없는 이름이라 거기서 멈춘다.
+    // 국내 앱(점신·헬로우봇)은 전부 궁금한 내용으로 고르게 한다 — 그게 실제 상담 순서이기도
+    // 하다. 손님이 고민을 말하면 리더가 몇 장 뽑을지 정하지, 손님이 스프레드를 고르지 않는다.
+    //
+    // 질문을 고르면 질문칸을 건너뛰고 바로 섞기로 간다. 타이핑이 필요 없다.
+    if (mode === 'topics') {
+      return (
+        <div className="screen">
+          <div className="eyebrow">{ui.read.eyebrow}</div>
+          <h1 style={{ marginBottom: 16 }}>{ui.read.title}</h1>
+
+          <div className="cat-row">
+            {CATEGORIES.map((c) => (
+              <button key={c} className={`cat${cat === c ? ' on' : ''}`} onClick={() => setCat(c)}>
+                {catText(ui, c)}
+              </button>
+            ))}
+          </div>
+
+          {topicsIn(cat).map((t) => {
+            const s = SPREADS[t.spread]
+            return (
+              <button key={t.id} className="topic" onClick={() => startTopic(t)}>
+                <span style={{ minWidth: 0, flex: 1 }}>
+                  <span className="topic-title">{topicText(ui, t.id)}</span>
+                  <span className="topic-tags">
+                    #{catText(ui, t.cat)} · #{spreadText(ui, s).title}
+                  </span>
+                </span>
+                <span className="t-icon" style={{ color: 'var(--ink)' }}><IconSpread n={s.count} /></span>
+              </button>
+            )
+          })}
+
+          <button className="btn ghost" style={{ marginTop: 6 }} onClick={() => setMode('spreads')}>
+            {ui.read.ownQuestion}
+          </button>
+        </div>
+      )
+    }
+
+    // 스프레드를 직접 고르는 화면 — 타로를 아는 사람용. 질문도 직접 쓴다.
     return (
       <div className="screen">
+        <button className="link row" onClick={() => setMode('topics')} style={{ marginBottom: 14 }}>
+          <IconBack /> {ui.common.back}
+        </button>
         <div className="eyebrow">{ui.read.eyebrow}</div>
         <h1 style={{ marginBottom: 6 }}>{ui.read.title}</h1>
         <p className="small muted" style={{ margin: '0 0 20px' }}>{ui.read.blurb}</p>

@@ -33,6 +33,7 @@ export default {
     focusTip: 'Les questions en Quoi ou Comment donnent une réponse utilisable. Quand et Est-ce que ne laissent qu’une supposition.',
     askTip: 'Une seule question à la fois, et la plus concrète possible.',
     tryAsking: 'Essayez de demander',
+    ownQuestion: 'Poser ma propre question',
     shuffling: 'Mélange en cours',
     newReading: 'Nouveau tirage',
   },
@@ -77,6 +78,62 @@ export default {
   },
 
   share: { tagline: 'Arcana — tirages de tarot gratuits' },
+
+  // 주제 분류 — 리딩 화면 위쪽 칩
+
+  cats: {
+
+    love: 'Amour',
+
+    crush: 'Amour secret',
+
+    work: 'Travail et études',
+
+    life: 'Argent et choix',
+
+  },
+
+
+  // 주제별 질문. 스프레드 이름 대신 '무엇이 궁금한가'로 고르게 한다.
+
+  // 각 언어로 따로 썼다 — 직역하면 어느 나라 말도 아닌 문장이 된다.
+
+  topics: {
+
+    loveNow: 'Où en sommes-nous vraiment ?',
+
+    loveWhere: 'Où va cette relation ?',
+
+    loveThem: 'Que ressent cette personne en ce moment ?',
+
+    loveGo: 'Est-ce que je continue avec cette personne ?',
+
+    crushApproach: 'Est-ce à moi de faire le premier pas ?',
+
+    crushHeart: 'Que faire de ce que je ressens ?',
+
+    crushAgain: 'Y a-t-il un retour possible ?',
+
+    crushLearn: 'Que m’a laissé cette histoire ?',
+
+    workBlock: 'Qu’est-ce qui bloque mon travail ?',
+
+    workMove: 'Est-ce que je change de poste ?',
+
+    workMiss: 'Qu’est-ce qui m’échappe ?',
+
+    workAhead: 'Comment cela va-t-il tourner ?',
+
+    lifeMoney: 'Par où commencer côté argent ?',
+
+    lifeChoice: 'Je me lance ou pas ?',
+
+    lifeAdvice: 'Qu’ai-je besoin d’entendre aujourd’hui ?',
+
+    lifeFlow: 'Comment ça se présente en ce moment ?',
+
+  },
+
 
   spreads: {
     daily: {

@@ -33,6 +33,7 @@ export default {
     focusTip: '「何を・どうやって」で聞くと使える答えが返ってきます。「いつ・〜になりますか」では推測しか残りません。',
     askTip: '一度にひとつだけ、具体的に聞いてください。',
     tryAsking: 'こう聞いてみましょう',
+    ownQuestion: '自分で質問する',
     shuffling: 'シャッフル中',
     newReading: '新しく引く',
   },
@@ -77,6 +78,62 @@ export default {
   },
 
   share: { tagline: 'Arcana — 無料のタロットリーディング' },
+
+  // 주제 분류 — 리딩 화면 위쪽 칩
+
+  cats: {
+
+    love: '恋愛',
+
+    crush: '片想い・復縁',
+
+    work: '仕事・勉強',
+
+    life: 'お金・選択',
+
+  },
+
+
+  // 주제별 질문. 스프레드 이름 대신 '무엇이 궁금한가'로 고르게 한다.
+
+  // 각 언어로 따로 썼다 — 직역하면 어느 나라 말도 아닌 문장이 된다.
+
+  topics: {
+
+    loveNow: '今、私たちはどんな関係？',
+
+    loveWhere: 'この関係はどこへ向かう？',
+
+    loveThem: 'あの人は今どんな気持ち？',
+
+    loveGo: 'この人と続けていい？',
+
+    crushApproach: '私から動いてもいい？',
+
+    crushHeart: 'この気持ち、どうすれば？',
+
+    crushAgain: 'もう一度会える？',
+
+    crushLearn: 'この縁が残したものは？',
+
+    workBlock: '今の仕事、何が詰まってる？',
+
+    workMove: '転職してもいい？',
+
+    workMiss: '見落としていることは？',
+
+    workAhead: 'この件はどう転ぶ？',
+
+    lifeMoney: 'お金、何から手をつける？',
+
+    lifeChoice: 'この選択、してもいい？',
+
+    lifeAdvice: '今日の私に必要な一言は？',
+
+    lifeFlow: '最近の流れはどう？',
+
+  },
+
 
   spreads: {
     daily: {

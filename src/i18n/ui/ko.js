@@ -35,6 +35,7 @@ export default {
     focusTip: '언제 될까요보다 무엇을, 어떻게로 물어보세요. 훨씬 쓸모 있는 답이 나와요.',
     askTip: '한 번에 하나만, 구체적으로 물어보세요.',
     tryAsking: '이렇게 물어보세요',
+    ownQuestion: '직접 물어보기',
     shuffling: '섞는 중',
     newReading: '새로 뽑기',
   },
@@ -79,6 +80,62 @@ export default {
   },
 
   share: { tagline: 'Arcana — 무료 타로 리딩' },
+
+  // 주제 분류 — 리딩 화면 위쪽 칩
+
+  cats: {
+
+    love: '연애',
+
+    crush: '짝사랑·재회',
+
+    work: '일·공부',
+
+    life: '돈·선택',
+
+  },
+
+
+  // 주제별 질문. 스프레드 이름 대신 '무엇이 궁금한가'로 고르게 한다.
+
+  // 각 언어로 따로 썼다 — 직역하면 어느 나라 말도 아닌 문장이 된다.
+
+  topics: {
+
+    loveNow: '지금 우리는 어떤 사이인가요?',
+
+    loveWhere: '이 관계, 어디로 가고 있나요?',
+
+    loveThem: '그 사람은 지금 무슨 마음일까요?',
+
+    loveGo: '이 사람과 계속 가도 될까요?',
+
+    crushApproach: '먼저 다가가도 괜찮을까요?',
+
+    crushHeart: '이 마음, 어떻게 해야 하나요?',
+
+    crushAgain: '우리 다시 만날 수 있을까요?',
+
+    crushLearn: '이 인연이 나에게 남긴 것은?',
+
+    workBlock: '지금 이 일, 뭐가 막고 있나요?',
+
+    workMove: '옮겨도 괜찮을까요?',
+
+    workMiss: '내가 놓치고 있는 게 있나요?',
+
+    workAhead: '이번 일은 어떻게 풀릴까요?',
+
+    lifeMoney: '돈 문제, 뭐부터 풀어야 하나요?',
+
+    lifeChoice: '이 선택, 해도 될까요?',
+
+    lifeAdvice: '오늘 나에게 필요한 한마디는?',
+
+    lifeFlow: '요즘 내 흐름은 어떤가요?',
+
+  },
+
 
   spreads: {
     daily: {

@@ -33,6 +33,7 @@ export default {
     focusTip: 'Perguntas que começam com O que ou Como dão algo que você pode usar. Quando e Será que só dão um palpite.',
     askTip: 'Uma pergunta por vez, e bem específica.',
     tryAsking: 'Experimente perguntar',
+    ownQuestion: 'Fazer minha pergunta',
     shuffling: 'Embaralhando',
     newReading: 'Nova tiragem',
   },
@@ -77,6 +78,62 @@ export default {
   },
 
   share: { tagline: 'Arcana — tiragens de tarô grátis' },
+
+  // 주제 분류 — 리딩 화면 위쪽 칩
+
+  cats: {
+
+    love: 'Amor',
+
+    crush: 'Paquera e ex',
+
+    work: 'Trabalho e estudos',
+
+    life: 'Dinheiro e escolhas',
+
+  },
+
+
+  // 주제별 질문. 스프레드 이름 대신 '무엇이 궁금한가'로 고르게 한다.
+
+  // 각 언어로 따로 썼다 — 직역하면 어느 나라 말도 아닌 문장이 된다.
+
+  topics: {
+
+    loveNow: 'Em que pé a gente está de verdade?',
+
+    loveWhere: 'Para onde essa relação está indo?',
+
+    loveThem: 'O que essa pessoa está sentindo?',
+
+    loveGo: 'Continuo com essa pessoa?',
+
+    crushApproach: 'Dou o primeiro passo?',
+
+    crushHeart: 'O que faço com o que sinto?',
+
+    crushAgain: 'Existe volta para nós dois?',
+
+    crushLearn: 'O que isso me deixou?',
+
+    workBlock: 'O que está travando meu trabalho?',
+
+    workMove: 'Mudo de emprego?',
+
+    workMiss: 'O que estou deixando passar?',
+
+    workAhead: 'Como isso vai acabar?',
+
+    lifeMoney: 'Por onde começo com dinheiro?',
+
+    lifeChoice: 'Vou nessa ou não?',
+
+    lifeAdvice: 'O que eu preciso ouvir hoje?',
+
+    lifeFlow: 'Como está minha fase agora?',
+
+  },
+
 
   spreads: {
     daily: {

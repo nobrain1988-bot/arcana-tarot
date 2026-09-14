@@ -47,6 +47,7 @@ export default {
     focusTip: 'Questions starting with What or How give you something you can use. When and Will only give you a guess.',
     askTip: 'One question at a time, and make it specific.',
     tryAsking: 'Try asking',
+    ownQuestion: 'Ask your own question',
     shuffling: 'Shuffling',
     newReading: 'New reading',
   },
@@ -101,6 +102,35 @@ export default {
   },
 
   // ── 스프레드 (제목·설명·자리 이름) ──────────────────────
+  // 주제 분류 — 리딩 화면 위쪽 칩
+  cats: {
+    love: 'Love',
+    crush: 'Crush & Exes',
+    work: 'Work & Study',
+    life: 'Money & Choices',
+  },
+
+  // 주제별 질문. 스프레드 이름 대신 '무엇이 궁금한가'로 고르게 한다.
+  // 각 언어로 따로 썼다 — 직역하면 어느 나라 말도 아닌 문장이 된다.
+  topics: {
+    loveNow: 'Where do we actually stand?',
+    loveWhere: 'Where is this relationship heading?',
+    loveThem: 'What is going on in their head?',
+    loveGo: 'Should I keep going with this person?',
+    crushApproach: 'Should I make the first move?',
+    crushHeart: 'What do I do with these feelings?',
+    crushAgain: 'Is there a way back to each other?',
+    crushLearn: 'What did this leave me with?',
+    workBlock: 'What is holding this job back?',
+    workMove: 'Should I make the move?',
+    workMiss: 'What am I missing here?',
+    workAhead: 'How is this going to play out?',
+    lifeMoney: 'Where do I start with money?',
+    lifeChoice: 'Should I go for it?',
+    lifeAdvice: 'What do I need to hear today?',
+    lifeFlow: 'How are things flowing right now?',
+  },
+
   spreads: {
     daily: {
       title: 'Daily Card',

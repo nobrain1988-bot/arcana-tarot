@@ -33,6 +33,7 @@ export default {
     focusTip: 'Ne ve Nasıl ile başlayan sorular işe yarar bir cevap verir. Ne zaman ve Olacak mı yalnızca tahmin bırakır.',
     askTip: 'Tek seferde tek soru, olabildiğince somut olsun.',
     tryAsking: 'Şöyle sormayı deneyin',
+    ownQuestion: 'Kendi sorumu sor',
     shuffling: 'Karıştırılıyor',
     newReading: 'Yeni açılım',
   },
@@ -77,6 +78,62 @@ export default {
   },
 
   share: { tagline: 'Arcana — ücretsiz tarot açılımları' },
+
+  // 주제 분류 — 리딩 화면 위쪽 칩
+
+  cats: {
+
+    love: 'Aşk',
+
+    crush: 'Karşılıksız aşk',
+
+    work: 'İş ve okul',
+
+    life: 'Para ve kararlar',
+
+  },
+
+
+  // 주제별 질문. 스프레드 이름 대신 '무엇이 궁금한가'로 고르게 한다.
+
+  // 각 언어로 따로 썼다 — 직역하면 어느 나라 말도 아닌 문장이 된다.
+
+  topics: {
+
+    loveNow: 'Aramızda gerçekte ne var?',
+
+    loveWhere: 'Bu ilişki nereye gidiyor?',
+
+    loveThem: 'O kişi şu an ne hissediyor?',
+
+    loveGo: 'Bu kişiyle devam edeyim mi?',
+
+    crushApproach: 'İlk adımı ben mi atayım?',
+
+    crushHeart: 'Bu duygularla ne yapmalıyım?',
+
+    crushAgain: 'Bize dönüş var mı?',
+
+    crushLearn: 'Bu bana ne bıraktı?',
+
+    workBlock: 'İşimi ne engelliyor?',
+
+    workMove: 'İş değiştireyim mi?',
+
+    workMiss: 'Neyi gözden kaçırıyorum?',
+
+    workAhead: 'Bu iş nasıl sonuçlanacak?',
+
+    lifeMoney: 'Paraya nereden başlamalıyım?',
+
+    lifeChoice: 'Atılayım mı, atılmayayım mı?',
+
+    lifeAdvice: 'Bugün neyi duymam gerek?',
+
+    lifeFlow: 'Şu sıralar işler nasıl gidiyor?',
+
+  },
+
 
   spreads: {
     daily: {
