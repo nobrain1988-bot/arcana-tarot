@@ -8,6 +8,7 @@ import { useLang } from './i18n/context.jsx'
 import { CardArt, CardBack } from './components/CardArt.jsx'
 import ResultView from './components/ResultView.jsx'
 import ChooseCards from './components/ChooseCards.jsx'
+import Ambience from './components/Ambience.jsx'
 import Settings from './components/Settings.jsx'
 import { IconSun, IconCards, IconBook, IconMoonList, IconBack, IconSpread, IconGear } from './components/icons.jsx'
 
@@ -59,6 +60,9 @@ function Shuffling({ label }) {
               <CardBack />
             </div>
           ))}
+          {/* 마지막에 카드가 한 덩어리로 모이면서 빛이 터진다.
+              이 매듭이 없으면 섞다가 그냥 화면이 바뀌어서 흐지부지된다. */}
+          <div className="shuffle-flash" />
         </div>
         <div className="eyebrow" style={{ marginBottom: 4 }}>{ui.read.shuffling}</div>
         <p className="small muted" style={{ margin: 0 }}>{label}</p>
@@ -128,7 +132,8 @@ function TodayView({ reversals }) {
       {!revealed ? (
         <>
           <div style={{ maxWidth: 200, margin: '0 auto 22px' }}>
-            <div className="card-shell"><CardBack /></div>
+            {/* 뒤집기 전 뒷면이 천천히 숨쉰다 — 눌러야 할 것이 무엇인지 눈이 먼저 안다 */}
+            <div className="card-shell card-breathe"><CardBack /></div>
           </div>
           <p className="small muted center" style={{ margin: '0 0 18px' }}>{ui.today.blurb}</p>
           <button className="btn" onClick={reveal}>{ui.today.reveal}</button>
@@ -461,6 +466,8 @@ export default function App() {
 
   return (
     <div className="app">
+      <Ambience />
+
       <button className="gear" onClick={() => setSettingsOpen(true)} aria-label={ui.set.title}>
         <IconGear />
       </button>

@@ -21,8 +21,17 @@ function Spread({ cards, reveal }) {
     <div className="spread-row" style={single ? { maxWidth: 210, margin: '0 auto 6px' } : undefined}>
       {cards.map((c, i) =>
         reveal ? (
-          <div key={i} className="flip" style={{ animationDelay: `${i * 0.09}s` }}>
-            <div className="flip-inner" style={{ animationDelay: `${FLIP_WAIT + i * FLIP_GAP}s` }}>
+          // 고른 카드가 아래에서 날아와 자리를 잡고(dealIn) → 뒤집히고(flipIn)
+          // → 앞면 위로 빛이 한 번 스친다(gleam). 세 연출의 시점이 어긋나면 안 된다.
+          <div key={i} className="flip" style={{ animationDelay: `${i * 0.11}s` }}>
+            <div
+              className="flip-inner"
+              style={{
+                animationDelay: `${FLIP_WAIT + i * FLIP_GAP}s`,
+                // 뒤집힘이 끝나는 순간에 맞춰 빛을 흘린다
+                '--gleam-delay': `${FLIP_WAIT + i * FLIP_GAP + FLIP_DUR * 0.72}s`,
+              }}
+            >
               <div className="flip-face flip-back card-shell"><CardBack /></div>
               <div className="flip-face flip-front card-shell">
                 <CardArt card={c.card} reversed={c.reversed} label={c.name} />
@@ -65,8 +74,10 @@ export default function ResultView({ reading, onShare, onAgain, reveal = false }
 
   // 카드가 다 뒤집힌 뒤에 해설이 통째로 올라오게 한다.
   // 카드와 글이 동시에 나오면 어디를 봐야 할지 몰라 연출이 흩어진다.
+  // 한 덩어리로 나타내지 않고 패널이 위에서부터 차례로 올라오게 한다.
+  // 기준 시각만 변수로 내려주고, 순서 간격은 CSS 가 nth-child 로 준다.
   const rest = reveal
-    ? { className: 'stack reveal-late', style: { animationDelay: `${revealDelay(reading.cards.length)}s` } }
+    ? { className: 'stack reveal-stack', style: { '--late': `${revealDelay(reading.cards.length)}s` } }
     : { className: 'stack' }
 
   return (
