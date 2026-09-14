@@ -1,11 +1,21 @@
-// 타로 카드 그림 — 전부 SVG 로 직접 그린다.
+// 타로 카드 그림.
 //
-// 왜 이미지 파일을 안 쓰는가:
-//   1) 라이더-웨이트 스캔본을 쓰면 나라마다 저작권 판단이 달라 분쟁 소지가 있다. 자체 제작은 0.
-//   2) 78장 스캔 이미지는 수십 MB → 앱 용량이 그만큼 늘고 다운로드 이탈이 생긴다. SVG는 수십 KB.
-//   3) 어떤 화면 크기·해상도에서도 안 깨진다.
+// 앞면은 라이더-웨이트(1909) 원본 사진을 쓴다. public/cards/<id>.webp
+// 파멜라 콜먼 스미스 사후 70년이 지나 퍼블릭 도메인이며, 위키미디어 공용에서
+// 라이선스 근거와 함께 받았다(tools/fetch-card-art.mjs, public/cards/CREDITS.txt).
 //
-// 좌표계는 100 × 160 (실제 타로 카드 비율과 비슷). 모든 그림은 이 안에서 그린다.
+// 처음에는 78장을 전부 SVG 로 직접 그렸다. 저작권 위험 0, 용량 수십 KB 라는 장점이
+// 있었지만 — 타로를 아는 사람이 보면 실제 덱이 아니라서 바로 이탈한다.
+// 사람들이 기대하는 그림이 있는 분야에서는 그 그림이어야 한다.
+//
+// 그 SVG 는 CardArtSvg 로 남겨 두고, 사진을 못 불러왔을 때 대신 나온다.
+// 카드가 아예 안 보이는 것보다는 낫다.
+//
+// SVG 좌표계는 100 × 160. 사진은 576 × 966(비율 0.596)이라 미세하게 다른데,
+// 카드 테두리(.card-shell)가 사진 비율을 기준으로 잡고 있어 대체 시 위아래가
+// 아주 조금 남는다. 드물게 일어나는 대체 상황이라 이대로 둔다.
+
+import { useState } from 'react'
 
 const W = 100
 const H = 160
@@ -309,7 +319,35 @@ const SHORT_SUIT = { wands: 'WANDS', cups: 'CUPS', swords: 'SWORDS', pentacles: 
 //   2) 이 자리는 6.4px 대문자 + 넓은 자간으로 짜여 있어서, 키릴·CJK 를 넣으면 넘치거나 뭉갠다.
 // 번역된 이름은 카드 바로 아래 본문에 크게 나오므로 사용자가 못 알아볼 일은 없다.
 // label 로 번역된 이름을 받아 화면낭독기(시각장애인용)에만 전달한다.
-export function CardArt({ card, reversed = false, showName = true, label, className = '', style }) {
+// 앞면 — 라이더-웨이트 사진. thumb 이면 작은 판(라이브러리 78장 격자용)을 쓴다.
+// 큰 것만 쓰면 격자 한 번 여는 데 10MB 가 날아간다.
+export function CardArt({ card, reversed = false, showName = true, label, className = '', style, thumb = false }) {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return <CardArtSvg card={card} reversed={reversed} showName={showName}
+                       label={label} className={className} style={style} />
+  }
+
+  // BASE_URL 을 붙여야 깃허브 페이지처럼 하위 경로에 올려도 깨지지 않는다
+  const src = `${import.meta.env.BASE_URL}cards/${thumb ? 't/' : ''}${card.id}.webp`
+
+  return (
+    <img
+      src={src}
+      className={`card-img ${className}`}
+      style={{ ...style, transform: reversed ? 'rotate(180deg)' : undefined }}
+      alt={`${label || card.name}${reversed ? ', reversed' : ''}`}
+      loading="lazy"
+      decoding="async"
+      draggable={false}
+      onError={() => setFailed(true)}
+    />
+  )
+}
+
+// 예전 자체 제작 SVG — 이제는 사진을 못 불러왔을 때의 대비책이다.
+export function CardArtSvg({ card, reversed = false, showName = true, label, className = '', style }) {
   const isMajor = card.arcana === 'major'
   const top = isMajor ? ROMAN[card.n] : card.rank.toUpperCase()
   const bottom = isMajor ? card.name.toUpperCase() : SHORT_SUIT[card.suit]
@@ -337,16 +375,20 @@ export function CardArt({ card, reversed = false, showName = true, label, classN
 }
 
 // ── 카드 뒷면 (뒤집기 전) ─────────────────────────────────────
+// 뒷면은 사진과 같은 비율(576:966 ≒ 100:168)로 그린다.
+// 앞뒤 비율이 다르면 뒤집는 순간 카드가 늘었다 줄어드는 것처럼 보인다.
+const BACK_H = 168
+
 export function CardBack({ className = '', style }) {
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className={`card-svg ${className}`} style={style} aria-hidden="true">
-      <rect x={0} y={0} width={W} height={H} rx={7} fill="var(--card-back)" />
-      <rect x={3} y={3} width={W - 6} height={H - 6} rx={5} fill="none" stroke="var(--ink)" strokeWidth={0.9} opacity={0.7} />
+    <svg viewBox={`0 0 ${W} ${BACK_H}`} className={`card-svg ${className}`} style={style} aria-hidden="true">
+      <rect x={0} y={0} width={W} height={BACK_H} rx={7} fill="var(--card-back)" />
+      <rect x={3} y={3} width={W - 6} height={BACK_H - 6} rx={5} fill="none" stroke="var(--ink)" strokeWidth={0.9} opacity={0.7} />
       <g opacity={0.75}>
-        <Circle cx={CX} cy={H / 2} r={22} {...S_THIN} />
-        <Circle cx={CX} cy={H / 2} r={15} {...S_THIN} />
-        <polygon points={star(CX, H / 2, 11, 8, 0.42)} {...S_THIN} />
-        {[38, H - 38].map((y) => (
+        <Circle cx={CX} cy={BACK_H / 2} r={22} {...S_THIN} />
+        <Circle cx={CX} cy={BACK_H / 2} r={15} {...S_THIN} />
+        <polygon points={star(CX, BACK_H / 2, 11, 8, 0.42)} {...S_THIN} />
+        {[40, BACK_H - 40].map((y) => (
           <polygon key={y} points={star(CX, y, 5, 4, 0.3)} {...S_THIN} />
         ))}
       </g>

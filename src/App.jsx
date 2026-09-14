@@ -337,7 +337,7 @@ function LibraryView() {
       <div className="grid">
         {list.map((c) => (
           <button key={c.id} className="grid-item" onClick={() => setOpen(c)}>
-            <div className="card-shell"><CardArt card={c} showName={false} label={cardName(c)} /></div>
+            <div className="card-shell"><CardArt card={c} thumb showName={false} label={cardName(c)} /></div>
             <div className="cap">{cardName(c)}</div>
           </button>
         ))}
@@ -421,7 +421,7 @@ function JournalView({ reversals, refreshKey }) {
             <div className="spread-row" style={{ maxWidth: cards.length === 1 ? 70 : 200, margin: 0 }}>
               {cards.map((c, j) => (
                 <div className="card-shell" key={j} style={{ flex: '0 0 62px' }}>
-                  <CardArt card={c.card} reversed={c.reversed} showName={false} label={cardName(c.card)} />
+                  <CardArt card={c.card} thumb reversed={c.reversed} showName={false} label={cardName(c.card)} />
                 </div>
               ))}
             </div>
