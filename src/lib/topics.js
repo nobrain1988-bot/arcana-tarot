@@ -30,14 +30,17 @@ export const TOPICS = [
   { id: 'loveGo',       cat: 'love',  spread: 'yesno' },
 
   { id: 'crushApproach', cat: 'crush', spread: 'yesno' },
-  { id: 'crushHeart',    cat: 'crush', spread: 'career' },
+  // '이 마음 어떻게 해야 하나요' 는 막힌 곳을 짚는 질문이 아니라
+  // 무엇을 하면 어떻게 되는지를 묻는 질문이다 → 결과 자리가 있는 쪽으로.
+  { id: 'crushHeart',    cat: 'crush', spread: 'outcome' },
   { id: 'crushAgain',    cat: 'crush', spread: 'yesno' },
   { id: 'crushLearn',    cat: 'crush', spread: 'three' },
 
   { id: 'workBlock',    cat: 'work',  spread: 'career' },
   { id: 'workMove',     cat: 'work',  spread: 'yesno' },
   { id: 'workMiss',     cat: 'work',  spread: 'three' },
-  { id: 'workAhead',    cat: 'work',  spread: 'three' },
+  // '어떻게 풀릴까요' 는 과거를 볼 필요가 없다. 지금 → 할 일 → 결과가 맞다.
+  { id: 'workAhead',    cat: 'work',  spread: 'outcome' },
 
   { id: 'lifeMoney',    cat: 'life',  spread: 'career' },
   { id: 'lifeChoice',   cat: 'life',  spread: 'yesno' },

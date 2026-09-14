@@ -188,6 +188,21 @@ export default {
         move:  { label: 'Çıkış yolu',     lead: 'Bunu gerçekten ilerleten şey.' },
       },
     },
+    // 상황 · 행동 · 결과 — 다른 스프레드에 없는 '결과' 자리가 핵심이다.
+    outcome: {
+      title: 'Durum · Eylem · Sonuç',
+      blurb: 'İşler şu an nerede, ne yapmalı ve bu nereye götürür.',
+      examples: [
+        'Bununla ne yapmalıyım?',
+        'Bu durumu nasıl ele almalıyım?',
+        'Böyle devam edersem ne olur?',
+      ],
+      pos: {
+        situation: { label: 'Durum', lead: 'Gerçekte önünüzde duran şey.' },
+        action:    { label: 'Ne yapmalı',    lead: 'Bu durumun istediği hamle.' },
+        result:    { label: 'Varacağı yer',    lead: 'Bu seçimin götürdüğü yer.' },
+      },
+    },
   },
 
   engine: {

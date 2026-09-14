@@ -188,6 +188,21 @@ export default {
         move:  { label: 'L’issue',         lead: 'Ce qui fait réellement avancer cela.' },
       },
     },
+    // 상황 · 행동 · 결과 — 다른 스프레드에 없는 '결과' 자리가 핵심이다.
+    outcome: {
+      title: 'Situation · Action · Résultat',
+      blurb: 'Où en sont les choses, quoi faire, et où cela mène.',
+      examples: [
+        'Que dois-je faire de cela ?',
+        'Comment gérer cette situation ?',
+        'Que se passe-t-il si je continue ?',
+      ],
+      pos: {
+        situation: { label: 'La situation', lead: 'Ce qui se trouve réellement devant vous.' },
+        action:    { label: 'Quoi faire',    lead: 'Le geste que cela demande.' },
+        result:    { label: 'Où cela mène',    lead: 'Là où ce choix vous conduit.' },
+      },
+    },
   },
 
   engine: {

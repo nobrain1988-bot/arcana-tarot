@@ -11,12 +11,20 @@ export const SPREADS = {
   yesno:  { id: 'yesno',  count: 1, positions: ['answer'] },
   love:   { id: 'love',   count: 3, positions: ['you', 'them', 'between'] },
   career: { id: 'career', count: 3, positions: ['now', 'block', 'move'] },
+  // 상황 · 행동 · 결과.
+  // 해외 타로 교육(Biddy Tarot)이 꼽는 기본 5종 중 하나인데 빠져 있었다.
+  // 다른 스프레드에 없는 '결과' 자리가 있는 것이 핵심이다 — 과거현재미래는 흐름을 보여주고
+  // 일과 돈은 막힌 것을 짚지만, "그래서 어떻게 되는데?"에 답하는 자리는 여기뿐이다.
+  // 즉답을 기대하고 오는 동아시아 사용자에게 특히 맞는다.
+  outcome: { id: 'outcome', count: 3, positions: ['situation', 'action', 'result'] },
 }
 
-export const SPREAD_LIST = [SPREADS.daily, SPREADS.three, SPREADS.yesno, SPREADS.love, SPREADS.career]
+export const SPREAD_LIST = [
+  SPREADS.daily, SPREADS.three, SPREADS.yesno, SPREADS.love, SPREADS.career, SPREADS.outcome,
+]
 
 // 질문을 먼저 받는 스프레드. 오늘의 카드·과거현재미래는 질문 없이 바로 뽑는다.
-export const ASKS_QUESTION = new Set(['yesno', 'love', 'career'])
+export const ASKS_QUESTION = new Set(['yesno', 'love', 'career', 'outcome'])
 
 // 스프레드 하나의 번역된 글자를 꺼낸다. 없으면 빈 값이 아니라 id 라도 돌려줘서
 // 화면에 빈칸이 생기지 않게 한다.

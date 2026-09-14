@@ -184,6 +184,21 @@ export default {
         move:  { label: 'The way through', lead: 'What actually moves this forward.' },
       },
     },
+    // 상황 · 행동 · 결과 — 다른 스프레드에 없는 '결과' 자리가 핵심이다.
+    outcome: {
+      title: 'Situation · Action · Outcome',
+      blurb: 'Where things stand, what to do about it, and where that leads.',
+      examples: [
+        'What should I do about this?',
+        'How do I handle this situation?',
+        'What happens if I go ahead?',
+      ],
+      pos: {
+        situation: { label: 'The situation', lead: 'What is actually in front of you.' },
+        action:    { label: 'What to do',    lead: 'The move this is asking for.' },
+        result:    { label: 'Where it lands',    lead: 'Where that choice takes this.' },
+      },
+    },
   },
 
   // ── 해석 엔진이 만들어내는 문장 ─────────────────────────
