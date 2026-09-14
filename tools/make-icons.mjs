@@ -20,6 +20,7 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = join(ROOT, 'assets')
+const PUB = join(ROOT, 'public')
 
 // 앱과 같은 색 (src/styles.css · capacitor.config.json 과 일치시킬 것)
 const C = {
@@ -92,16 +93,31 @@ const svgSplash = (size) => `<svg xmlns="http://www.w3.org/2000/svg" width="${si
   ${mark(size, 0.30)}
 </svg>`
 
-const png = (svg, file) =>
-  sharp(Buffer.from(svg)).png().toFile(join(OUT, file)).then(() => console.log('  ✓', file))
+// 마스커블 아이콘: 안드로이드가 원형·둥근네모 등으로 잘라낸다.
+// 잘려도 문양이 살아남도록 가운데 안전지대(지름 80%) 안에 넣는다.
+const svgMaskable = (size) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+  <defs>${defs}</defs>
+  <rect width="${size}" height="${size}" fill="url(#bg)"/>
+  ${mark(size, 0.66)}
+</svg>`
+
+const png = (svg, file, dir = OUT) =>
+  sharp(Buffer.from(svg)).png().toFile(join(dir, file)).then(() => console.log('  ✓', file))
 
 await mkdir(OUT, { recursive: true })
+await mkdir(PUB, { recursive: true })
 await Promise.all([
   png(svgIcon(1024), 'icon.png'),
   png(svgForeground(1024), 'icon-foreground.png'),
   png(svgBackground(1024), 'icon-background.png'),
   png(svgSplash(2732), 'splash.png'),
   png(svgSplash(2732), 'splash-dark.png'),
+
+  // 홈 화면에 추가(PWA)용 — 폰 브라우저에서 앱처럼 띄울 때 쓴다.
+  // public/ 에 두면 Vite 가 dist 로 복사하고, 그대로 앱 번들에도 들어간다.
+  png(svgIcon(192), 'pwa-192.png', PUB),
+  png(svgIcon(512), 'pwa-512.png', PUB),
+  png(svgMaskable(512), 'pwa-maskable-512.png', PUB),
 ])
 
 // 원본 SVG 도 남긴다. 스토어 그래픽·홍보물에서 확대해 써야 할 때 필요하다.
