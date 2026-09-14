@@ -10,7 +10,7 @@ import ResultView from './components/ResultView.jsx'
 import ChooseCards from './components/ChooseCards.jsx'
 import Ambience from './components/Ambience.jsx'
 import Settings from './components/Settings.jsx'
-import { IconSun, IconCards, IconBook, IconMoonList, IconBack, IconSpread, IconGear } from './components/icons.jsx'
+import { IconSun, IconCards, IconBook, IconMoonList, IconBack, IconSpread } from './components/icons.jsx'
 
 // 출시 후 실제 스토어 주소로 바꾼다. 공유 문구 끝에 붙는다.
 const STORE_URL = 'https://play.google.com/store/apps/details?id=com.obok.arcana'
@@ -445,7 +445,7 @@ const TABS = [
 ]
 
 export default function App() {
-  const { ui } = useLang()
+  const { ui, lang } = useLang()
   const [tab, setTab] = useState('today')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [reversals, setReversals] = useState(() => store.getSettings().reversals)
@@ -468,8 +468,12 @@ export default function App() {
     <div className="app">
       <Ambience />
 
+      {/* 톱니바퀴가 아니라 '지금 언어'를 띄운다.
+          이 버튼의 실제 용도는 언어 변경이다. 그런데 톱니바퀴는 '설정'으로 읽히고,
+          정작 이 버튼이 필요한 사람은 '폰 언어 자동 감지가 틀려서 화면 글자를 못 읽는
+          사용자'다. 그 사람에게 KO / EN 같은 코드는 어느 나라 사람이든 바로 알아본다. */}
       <button className="gear" onClick={() => setSettingsOpen(true)} aria-label={ui.set.title}>
-        <IconGear />
+        <span className="gear-lang">{String(lang).slice(0, 2).toUpperCase()}</span>
       </button>
 
       {screen}

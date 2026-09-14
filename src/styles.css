@@ -469,3 +469,13 @@ h3 { font-size: 17px; }
   object-fit: cover;
   background: var(--card-bg);   /* 늦게 뜰 때 흰 사각형이 번쩍이지 않게 */
 }
+
+/* 우상단 버튼 — 톱니바퀴 대신 현재 언어 코드(KO/EN/JA…)를 띄운다.
+   언어가 잘못 잡혀 화면을 못 읽는 사용자에게는 이 두 글자가 유일한 단서다. */
+.gear-lang {
+  font-family: var(--sans);
+  font-size: 12.5px; font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--ink);
+  line-height: 1;
+}
