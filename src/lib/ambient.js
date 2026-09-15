@@ -40,9 +40,10 @@ const CHORD_FADE = 3.5  // 겹치면서 넘어가는 시간(초). 길수록 경�
 const PAD_PEAK = 0.19   // 화음 한 덩어리
 const MEL_PEAK = 0.17   // 가락 종 한 번
 const DEEP_PEAK = 0.11  // 아주 가끔 울리는 낮은 종
-// 별빛 한 알. 열두 개가 겹치므로 한 알은 작아야 하지만, 0.055 로 뒀더니
-// 패드보다 21dB 아래라 재 봐야 겨우 보이는 수준이었다. 들으라고 넣은 소리다.
-const SHIM_PEAK = 0.075
+// 은하수 별 한 알. 이건 '효과음' 이지 주인공이 아니다 — 배경에 어우러져야 한다.
+// 0.14 → 0.075 로 한 번 줄였는데도 앞으로 나온다는 지적을 받아 한 번 더 줄인다.
+// 알이 22~30개씩 겹치므로 한 알을 조금만 낮춰도 합쳐진 소리는 많이 내려간다.
+const SHIM_PEAK = 0.040
 
 // 전체 음량. 0.5 로 뒀다가 "사운드를 높여 달라" 는 요청을 받았다.
 // 뒤에 리미터를 물려 뒀으므로 올려도 찢어지지 않는다.
@@ -372,7 +373,14 @@ function armUnlock() {
 function disarm() { if (unlock) { unlock(); unlock = null } }
 
 // 실제로 소리를 짓고 연주를 시작한다. ctx 가 확실히 running 일 때만 부른다.
+//
+// 맨 앞의 빗장이 중요하다. 화면을 한 번 누르면 pointerdown 과 click 이 둘 다 온다.
+// pointerdown 은 armUnlock 이 받아서 ctx.resume() 을 기다리고, 그 사이에 click 이
+// enter() → start() 로 먼저 연주를 지어 버린다. 그러고 나서 기다리던 쪽이 깨어나
+// 한 번 더 짓는다 — 같은 음악이 두 벌 겹쳐서 두 배로 시끄럽고 탁해진다.
+// 한 번 지었으면 두 번 짓지 않는다.
 function build() {
+  if (running) return true
   try {
     master = ctx.createGain()
     // 3초에 걸쳐 들어온다. 갑자기 나면 깜짝 놀라고, 너무 길면 시작 화면이
@@ -425,7 +433,7 @@ function build() {
     shimBus.Q.value = 0.5
     shimBus.connect(master)
     shimWet = ctx.createGain()
-    shimWet.gain.value = 0.8   // 종보다 훨씬 젖게 — 꼬리가 길어야 흐른다
+    shimWet.gain.value = 0.5   // 종보다는 젖게. 0.8 은 꼬리가 너무 남아서 배경이 아니라 앞이었다
     shimWet.connect(rev)
 
     running = true

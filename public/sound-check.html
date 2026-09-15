@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Arcana 소리 점검</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; padding: 20px 18px 40px;
+    background: #0b0918; color: #efe9f7;
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  h1 { font-size: 19px; margin: 0 0 4px; }
+  .sub { color: #9a90b5; font-size: 13px; margin: 0 0 20px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 20px; }
+  td { padding: 9px 0; border-bottom: 1px solid #241f3a; vertical-align: top; }
+  td:first-child { color: #9a90b5; width: 44%; }
+  td:last-child { font-weight: 600; }
+  .ok { color: #7ee0a8; }
+  .no { color: #ff8a8a; }
+  .warn { color: #e8c46a; }
+  button {
+    width: 100%; padding: 16px; margin: 0 0 10px;
+    font: 600 16px/1 inherit; color: #0b0918;
+    background: #d8b26b; border: 0; border-radius: 12px; cursor: pointer;
+  }
+  button.ghost { background: #241f3a; color: #efe9f7; }
+  #log {
+    background: #16122a; border-radius: 10px; padding: 12px;
+    font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace;
+    color: #b9b0d0; white-space: pre-wrap; word-break: break-all;
+  }
+  .note { font-size: 13px; color: #9a90b5; margin: 18px 0 8px; }
+</style>
+</head>
+<body>
+
+<h1>Arcana 소리 점검</h1>
+<p class="sub">이 화면을 그대로 캡처해서 보내 주세요.</p>
+
+<table>
+  <tr><td>지금 소리가 나나요</td><td id="r-state">…</td></tr>
+  <tr><td>브라우저가 막고 있나요</td><td id="r-block">…</td></tr>
+  <tr><td>앱에 저장된 소리 설정</td><td id="r-pref">…</td></tr>
+  <tr><td>홈 화면에서 연 건가요</td><td id="r-pwa">…</td></tr>
+  <tr><td>소리 장치</td><td id="r-hw">…</td></tr>
+</table>
+
+<button id="play">🔊 소리 켜기 (눌러 보세요)</button>
+<button id="loud" class="ghost">더 크게 한 번 더</button>
+
+<p class="note">
+  소리가 안 들리면 <b>소리를 내는 동안</b> 폰의 볼륨 올리기 버튼을 눌러 보세요.
+  안드로이드는 벨소리 볼륨과 미디어 볼륨이 따로라, 벨소리가 커도 미디어가 0이면
+  아무 소리도 안 납니다.
+</p>
+
+<div id="log"></div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id) }
+  var lines = []
+  function log(s) { lines.push(s); $('log').textContent = lines.join('\n') }
+  function set(id, text, cls) {
+    var el = $(id); el.textContent = text; el.className = cls || ''
+  }
+
+  var AC = window.AudioContext || window.webkitAudioContext
+  if (!AC) {
+    set('r-state', '이 브라우저는 Web Audio 를 못 씁니다', 'no')
+    log('AudioContext 없음')
+    return
+  }
+
+  // 아무것도 안 누른 채로 만들어 본다 — 이게 '앱을 열자마자' 와 같은 상황이다
+  var ctx = new AC()
+  log('만든 직후 state = ' + ctx.state)
+  log('sampleRate = ' + ctx.sampleRate)
+
+  function refresh() {
+    var running = ctx.state === 'running'
+    set('r-state', running ? '예 — 소리가 나갈 수 있는 상태' : '아니오 — 멈춰 있음 (' + ctx.state + ')', running ? 'ok' : 'no')
+    set('r-block', running ? '아니오 — 안 막힘' : '예 — 화면을 한 번 눌러야 열립니다', running ? 'ok' : 'warn')
+  }
+  refresh()
+  setInterval(refresh, 800)
+
+  // 앱이 저장해 둔 설정
+  try {
+    var raw = localStorage.getItem('arcana.settings')
+    if (!raw) set('r-pref', '저장된 것 없음 (기본 = 켜짐)', 'ok')
+    else {
+      var s = JSON.parse(raw)
+      set('r-pref', s.sound === false ? '꺼짐  ← 이것 때문에 조용할 수 있습니다' : '켜짐', s.sound === false ? 'no' : 'ok')
+      log('arcana.settings = ' + raw)
+    }
+  } catch (e) { set('r-pref', '읽을 수 없음', 'warn'); log('설정 읽기 실패: ' + e) }
+
+  // 홈 화면에 추가해서 연 것인지
+  var standalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true
+  set('r-pwa', standalone ? '예 — 홈 화면 아이콘으로 열었습니다' : '아니오 — 브라우저로 열었습니다', standalone ? 'ok' : 'warn')
+
+  // 출력 장치 (이어폰인지 스피커인지 등은 권한 없이 못 보지만, 있는 것만 적는다)
+  set('r-hw', (navigator.mediaDevices ? '확인 가능' : '알 수 없음'), '')
+  if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+    navigator.mediaDevices.enumerateDevices().then(function (ds) {
+      var outs = ds.filter(function (d) { return d.kind === 'audiooutput' })
+      set('r-hw', outs.length ? outs.length + '개 찾음' : '못 찾음', outs.length ? 'ok' : 'warn')
+    }).catch(function () { set('r-hw', '알 수 없음', '') })
+  }
+
+  // 아주 단순한 소리 — 앱의 배경음과 상관없이 '이 폰에서 소리가 나는가' 만 본다
+  function beep(level) {
+    ctx.resume().then(function () {
+      log('누른 뒤 state = ' + ctx.state)
+      refresh()
+      var t = ctx.currentTime
+      var g = ctx.createGain()
+      g.gain.setValueAtTime(0.0001, t)
+      g.gain.exponentialRampToValueAtTime(level, t + 0.05)
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 2.2)
+      g.connect(ctx.destination)
+      ;[440, 660, 880].forEach(function (f, i) {
+        var o = ctx.createOscillator()
+        o.type = 'sine'
+        o.frequency.value = f
+        var vg = ctx.createGain()
+        vg.gain.value = [0.6, 0.3, 0.15][i]
+        o.connect(vg).connect(g)
+        o.start(t + i * 0.18)
+        o.stop(t + 2.6)
+      })
+      log('소리 냄 (크기 ' + level + ') — 들리셨나요?')
+    }).catch(function (e) { log('열기 실패: ' + e) })
+  }
+
+  $('play').onclick = function () { beep(0.25) }
+  $('loud').onclick = function () { beep(0.8) }
+})()
+</script>
+
+</body>
+</html>
