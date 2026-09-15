@@ -7,14 +7,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- ⚠️ 애드몹 앱 ID — 지금은 '구글 공식 테스트 값'이다.
-             출시 전에 애드몹 콘솔에서 이 앱(com.obok.arcana)을 등록하고 받은
-             실제 App ID 로 반드시 교체할 것. 값이 안 맞으면 앱이 켜지자마자 죽는다.
-             실제 값 형태: ca-app-pub-9311950226943560~XXXXXXXXXX (오복사주와 같은 계정)
-             src/lib/ads.js 의 광고 단위 ID 도 함께 바꿔야 한다. -->
+        <!-- 애드몹 앱 ID — 실제 값이다 (오복사주와 같은 계정 pub-9311950226943560).
+             이 값이 틀리면 앱이 켜지자마자 죽는다. 광고가 안 나오는 정도가 아니라
+             시작 자체가 안 된다 — 그래서 광고 단위 ID 보다 이쪽이 더 위험하다.
+             앱 ID 는 '어느 앱인가' 이고, 광고 단위 ID(src/lib/ads.js)는 '어느 자리인가' 라
+             서로 다른 값이다. 앱 ID 는 테스트/실제를 나누지 않는다. -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"
+            android:value="ca-app-pub-9311950226943560~9586278141"
         />
 
         <activity
