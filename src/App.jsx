@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 // cardById 는 기록 화면이 쓴다 — 저장된 id 로 카드를 되찾는다
-import { draw, cardById } from './lib/deck.js'
+import { draw, cardById, todayKey } from './lib/deck.js'
 import { SPREADS, SPREAD_LIST, ASKS_QUESTION, spreadText } from './lib/spreads.js'
 import { CATEGORIES, CAT_EMOJI, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
@@ -77,6 +77,88 @@ function Shuffling({ label }) {
 
 
 // ──────────────────────────────────────────────────────────────
+// 1) 오늘의 카드 — 하루 동안 고정된다.
+//
+// 탭이 아니라 질문 목록 맨 위의 특별한 줄에서 들어온다.
+// 탭으로 두면 첫 화면을 차지해 버리는데, 앱을 여는 목적은 대개 '무엇을 물어볼까'이지
+// 오늘의 카드가 아니다. 그렇다고 없애면 매일 열 이유가 사라진다 —
+// 하루 한 장 고정은 이 앱에서 재방문을 만드는 유일한 장치다. 그래서 목록 위에 둔다.
+// ──────────────────────────────────────────────────────────────
+function TodayView({ reversals, onBack }) {
+  const { ui, lang } = useLang()
+  const t = useText()
+  const [drawn, setDrawn] = useState(null)
+  const [revealed, setRevealed] = useState(false)
+
+  useEffect(() => {
+    const key = todayKey()
+    const saved = store.getDaily()
+
+    // 오늘 이미 뽑았으면 저장된 id 로 복원한다(문구가 바뀌어도 최신 문구로 나오도록 id만 저장).
+    if (saved && saved.dateKey === key && Array.isArray(saved.drawn)) {
+      const list = saved.drawn.map((d) => ({ card: cardById(d.id), reversed: !!d.reversed })).filter((d) => d.card)
+      if (list.length) {
+        setDrawn(list)
+        setRevealed(!!saved.revealed)   // 뒤집어 본 날이면 바로 보여준다
+        return
+      }
+    }
+    // 아직 안 뽑았으면 '날짜 + 기기고유값' 을 시드로 뽑는다 → 오늘 하루 고정, 사람마다 다름
+    const list = draw(1, { seed: `${key}|${store.deviceSalt()}` })
+    store.setDaily(key, list)
+    setDrawn(list)
+    setRevealed(false)
+  }, [])
+
+  // 언어나 역방향 설정이 바뀌면 해석을 다시 만든다.
+  // (카드는 그대로고 읽는 방식만 바뀐다 — 오늘의 카드가 다른 카드로 바뀌지 않는다)
+  const reading = useMemo(() => {
+    if (!drawn) return null
+    const applied = drawn.map((d) => ({ ...d, reversed: reversals && d.reversed }))
+    return interpret(SPREADS.daily, applied, ui, t)
+  }, [drawn, reversals, ui, t])
+
+  // 방금 뒤집었을 때만 뒤집기 연출을 준다.
+  // 이미 본 날 앱을 다시 켰는데 매번 뒤집히면 연출이 아니라 방해가 된다.
+  const [justRevealed, setJustRevealed] = useState(false)
+
+  const reveal = useCallback(async () => {
+    await showInterstitialBeforeResult()
+    setRevealed(true)
+    setJustRevealed(true)
+    store.markDailyRevealed()
+    if (drawn) store.addJournal({ spreadId: 'daily', cards: drawn })
+  }, [drawn])
+
+  if (!reading) return null
+
+  const today = formatDate(new Date(), lang, { weekday: 'long', month: 'long', day: 'numeric' })
+
+  return (
+    <div className="screen">
+      <button className="link row" onClick={onBack} style={{ marginBottom: 14 }}>
+        <IconBack /> {ui.common.back}
+      </button>
+      <div className="eyebrow">{today}</div>
+      <h1 style={{ marginBottom: 18 }}>{ui.today.title}</h1>
+
+      {!revealed ? (
+        <>
+          <div style={{ maxWidth: 200, margin: '0 auto 22px' }}>
+            {/* 뒤집기 전 뒷면이 천천히 숨쉰다 — 눌러야 할 것이 무엇인지 눈이 먼저 안다 */}
+            <div className="card-shell card-breathe"><CardBack /></div>
+          </div>
+          <p className="small muted center" style={{ margin: '0 0 18px' }}>{ui.today.blurb}</p>
+          <button className="btn" onClick={reveal}>{ui.today.reveal}</button>
+        </>
+      ) : (
+        <ResultView reading={reading} reveal={justRevealed} onShare={() => shareReading(reading, ui)} />
+      )}
+    </div>
+  )
+}
+
+// ──────────────────────────────────────────────────────────────
 // 2) Readings — 스프레드 선택 → (질문) → 셔플 → 결과
 // ──────────────────────────────────────────────────────────────
 function ReadingsView({ reversals }) {
@@ -89,6 +171,7 @@ function ReadingsView({ reversals }) {
   // 고르는 화면의 두 가지 모드.
   //   topics  — 주제별 질문 목록 (기본). 국내 앱들이 쓰는 방식이고 처음 온 사람이 고를 수 있다.
   //   spreads — 스프레드를 직접 고르고 질문을 직접 쓴다. 타로를 아는 사람용.
+  //   today   — 오늘의 카드 (목록 맨 위 줄에서 들어온다)
   const [mode, setMode] = useState('topics')
   const [cat, setCat] = useState(CATEGORIES[0])
 
@@ -139,6 +222,12 @@ function ReadingsView({ reversals }) {
   }
 
   if (phase === 'pick') {
+    // 오늘의 카드는 목록 맨 위 줄에서 들어온다. 탭이 아니라 이 안의 화면이라
+    // 아래 탭바는 '리딩'에 머문다 — 사용자 입장에서 여기를 벗어난 게 아니다.
+    if (mode === 'today') {
+      return <TodayView reversals={reversals} onBack={() => setMode('topics')} />
+    }
+
     // 주제별 질문 — 무엇이 궁금한지로 고른다.
     //
     // 전에는 스프레드 이름('과거 · 현재 · 미래')으로 고르게 했다. 그건 타로를 아는 사람의
@@ -152,6 +241,18 @@ function ReadingsView({ reversals }) {
         <div className="screen">
           <div className="eyebrow">{ui.read.eyebrow}</div>
           <h1 style={{ marginBottom: 16 }}>{ui.read.title}</h1>
+
+          {/* 오늘의 카드 — 분류에 속하지 않으므로 칩 위에 따로 둔다.
+              하루 한 장 고정이라 '오늘 것은 봤나' 확인하러 매일 들어올 이유가 된다.
+              이 앱에서 재방문을 만드는 유일한 장치라 첫 화면에서 보여야 한다. */}
+          <button className="today-row" onClick={() => setMode('today')}>
+            <span className="today-back"><CardBack /></span>
+            <span className="today-text">
+              <span className="today-title">{ui.today.title}</span>
+              <span className="today-sub">{ui.today.blurb}</span>
+            </span>
+            <span className="today-go">→</span>
+          </button>
 
           <div className="cat-row">
             {CATEGORIES.map((c) => (
