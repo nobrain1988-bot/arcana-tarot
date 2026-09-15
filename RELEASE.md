@@ -56,11 +56,27 @@ SDK 도 없다. 오복사주도 같은 방식으로 빌드했다.)
 
 | 방법 | 비용 | 조건 | 결과 주소 |
 |---|---|---|---|
-| **깃허브 페이지** | 무료 | 저장소가 공개여야 함 | `nobrain1988-bot.github.io/arcana-tarot/privacy.html` |
+| **깃허브 페이지** | 무료 | 저장소가 공개여야 함 (이미 공개다) | `nobrain1988-bot.github.io/arcana-tarot/privacy.html` |
 | **Vercel** | 무료 | 오복사주에서 쓰던 방식 그대로 | `arcana-tarot.vercel.app/privacy.html` |
 | 구글 사이트 도구 | 무료 | HTML 대신 글만 복사해 붙여넣기 | `sites.google.com/view/...` |
 
-🔴 어느 쪽을 할지 정해서 알려주면, 설정 파일은 Claude 가 만든다.
+### 깃허브 페이지로 하는 법 (추천 — 5분, 파일은 이미 다 있다)
+
+저장소 → **Settings** → 왼쪽 메뉴 **Pages** → 이렇게 고른다.
+
+| 칸 | 고를 값 |
+|---|---|
+| Source | **Deploy from a branch** |
+| Branch | **main** |
+| 폴더 (Branch 옆 칸) | **/docs** |
+
+그리고 **Save**. 1~2분 뒤 주소가 열린다.
+
+- 개인정보처리방침: - 소개 페이지: 
+> ⚠️ Source 를  로 고르면 안 된다. 이 저장소에는 Pages 용
+> 워크플로가 없어서 배포될 것이 없고, 계속 404 가 난다.
+>  폴더에  과  이 이미 들어 있으므로
+> 그 폴더를 그대로 쓰는 쪽이 맞다.
 
 ---
 
