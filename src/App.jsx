@@ -505,7 +505,12 @@ export default function App() {
   const enter = useCallback(() => {
     setPhase((p) => (p === 'intro' ? 'leaving' : p))
     // 브라우저가 소리를 막고 있었다면 이 탭이 그 빗장을 푸는 '한 번'이다.
-    if (store.getSettings().sound !== false) ambient.start()
+    if (store.getSettings().sound !== false) {
+      ambient.start()
+      // 문이 열리는 순간 별빛 한 줄기. 들어가는 연출(1.5초)과 소리가 같이 움직여야
+      // 화면만 바뀌는 게 아니라 '들어갔다'는 감각이 된다.
+      setTimeout(() => ambient.sparkle(), 120)
+    }
     // 나가는 연출(1.5초)이 끝난 뒤에 걷어낸다. 더 일찍 지우면 도중에 끊긴다.
     setTimeout(() => setPhase('in'), 1600)
   }, [])

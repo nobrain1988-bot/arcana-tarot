@@ -38,6 +38,9 @@ const CHORD_FADE = 5    // 겹치면서 넘어가는 시간(초). 길수록 경�
 const PAD_PEAK = 0.19   // 화음 한 덩어리
 const MEL_PEAK = 0.17   // 가락 종 한 번
 const DEEP_PEAK = 0.11  // 아주 가끔 울리는 낮은 종
+// 별빛 한 알. 열두 개가 겹치므로 한 알은 작아야 하지만, 0.055 로 뒀더니
+// 패드보다 21dB 아래라 재 봐야 겨우 보이는 수준이었다. 들으라고 넣은 소리다.
+const SHIM_PEAK = 0.14
 
 // A 자연단음계를 계단으로 펴 둔다. 가락은 이 계단의 '칸 번호'로만 적는다.
 // 반음을 직접 적으면 손댈 때마다 음이 어긋난다.
@@ -57,11 +60,26 @@ const PHRASES = [
   [18, 16, 14, 11],
 ]
 
+// ── 별빛 (촤르르르) ─────────────────────────────────────────
+// 하프를 손등으로 훑거나 윈드차임(마크트리)을 쓸어내릴 때 나는 소리.
+// 높은 음을 40~80ms 간격으로 우르르 쏟아 놓으면 하나하나가 아니라 한 줄기로 들린다.
+//
+// 5음 음계(펜타토닉)만 쓴다. 이 다섯 음은 어떤 두 개를 동시에 울려도 부딪히지 않아서,
+// 12개가 한꺼번에 울려도 탁해지지 않는다. 7음 음계로 하면 반음이 섞여 뭉개진다.
+// A4(440Hz)부터 G7(3136Hz)까지 — 이 높이라야 '별빛'이지, 낮으면 그냥 실로폰이다.
+const SPARKLE = [
+  24, 27, 29, 31, 34,   // A4  C5  D5  E5  G5
+  36, 39, 41, 43, 46,   // A5  C6  D6  E6  G6
+  48, 51, 53, 55, 58,   // A6  C7  D7  E7  G7
+]
+
 let ctx = null
 let master = null          // 전체 음량
 let padBus = null          // 패드 — 멀리서 들리게 어둡게 깎는다
 let melBus = null          // 가락 — 패드보다 밝게 둬야 묻히지 않는다
+let shimBus = null         // 별빛 — 제일 밝게. 여기를 깎으면 '촤르르'가 '뚱뚱'해진다
 let wet = null             // 리버브로 보내는 양
+let shimWet = null         // 별빛은 훨씬 더 젖게 보낸다 — 꼬리가 길어야 흐르는 느낌이 난다
 let pad = null             // 지금 울리고 있는 화음
 let chordIx = 0
 let timers = []
@@ -208,6 +226,73 @@ function bell(freq, peak, decay) {
   osc.onended = () => { try { g.disconnect() } catch {} }
 }
 
+// ── 별빛 한 줄기 ────────────────────────────────────────────
+// 종(bell)과 따로 만드는 이유: 종은 '한 번 치고 길게 운다'이고
+// 이건 '짧게 여러 번을 쓸어내린다'라서 소리의 성격이 반대다.
+// 배음도 다르다 — 종은 옥타브(2배)를 얹지만, 쇠막대·관은 2.76배·5.4배처럼
+// 옥타브에 안 맞는 배음이 난다. 그 어긋남이 '금속이 반짝이는' 느낌을 만든다.
+function chime(freq, peak, decay, pan, at) {
+  const t = at
+  const g = ctx.createGain()
+  g.gain.setValueAtTime(0.000001, t)
+  g.gain.exponentialRampToValueAtTime(peak, t + 0.008)   // 거의 즉시 — 쓸어내리는 소리라 붙어야 한다
+  g.gain.exponentialRampToValueAtTime(0.000001, t + decay)
+
+  const parts = [[1, 1], [2.76, 0.16], [5.4, 0.05]]
+  const oscs = parts.map(([ratio, amt]) => {
+    const o = ctx.createOscillator()
+    o.type = 'sine'
+    o.frequency.value = freq * ratio
+    const vg = ctx.createGain()
+    vg.gain.value = amt
+    o.connect(vg).connect(g)
+    o.start(t)
+    o.stop(t + decay + 0.3)
+    return o
+  })
+
+  // 좌우로 흘려 보낸다. 한가운데서만 나면 '쏟아진다'가 아니라 '울린다'가 된다.
+  let tail = g
+  if (ctx.createStereoPanner) {
+    const p = ctx.createStereoPanner()
+    p.pan.value = Math.max(-1, Math.min(1, pan))
+    g.connect(p)
+    tail = p
+  }
+  tail.connect(shimBus)
+  tail.connect(shimWet)
+  oscs[0].onended = () => { try { g.disconnect() } catch {} }
+}
+
+// 한 줄기 = 높은 음 9~14개를 40~80ms 간격으로 쏟는다.
+// 가운데가 제일 세고 양끝이 여린 모양이라 '촤르르를~' 하고 부풀었다 사라진다.
+export function sparkle() {
+  if (!running || !ctx || !shimBus) return
+  const n = 9 + Math.floor(Math.random() * 6)
+  const up = Math.random() < 0.78                 // 대개 올라간다. 가끔 내려오면 덜 질린다
+  const room = SPARKLE.length - n
+  const from = Math.floor(Math.random() * (room + 1))
+  const gap = 0.042 + Math.random() * 0.04
+  const t0 = now() + 0.03
+  for (let i = 0; i < n; i++) {
+    const semi = SPARKLE[up ? from + i : from + n - 1 - i]
+    const f = hz(semi)
+    // 가운데가 부풀어 오르는 모양
+    const shape = 0.55 + 0.45 * Math.sin((Math.PI * i) / (n - 1))
+    // 높은 음일수록 빨리 사라진다 — 실제 쇠막대가 그렇다
+    const decay = Math.max(1.1, Math.min(3.2, 3.0 * Math.pow(620 / f, 0.35)))
+    const pan = (up ? -0.55 : 0.55) + (up ? 1 : -1) * 1.1 * (i / (n - 1))
+    chime(f, SHIM_PEAK * shape, decay, pan, t0 + i * gap)
+  }
+}
+
+function scheduleSparkle() {
+  if (!running) return
+  sparkle()
+  // 22~48초에 한 번. 자주 나오면 특별하지 않고, 뜸하면 있는 줄도 모른다.
+  later(scheduleSparkle, 22000 + Math.random() * 26000)
+}
+
 // 악구 하나를 친다 — 네 음을 천천히, 그러고 나서 한참 쉰다.
 // 쉬는 구간이 없으면 계속 딸랑거려서 귀가 쉬지 못한다.
 function playPhrase() {
@@ -306,12 +391,23 @@ export async function start() {
     melBus.Q.value = 0.5
     melBus.connect(master)
 
+    // 별빛은 제일 밝게 통과시킨다. 3kHz 위를 깎으면 '촤르르'의 반짝임이 사라진다.
+    shimBus = ctx.createBiquadFilter()
+    shimBus.type = 'lowpass'
+    shimBus.frequency.value = 9000
+    shimBus.Q.value = 0.5
+    shimBus.connect(master)
+    shimWet = ctx.createGain()
+    shimWet.gain.value = 0.8   // 종보다 훨씬 젖게 — 꼬리가 길어야 흐른다
+    shimWet.connect(rev)
+
     running = true
     chordIx = 0
     pad = null
     nextChord()
     later(playPhrase, 6000)      // 패드가 자리를 잡은 뒤에 가락이 들어온다
     later(playDeep, 14000)
+    later(scheduleSparkle, 9000)   // 가락이 한 번 지나간 뒤에 첫 별빛
 
     if (ctx.state !== 'running') armUnlock()
     return isAudible()
