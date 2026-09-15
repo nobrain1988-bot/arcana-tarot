@@ -72,10 +72,12 @@ SDK 도 없다. 오복사주도 같은 방식으로 빌드했다.)
 
 그리고 **Save**. 1~2분 뒤 주소가 열린다.
 
-- 개인정보처리방침: - 소개 페이지: 
-> ⚠️ Source 를  로 고르면 안 된다. 이 저장소에는 Pages 용
+- 개인정보처리방침 → `https://nobrain1988-bot.github.io/arcana-tarot/privacy.html`
+- 소개 페이지 → `https://nobrain1988-bot.github.io/arcana-tarot/`
+
+> ⚠️ Source 를 `GitHub Actions` 로 고르면 안 된다. 이 저장소에는 Pages 용
 > 워크플로가 없어서 배포될 것이 없고, 계속 404 가 난다.
->  폴더에  과  이 이미 들어 있으므로
+> `docs/` 폴더에 `index.html` 과 `privacy.html` 이 이미 들어 있으므로
 > 그 폴더를 그대로 쓰는 쪽이 맞다.
 
 ---
