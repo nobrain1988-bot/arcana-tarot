@@ -81,6 +81,17 @@ export default {
 
   // 주제 분류 — 리딩 화면 위쪽 칩
 
+  // 시작 화면 — 문을 열고 들어가는 느낌
+
+  intro: {
+
+    tagline: 'Kartlar seni çoktan bekliyor.',
+
+    enter: 'İçeri gir',
+
+  },
+
+
   cats: {
 
     love: 'Aşk',

@@ -117,7 +117,8 @@ src/
     majors.js    메이저 22장 데이터 (영어 원문 = 번역의 기준)
     minors.js    마이너 56장 데이터 (4수트 × 14랭크)
     deck.js      78장 조립 + 시드 셔플 + 카드 뽑기
-    spreads.js   스프레드 5종 '구조' (글자는 언어 팩에 있다)
+    topics.js    주제별 질문 (분류 4개 × 질문 15개). 스프레드 이름 대신 궁금한 내용으로 고른다
+    spreads.js   스프레드 6종 '구조' (글자는 언어 팩에 있다)
     reading.js   해석 엔진 (예/아니오 극성표 포함, 글자 없음)
     ads.js       애드몹
     storage.js   localStorage (오늘의 카드·저널·설정)
@@ -128,6 +129,9 @@ src/
     ui/*.js      9개 국어 화면 문구 + 엔진 문장
     cards/*.js   9개 국어 카드 78장 해석
   components/
+    Intro.jsx      시작 화면 — 문을 열고 들어가는 순간 (public/intro/reader.png 자리)
+    Ambience.jsx   배경에 천천히 깜빡이는 별
+    ChooseCards.jsx 부채꼴로 펼친 카드에서 직접 고르기
     CardArt.jsx    카드 앞면(라이더-웨이트 사진) + 뒷면. 사진 실패 시 자체 SVG 로 대체
     ResultView.jsx 결과 화면
     Settings.jsx   설정 시트 (언어·역방향·데이터)

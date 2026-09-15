@@ -103,6 +103,12 @@ export default {
 
   // ── 스프레드 (제목·설명·자리 이름) ──────────────────────
   // 주제 분류 — 리딩 화면 위쪽 칩
+  // 시작 화면 — 문을 열고 들어가는 느낌
+  intro: {
+    tagline: 'The cards are already waiting for you.',
+    enter: 'Step inside',
+  },
+
   cats: {
     love: 'Love',
     crush: 'Crush & Exes',

@@ -81,6 +81,17 @@ export default {
 
   // 주제 분류 — 리딩 화면 위쪽 칩
 
+  // 시작 화면 — 문을 열고 들어가는 느낌
+
+  intro: {
+
+    tagline: 'Les cartes vous attendent déjà.',
+
+    enter: 'Entrer',
+
+  },
+
+
   cats: {
 
     love: 'Amour',

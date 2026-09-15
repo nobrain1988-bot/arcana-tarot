@@ -10,6 +10,7 @@ import { CardArt, CardBack } from './components/CardArt.jsx'
 import ResultView from './components/ResultView.jsx'
 import ChooseCards from './components/ChooseCards.jsx'
 import Ambience from './components/Ambience.jsx'
+import Intro from './components/Intro.jsx'
 import Settings from './components/Settings.jsx'
 import { IconSun, IconCards, IconBook, IconMoonList, IconBack, IconSpread } from './components/icons.jsx'
 
@@ -537,6 +538,9 @@ const TABS = [
 
 export default function App() {
   const { ui, lang } = useLang()
+  // 앱을 켤 때마다 시작 화면을 거친다. 저장하지 않는 이유 —
+  // 이건 '한 번 보고 마는 안내'가 아니라 매번 거치는 문이다. 들어가는 데 탭 한 번이면 된다.
+  const [entered, setEntered] = useState(false)
   const [tab, setTab] = useState('today')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [reversals, setReversals] = useState(() => store.getSettings().reversals)
@@ -558,6 +562,10 @@ export default function App() {
   return (
     <div className="app">
       <Ambience />
+
+      {/* 시작 화면은 앱 위에 덮인다. 뒤쪽 화면은 이미 그려져 있어서
+          장막이 걷히는 순간 바로 준비된 상태로 나타난다. */}
+      {!entered && <Intro onEnter={() => setEntered(true)} />}
 
       {/* 톱니바퀴가 아니라 '지금 언어'를 띄운다.
           이 버튼의 실제 용도는 언어 변경이다. 그런데 톱니바퀴는 '설정'으로 읽히고,
