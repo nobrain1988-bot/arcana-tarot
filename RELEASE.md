@@ -23,6 +23,7 @@
 | 스토어 아이콘 512×512 | 완료 — `store/icon-512.png` |
 | 그래픽 이미지 1024×500 | 완료 — `store/feature-graphic.png` |
 | 휴대전화 스크린샷 5장 (1080×1920) | 완료 — `store/screenshots/` |
+| 개인정보처리방침 주소 | 완료 — https://nobrain1988-bot.github.io/arcana-tarot/privacy.html |
 
 **남은 것은 전부 "계정에 로그인해서 등록하는 일"이다.** 코드 작업은 끝났다.
 
@@ -49,7 +50,16 @@ SDK 도 없다. 오복사주도 같은 방식으로 빌드했다.)
 
 ---
 
-## 2단계 — 개인정보처리방침 주소 만들기 🔴
+## 2단계 — 개인정보처리방침 주소 만들기 ✅ 완료
+
+**끝났다.** 깃허브 페이지를 `main` 브랜치의 `/docs` 폴더로 켰다.
+
+| | 주소 |
+|---|---|
+| 개인정보처리방침 (플레이 콘솔에 넣을 값) | https://nobrain1988-bot.github.io/arcana-tarot/privacy.html |
+| 소개 페이지 | https://nobrain1988-bot.github.io/arcana-tarot/ |
+
+아래는 어떻게 했는지의 기록이다.
 
 광고를 붙이므로 구글이 **필수**로 요구한다. 원고는 이미 `public/privacy.html` 에 있다.
 셋 중 하나만 고르면 된다.

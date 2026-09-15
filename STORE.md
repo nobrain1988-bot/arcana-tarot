@@ -200,7 +200,7 @@ npm run feature                      # 그래픽 이미지
 
 | 항목 | 값 |
 |---|---|
-| 개인정보처리방침 URL | `public/privacy.html` 을 올린 주소 (아래 RELEASE.md 참고) |
+| 개인정보처리방침 URL | `https://nobrain1988-bot.github.io/arcana-tarot/privacy.html` ✅ 열려 있음 |
 | 앱 카테고리 | Lifestyle |
 | 이메일 | leejiwon44@nate.com |
 | 웹사이트 | 선택 — 없으면 비워도 된다 |
