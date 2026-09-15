@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { DECK, cardById, draw, todayKey } from './lib/deck.js'
+// cardById 는 기록 화면이 쓴다 — 저장된 id 로 카드를 되찾는다
+import { draw, cardById } from './lib/deck.js'
 import { SPREADS, SPREAD_LIST, ASKS_QUESTION, spreadText } from './lib/spreads.js'
-import { CATEGORIES, topicsIn, catText, topicText } from './lib/topics.js'
+import { CATEGORIES, CAT_EMOJI, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
 import { initAds, showInterstitialBeforeResult } from './lib/ads.js'
 import * as ambient from './lib/ambient.js'
@@ -13,7 +14,7 @@ import ChooseCards from './components/ChooseCards.jsx'
 import Ambience from './components/Ambience.jsx'
 import Intro from './components/Intro.jsx'
 import Settings from './components/Settings.jsx'
-import { IconSun, IconCards, IconMoonList, IconBack, IconSpread } from './components/icons.jsx'
+import { IconCards, IconMoonList, IconBack, IconSpread } from './components/icons.jsx'
 
 // 출시 후 실제 스토어 주소로 바꾼다. 공유 문구 끝에 붙는다.
 const STORE_URL = 'https://play.google.com/store/apps/details?id=com.obok.arcana'
@@ -74,79 +75,6 @@ function Shuffling({ label }) {
   )
 }
 
-// ──────────────────────────────────────────────────────────────
-// 1) Today — 오늘의 카드. 하루 동안 고정된다.
-// ──────────────────────────────────────────────────────────────
-function TodayView({ reversals }) {
-  const { ui, lang } = useLang()
-  const t = useText()
-  const [drawn, setDrawn] = useState(null)
-  const [revealed, setRevealed] = useState(false)
-
-  useEffect(() => {
-    const key = todayKey()
-    const saved = store.getDaily()
-
-    // 오늘 이미 뽑았으면 저장된 id 로 복원한다(문구가 바뀌어도 최신 문구로 나오도록 id만 저장).
-    if (saved && saved.dateKey === key && Array.isArray(saved.drawn)) {
-      const list = saved.drawn.map((d) => ({ card: cardById(d.id), reversed: !!d.reversed })).filter((d) => d.card)
-      if (list.length) {
-        setDrawn(list)
-        setRevealed(!!saved.revealed)   // 뒤집어 본 날이면 바로 보여준다
-        return
-      }
-    }
-    // 아직 안 뽑았으면 '날짜 + 기기고유값' 을 시드로 뽑는다 → 오늘 하루 고정, 사람마다 다름
-    const list = draw(1, { seed: `${key}|${store.deviceSalt()}` })
-    store.setDaily(key, list)
-    setDrawn(list)
-    setRevealed(false)
-  }, [])
-
-  // 언어나 역방향 설정이 바뀌면 해석을 다시 만든다.
-  // (카드는 그대로고 읽는 방식만 바뀐다 — 오늘의 카드가 다른 카드로 바뀌지 않는다)
-  const reading = useMemo(() => {
-    if (!drawn) return null
-    const applied = drawn.map((d) => ({ ...d, reversed: reversals && d.reversed }))
-    return interpret(SPREADS.daily, applied, ui, t)
-  }, [drawn, reversals, ui, t])
-
-  // 방금 뒤집었을 때만 뒤집기 연출을 준다.
-  // 이미 본 날 앱을 다시 켰는데 매번 뒤집히면 연출이 아니라 방해가 된다.
-  const [justRevealed, setJustRevealed] = useState(false)
-
-  const reveal = useCallback(async () => {
-    await showInterstitialBeforeResult()
-    setRevealed(true)
-    setJustRevealed(true)
-    store.markDailyRevealed()
-    if (drawn) store.addJournal({ spreadId: 'daily', cards: drawn })
-  }, [drawn])
-
-  if (!reading) return null
-
-  const today = formatDate(new Date(), lang, { weekday: 'long', month: 'long', day: 'numeric' })
-
-  return (
-    <div className="screen">
-      <div className="eyebrow">{today}</div>
-      <h1 style={{ marginBottom: 18 }}>{ui.today.title}</h1>
-
-      {!revealed ? (
-        <>
-          <div style={{ maxWidth: 200, margin: '0 auto 22px' }}>
-            {/* 뒤집기 전 뒷면이 천천히 숨쉰다 — 눌러야 할 것이 무엇인지 눈이 먼저 안다 */}
-            <div className="card-shell card-breathe"><CardBack /></div>
-          </div>
-          <p className="small muted center" style={{ margin: '0 0 18px' }}>{ui.today.blurb}</p>
-          <button className="btn" onClick={reveal}>{ui.today.reveal}</button>
-        </>
-      ) : (
-        <ResultView reading={reading} reveal={justRevealed} onShare={() => shareReading(reading, ui)} />
-      )}
-    </div>
-  )
-}
 
 // ──────────────────────────────────────────────────────────────
 // 2) Readings — 스프레드 선택 → (질문) → 셔플 → 결과
@@ -228,25 +156,37 @@ function ReadingsView({ reversals }) {
           <div className="cat-row">
             {CATEGORIES.map((c) => (
               <button key={c} className={`cat${cat === c ? ' on' : ''}`} onClick={() => setCat(c)}>
-                {catText(ui, c)}
+                {catText(ui, c)}<span className="cat-emoji">{CAT_EMOJI[c]}</span>
               </button>
             ))}
           </div>
 
-          {topicsIn(cat).map((t) => {
-            const s = SPREADS[t.spread]
-            return (
-              <button key={t.id} className="topic" onClick={() => startTopic(t)}>
-                <span style={{ minWidth: 0, flex: 1 }}>
-                  <span className="topic-title">{topicText(ui, t.id)}</span>
-                  <span className="topic-tags">
-                    #{catText(ui, t.cat)} · #{spreadText(ui, s).title}
+          {/* 한 줄에 제목 · 해시태그 · 오른쪽 그림. 국내 앱들이 쓰는 형태다.
+              그림은 그 질문의 분위기를 한눈에 주는 역할만 하고, 실제로 뽑히는 카드와는
+              아무 상관이 없다. 삽화를 따로 그리지 않고 이미 가진 78장에서 골라 쓴다. */}
+          <div className="topic-list">
+            {topicsIn(cat).map((t) => {
+              const s = SPREADS[t.spread]
+              return (
+                <button key={t.id} className="topic" onClick={() => startTopic(t)}>
+                  <span className="topic-text">
+                    <span className="topic-title">{topicText(ui, t.id)}</span>
+                    <span className="topic-tags">
+                      #{catText(ui, t.cat)} #{spreadText(ui, s).title}
+                    </span>
                   </span>
-                </span>
-                <span className="t-icon" style={{ color: 'var(--ink)' }}><IconSpread n={s.count} /></span>
-              </button>
-            )
-          })}
+                  {/* 지연 로딩(loading="lazy")은 일부러 안 쓴다.
+                      15장 × 19KB = 285KB 뿐이라 아낄 게 거의 없는 반면,
+                      이건 앱을 열자마자 보이는 첫 화면이라 그림이 비어 있으면 안 된다. */}
+                  <img
+                    className="topic-thumb"
+                    src={`${import.meta.env.BASE_URL}cards/t/${t.card}.webp`}
+                    alt="" aria-hidden="true" decoding="async"
+                  />
+                </button>
+              )
+            })}
+          </div>
 
           <button className="btn ghost" style={{ marginTop: 6 }} onClick={() => setMode('spreads')}>
             {ui.read.ownQuestion}
@@ -444,7 +384,6 @@ function JournalView({ reversals, refreshKey }) {
 // 사전은 스토어 검색(ASO)에 도움이 됐던 기능이라, 다시 넣고 싶으면
 // LibraryView 를 지운 커밋에서 되살리면 된다. 언어 팩의 tabs.library 문구도 남아 있다.
 const TABS = [
-  { key: 'today',   Icon: IconSun,      label: (ui) => ui.tabs.today },
   { key: 'read',    Icon: IconCards,    label: (ui) => ui.tabs.readings },
   { key: 'journal', Icon: IconMoonList, label: (ui) => ui.tabs.journal },
 ]
@@ -470,7 +409,7 @@ export default function App() {
     // 나가는 연출(1.5초)이 끝난 뒤에 걷어낸다. 더 일찍 지우면 도중에 끊긴다.
     setTimeout(() => setPhase('in'), 1600)
   }, [])
-  const [tab, setTab] = useState('today')
+  const [tab, setTab] = useState('read')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [reversals, setReversals] = useState(() => store.getSettings().reversals)
   // 설정에서 데이터를 지우면 저널을 다시 읽어야 한다. 이 숫자가 바뀌면 다시 읽는다.
@@ -502,7 +441,6 @@ export default function App() {
 
   // key 를 바꿔 탭 전환 시 화면이 새로 마운트되게 한다(진입 애니메이션 + 상태 초기화)
   const screen =
-    tab === 'today'   ? <TodayView key={`today-${dataVersion}`} reversals={reversals} /> :
     tab === 'read'    ? <ReadingsView key="read" reversals={reversals} /> :
                         <JournalView key="journal" reversals={reversals} refreshKey={dataVersion} />
 

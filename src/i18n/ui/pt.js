@@ -96,6 +96,9 @@ export default {
 
   cats: {
 
+
+
+    all: 'Tudo',
     love: 'Amor',
 
     crush: 'Paquera e ex',

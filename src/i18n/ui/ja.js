@@ -96,6 +96,9 @@ export default {
 
   cats: {
 
+
+
+    all: 'すべて',
     love: '恋愛',
 
     crush: '片想い・復縁',

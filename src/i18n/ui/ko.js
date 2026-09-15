@@ -98,6 +98,9 @@ export default {
 
   cats: {
 
+
+
+    all: '전체',
     love: '연애',
 
     crush: '짝사랑·재회',

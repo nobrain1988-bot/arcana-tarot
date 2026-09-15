@@ -36,7 +36,8 @@
 
 | # | 기능 | 설명 | 목적 |
 |---|---|---|---|
-| 1 | **Daily Card** | 하루 한 장. 날짜+기기값 시드로 고정 → 같은 날 다시 열어도 같은 카드 | **재방문** |
+| 1 | ~~Daily Card~~ | **탭에서 제거**(2026-09-15). 첫 화면을 점신처럼 질문 목록으로 바꾸면서 뺐다.
+      ⚠️ 원래 재방문을 만드는 축이었다 — 되살리려면 TodayView 를 지운 커밋 참조 |
 | 2 | Past · Present · Future | 3장 클래식 스프레드 | 핵심 콘텐츠 |
 | 3 | Yes or No | 한 장으로 예/아니오 + 근거 | 가벼운 진입 |
 | 4 | Love Reading | You / The other / Between you | 체류시간 |
@@ -136,7 +137,7 @@ src/
     ResultView.jsx 결과 화면
     Settings.jsx   설정 시트 (언어·역방향·데이터)
     icons.jsx      탭바 아이콘
-  App.jsx        3개 탭(오늘·리딩·기록) + 리딩 플로우
+  App.jsx        2개 탭(리딩·기록) + 리딩 플로우
   styles.css     다크 + 골드 디자인
 tools/
   check-i18n.mjs    번역 검사기 (npm run check:i18n)

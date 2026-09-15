@@ -96,6 +96,9 @@ export default {
 
   cats: {
 
+
+
+    all: 'Tümü',
     love: 'Aşk',
 
     crush: 'Karşılıksız aşk',

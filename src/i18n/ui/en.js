@@ -112,6 +112,8 @@ export default {
   },
 
   cats: {
+
+    all: 'All',
     love: 'Love',
     crush: 'Crush & Exes',
     work: 'Work & Study',
