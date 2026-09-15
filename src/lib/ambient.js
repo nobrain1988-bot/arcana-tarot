@@ -30,8 +30,10 @@ const CHORDS = [
   [5, 8, 12, 15],   // Dm7   D3 F3 A3 C4
   [7, 10, 14, 19],  // Em7   E3 G3 B3 E4
 ]
-const CHORD_HOLD = 13   // 한 화음이 머무는 시간(초)
-const CHORD_FADE = 5    // 겹치면서 넘어가는 시간(초). 길수록 경계가 안 보인다
+// 템포. 처음엔 화음 13초·악구 사이 4~9초로 아주 느리게 뒀는데 "너무 느리다" 는
+// 지적을 받았다. 잔잔한 것과 멈춰 있는 것은 다르다 — 움직임이 느껴져야 한다.
+const CHORD_HOLD = 9    // 한 화음이 머무는 시간(초)
+const CHORD_FADE = 3.5  // 겹치면서 넘어가는 시간(초). 길수록 경계가 안 보인다
 
 // 음량 균형. 처음엔 가락이 패드보다 16dB 작아서 완전히 묻혔다 —
 // 스펙트럼을 재 보고 나서야 알았다. 패드는 '바닥'이고 가락이 들려야 할 쪽이다.
@@ -41,6 +43,13 @@ const DEEP_PEAK = 0.11  // 아주 가끔 울리는 낮은 종
 // 별빛 한 알. 열두 개가 겹치므로 한 알은 작아야 하지만, 0.055 로 뒀더니
 // 패드보다 21dB 아래라 재 봐야 겨우 보이는 수준이었다. 들으라고 넣은 소리다.
 const SHIM_PEAK = 0.14
+
+// 전체 음량. 0.5 로 뒀다가 "사운드를 높여 달라" 는 요청을 받았다.
+// 뒤에 리미터를 물려 뒀으므로 올려도 찢어지지 않는다.
+// 0.85 로 올려 놓고 재 보니 파형 최고치가 0.432 — 쓸 수 있는 크기의 절반도
+// 안 쓰고 있었다. 리미터가 뒤를 받치고 있으므로 더 올린다. 이 값에서 최고치는
+// 0.63 쯤이고, 별빛과 화음이 겹치는 드문 순간에만 리미터가 살짝 눌러 준다.
+const MASTER = 1.25
 
 // A 자연단음계를 계단으로 펴 둔다. 가락은 이 계단의 '칸 번호'로만 적는다.
 // 반음을 직접 적으면 손댈 때마다 음이 어긋난다.
@@ -272,7 +281,7 @@ export function sparkle() {
   const up = Math.random() < 0.78                 // 대개 올라간다. 가끔 내려오면 덜 질린다
   const room = SPARKLE.length - n
   const from = Math.floor(Math.random() * (room + 1))
-  const gap = 0.042 + Math.random() * 0.04
+  const gap = 0.028 + Math.random() * 0.028
   const t0 = now() + 0.03
   for (let i = 0; i < n; i++) {
     const semi = SPARKLE[up ? from + i : from + n - 1 - i]
@@ -289,8 +298,8 @@ export function sparkle() {
 function scheduleSparkle() {
   if (!running) return
   sparkle()
-  // 22~48초에 한 번. 자주 나오면 특별하지 않고, 뜸하면 있는 줄도 모른다.
-  later(scheduleSparkle, 22000 + Math.random() * 26000)
+  // 11~24초에 한 번. 자주 나오면 특별하지 않고, 뜸하면 있는 줄도 모른다.
+  later(scheduleSparkle, 11000 + Math.random() * 13000)
 }
 
 // 악구 하나를 친다 — 네 음을 천천히, 그러고 나서 한참 쉰다.
@@ -298,18 +307,18 @@ function scheduleSparkle() {
 function playPhrase() {
   if (!running) return
   const phrase = pick(PHRASES)
-  const gap = 1100 + Math.random() * 700   // 음과 음 사이
+  const gap = 620 + Math.random() * 420    // 음과 음 사이
   phrase.forEach((step, i) => {
     // 가끔 한 음을 건너뛴다. 같은 조각이라도 매번 다르게 들린다.
     if (i > 0 && Math.random() < 0.15) return
     later(() => {
       if (!running) return
       const semi = SCALE[Math.min(step, SCALE.length - 1)]
-      bell(hz(semi), MEL_PEAK, 4.2)
+      bell(hz(semi), MEL_PEAK, 3.2)
     }, i * gap)
   })
-  // 악구가 끝나고 4~9초 쉰다
-  const total = phrase.length * gap + 4000 + Math.random() * 5000
+  // 악구가 끝나고 2~5초 쉰다
+  const total = phrase.length * gap + 2000 + Math.random() * 3000
   later(playPhrase, total)
 }
 
@@ -317,7 +326,7 @@ function playPhrase() {
 function playDeep() {
   if (!running) return
   bell(hz(pick([0, 7, 12])), DEEP_PEAK, 7)
-  later(playDeep, 20000 + Math.random() * 25000)
+  later(playDeep, 14000 + Math.random() * 16000)
 }
 
 export function isRunning() {
@@ -336,10 +345,11 @@ export function isAudible() {
 // (안드로이드 앱 안에서는 이 제한 자체를 꺼 두므로 처음부터 소리가 난다)
 function armUnlock() {
   if (unlock || !ctx) return
-  const open = () => {
-    if (!ctx) return
-    ctx.resume().catch(() => {})
-    if (ctx.state === 'running') disarm()
+  const open = async () => {
+    if (!ctx || running) return
+    try { await ctx.resume() } catch {}
+    // 빗장이 풀린 뒤에야 비로소 연주를 짓는다.
+    if (ctx.state === 'running') { disarm(); build() }
   }
   const evs = ['pointerdown', 'touchstart', 'mousedown', 'keydown']
   evs.forEach((e) => document.addEventListener(e, open, { passive: true }))
@@ -347,24 +357,27 @@ function armUnlock() {
 }
 function disarm() { if (unlock) { unlock(); unlock = null } }
 
-export async function start() {
-  // 이미 켜져 있는데 브라우저가 막고 있는 경우 — 다시 열어만 본다
-  if (running) {
-    if (ctx && ctx.state !== 'running') { try { await ctx.resume() } catch {} }
-    return isAudible()
-  }
+// 실제로 소리를 짓고 연주를 시작한다. ctx 가 확실히 running 일 때만 부른다.
+function build() {
   try {
-    const AC = window.AudioContext || window.webkitAudioContext
-    if (!AC) return false
-    if (!ctx) ctx = new AC()
-    if (ctx.state === 'suspended') { try { await ctx.resume() } catch {} }
-
     master = ctx.createGain()
-    // 5초에 걸쳐 천천히 들어온다. 갑자기 나면 깜짝 놀란다.
-    // 지수로 올리면 앞 4초가 거의 안 들리다가 끝에서 훅 커진다 — 직선이 맞다.
+    // 3초에 걸쳐 들어온다. 갑자기 나면 깜짝 놀라고, 너무 길면 시작 화면이
+    // 조용한 것처럼 느껴진다(실제로 그런 지적을 받았다).
+    // 지수로 올리면 앞이 거의 안 들리다가 끝에서 훅 커진다 — 직선이 맞다.
     master.gain.setValueAtTime(0, now())
-    master.gain.linearRampToValueAtTime(0.5, now() + 5)
-    master.connect(ctx.destination)
+    master.gain.linearRampToValueAtTime(MASTER, now() + 3)
+
+    // 마지막에 리미터를 문다. 음량을 올려 달라는 요청을 받았는데, 그냥 올리면
+    // 별빛 12알 + 화음 + 종이 겹치는 순간 파형이 1.0 을 넘어 찢어진다(클리핑).
+    // 리미터는 그 순간에만 눌러 주므로, 평소 음량은 키우면서 찢어짐은 막는다.
+    // 폰 스피커는 여유가 적어서 이게 특히 중요하다.
+    const limiter = ctx.createDynamicsCompressor()
+    limiter.threshold.value = -3
+    limiter.knee.value = 3
+    limiter.ratio.value = 14
+    limiter.attack.value = 0.003
+    limiter.release.value = 0.22
+    master.connect(limiter).connect(ctx.destination)
 
     const rev = makeReverb(3.2, 2.4)
     const revOut = ctx.createGain()
@@ -405,14 +418,44 @@ export async function start() {
     chordIx = 0
     pad = null
     nextChord()
-    later(playPhrase, 6000)      // 패드가 자리를 잡은 뒤에 가락이 들어온다
-    later(playDeep, 14000)
-    later(scheduleSparkle, 9000)   // 가락이 한 번 지나간 뒤에 첫 별빛
-
-    if (ctx.state !== 'running') armUnlock()
-    return isAudible()
+    later(playPhrase, 3500)      // 패드가 자리를 잡은 뒤에 가락이 들어온다
+    later(playDeep, 9000)
+    later(scheduleSparkle, 5000)   // 가락이 한 번 지나간 뒤에 첫 별빛
+    return true
   } catch {
     // 소리가 안 나는 건 앱이 안 되는 것과는 다르다. 조용히 포기한다.
+    running = false
+    return false
+  }
+}
+
+export async function start() {
+  // 이미 켜져 있는데 브라우저가 막고 있는 경우 — 다시 열어만 본다
+  if (running) {
+    if (ctx && ctx.state !== 'running') { try { await ctx.resume() } catch {} }
+    return isAudible()
+  }
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext
+    if (!AC) return false
+    if (!ctx) ctx = new AC()
+    if (ctx.state !== 'running') { try { await ctx.resume() } catch {} }
+
+    if (ctx.state !== 'running') {
+      // 아직 막혀 있다. **여기서 연주를 시작하면 안 된다.**
+      //
+      // 막혀 있는 동안 ctx.currentTime 은 멈춰 있는데 setTimeout 은 계속 돈다.
+      // 그대로 두면 9초마다 만들어지는 화음이 전부 '같은 시각'에 예약되고,
+      // 사용자가 화면을 눌러 빗장이 풀리는 순간 그게 한꺼번에 터진다.
+      // 음악이 아니라 굉음이 된다 — 처음엔 이걸 몰라서 시작 화면에서
+      // 소리가 이상하게 나거나 아예 안 나는 것처럼 들렸다.
+      //
+      // 그래서 짓지 않고 기다린다. 첫 터치가 오면 그때 build() 한다.
+      armUnlock()
+      return false
+    }
+    return build()
+  } catch {
     running = false
     return false
   }

@@ -13,7 +13,8 @@
 // 그림은 화면을 꽉 채운다. 처음엔 아치 안에 넣었는데, 받은 그림이 인물만이 아니라
 // 촛불·카드·방까지 한 장면이라 액자에 가두면 그 분위기가 다 잘려나갔다.
 
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import * as ambient from '../lib/ambient.js'
 import { useLang } from '../i18n/context.jsx'
 
 const IMG = `${import.meta.env.BASE_URL}intro/reader.webp`
@@ -43,6 +44,18 @@ function IconSound({ on }) {
 export default function Intro({ onEnter, leaving, sound, onSound }) {
   const { ui } = useLang()
 
+  // '켜져 있는데 안 들리는' 상태 — 브라우저가 첫 터치 전에는 소리를 막기 때문이다.
+  // 화면에 아무 표시가 없으면 사용자는 그냥 "소리가 안 나네" 하고 만다(실제로 그랬다).
+  // 그래서 이 경우에만 스피커 버튼이 천천히 숨쉰다. 누르면 바로 난다.
+  const [muted, setMuted] = useState(false)
+  useEffect(() => {
+    // 마운트 직후엔 아직 resume 이 진행 중일 수 있어 조금 뒤에 본다.
+    const check = () => setMuted(sound && !ambient.isAudible())
+    const t1 = setTimeout(check, 700)
+    const t2 = setInterval(check, 1500)
+    return () => { clearTimeout(t1); clearInterval(t2) }
+  }, [sound])
+
   const go = useCallback(() => {
     if (leaving) return
     onEnter()
@@ -64,7 +77,7 @@ export default function Intro({ onEnter, leaving, sound, onSound }) {
       {/* 소리 켜고 끄기. 들어가기 전에 먼저 보이게 둔 이유 —
           누르자마자 소리가 나는데 미리 끌 방법이 없으면 곤란한 자리(지하철·사무실)가 있다. */}
       <button
-        className="intro-sound"
+        className={`intro-sound${muted ? ' muted' : ''}`}
         aria-label={ui.common.sound}
         aria-pressed={sound}
         onClick={(e) => { e.stopPropagation(); onSound(!sound) }}
