@@ -500,12 +500,11 @@ export default function App() {
   //   leaving — 시작 화면은 앞으로 밀려나며 흐려지고, 앱은 안쪽에서 다가온다 (겹치는 구간)
   //   in      — 시작 화면을 걷어낸다
   const [phase, setPhase] = useState('intro')
-  const entered = phase !== 'intro'
   const [sound, setSound] = useState(() => store.getSettings().sound !== false)
 
   const enter = useCallback(() => {
     setPhase((p) => (p === 'intro' ? 'leaving' : p))
-    // 브라우저는 사용자가 누르기 전에는 소리를 못 내게 막는다. 이 탭이 그 '한 번'이다.
+    // 브라우저가 소리를 막고 있었다면 이 탭이 그 빗장을 푸는 '한 번'이다.
     if (store.getSettings().sound !== false) ambient.start()
     // 나가는 연출(1.5초)이 끝난 뒤에 걷어낸다. 더 일찍 지우면 도중에 끊긴다.
     setTimeout(() => setPhase('in'), 1600)
@@ -518,27 +517,43 @@ export default function App() {
 
   useEffect(() => { initAds() }, [])
 
+  // 배경음은 **시작 화면부터** 켠다. 문을 열고 들어가는 순간이 이 화면인데
+  // 그때 아무 소리도 안 나면 분위기의 절반이 빈다.
+  //
+  // 다만 브라우저(폰 크롬·사파리)는 사용자가 화면을 한 번 누르기 전에는
+  // 어떤 사이트도 소리를 못 내게 막는다. 웹 표준이라 우회할 방법이 없다.
+  // 그래서 여기서는 '켜 두기만' 하고, 막혀 있으면 ambient 가 첫 터치를 기다렸다가
+  // 알아서 연다. 안드로이드 앱 안에서는 그 제한을 꺼 뒀으므로 바로 울린다.
+  useEffect(() => {
+    if (store.getSettings().sound !== false) ambient.start()
+  }, [])
+
   const changeReversals = (v) => { setReversals(v); store.setSettings({ reversals: v }) }
   const clearData = () => { store.clearUserData(); setDataVersion((n) => n + 1); setSettingsOpen(false) }
 
   const changeSound = (v) => {
+    // 브라우저가 막고 있으면 '켜져 있는데 안 들리는' 상태가 된다 — 아이콘은 켜짐인데 조용하다.
+    // 그 상태에서 이 버튼을 누르는 사람의 뜻은 '꺼 줘'가 아니라 '들려 줘'다.
+    // 그대로 토글해 버리면 버튼이 고장 난 것처럼 보인다.
+    if (!v && sound && !ambient.isAudible()) { ambient.start(); return }
     setSound(v)
     store.setSettings({ sound: v })
-    // 시작 화면에서 끄는 경우엔 아직 안 켜져 있으니 start 는 들어갈 때 판단한다.
+    // 시작 화면에서도 켤 수 있어야 한다. 이 버튼을 누르는 것 자체가 '사용자가 눌렀다'는
+    // 조건을 만족시키므로, 브라우저에서 첫 화면 배경음을 듣는 유일한 길이기도 하다.
     if (!v) ambient.stop()
-    else if (entered) ambient.start()
+    else ambient.start()
   }
 
   // 앱을 벗어나면 배경음을 멈춘다. 다른 앱을 쓰는데 뒤에서 계속 울리면 안 된다.
-  // 돌아오면 설정이 켜져 있고 이미 들어와 있을 때만 다시 켠다.
+  // 돌아오면 설정이 켜져 있을 때 다시 켠다 — 시작 화면이어도 마찬가지다.
   useEffect(() => {
     const off = ambient.bindVisibility()
     const back = () => {
-      if (!document.hidden && sound && entered) ambient.start()
+      if (!document.hidden && sound) ambient.start()
     }
     document.addEventListener('visibilitychange', back)
     return () => { off(); document.removeEventListener('visibilitychange', back) }
-  }, [sound, entered])
+  }, [sound])
 
   // key 를 바꿔 탭 전환 시 화면이 새로 마운트되게 한다(진입 애니메이션 + 상태 초기화)
   const screen =
