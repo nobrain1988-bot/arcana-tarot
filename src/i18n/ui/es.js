@@ -219,7 +219,7 @@ export default {
       pos: { answer: { label: 'La respuesta', lead: 'El motivo detrás de la respuesta.' } },
     },
     love: {
-      title: 'Tirada de amor',
+      title: 'Dos personas',
       blurb: 'Tres cartas sobre una relación: la tuya, la suya y lo que hay entre ambos.',
       examples: [
         '¿Qué estoy aportando yo a esto ahora?',
@@ -233,7 +233,7 @@ export default {
       },
     },
     career: {
-      title: 'Trabajo y dinero',
+      title: 'El bloqueo',
       blurb: 'Dónde estás, qué te está bloqueando y qué hace que avance.',
       examples: [
         '¿Qué está bloqueando esto realmente?',
@@ -259,6 +259,42 @@ export default {
         situation: { label: 'La situación', lead: 'Lo que de verdad tienes delante.' },
         action:    { label: 'Qué hacer',    lead: 'El movimiento que esto pide.' },
         result:    { label: 'Dónde acaba',    lead: 'Adónde te lleva esa decisión.' },
+      },
+    },
+    hidden: {
+      title: 'Lo que no veías',
+      blurb: 'Separa lo que tienes delante de lo que se te escapa.',
+      pos: {
+        seen: { label: 'Lo que ves', lead: 'La parte que ya conoces.' },
+        unseen: { label: 'Lo oculto', lead: 'La parte que quedó fuera de tu vista.' },
+        know: { label: 'Lo que debes saber', lead: 'Lo que cambia cuando lo ves.' },
+      },
+    },
+    strength: {
+      title: 'Lo que tienes',
+      blurb: 'Qué es fuerte, qué falta y dónde encaja.',
+      pos: {
+        have: { label: 'Tu fuerza', lead: 'Lo que ya está en ti.' },
+        thin: { label: 'Lo que falta', lead: 'La parte que aún no ha madurado.' },
+        use: { label: 'Dónde sirve', lead: 'Dónde funciona de verdad esa fuerza.' },
+      },
+    },
+    residue: {
+      title: 'Lo que quedó',
+      blurb: 'Qué dejó atrás algo que ya terminó.',
+      pos: {
+        was: { label: 'Lo que hubo', lead: 'Lo que de verdad hubo entonces.' },
+        left: { label: 'Lo que queda', lead: 'Lo que sigue dentro de ti.' },
+        learn: { label: 'Lo que enseñó', lead: 'Para qué sirvió todo esto.' },
+      },
+    },
+    priority: {
+      title: 'Qué importa',
+      blurb: 'Separa lo que te tira de lo que de verdad pesa.',
+      pos: {
+        pull: { label: 'Lo que te tira', lead: 'Lo que más ruido hace ahora.' },
+        real: { label: 'Lo que pesa', lead: 'Dónde está el peso real.' },
+        first: { label: 'Por dónde empezar', lead: 'Lo único que tocar primero.' },
       },
     },
   },

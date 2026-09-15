@@ -219,7 +219,7 @@ export default {
       pos: { answer: { label: '答え', lead: 'その答えの理由。' } },
     },
     love: {
-      title: '恋愛リーディング',
+      title: 'ふたりの関係',
       blurb: '関係を3枚で — あなた、相手、そして二人のあいだ。',
       examples: [
         '今、私はこの関係に何を持ち込んでいますか。',
@@ -233,7 +233,7 @@ export default {
       },
     },
     career: {
-      title: '仕事とお金',
+      title: '行き詰まりの原因',
       blurb: '今どこにいて、何が塞いでいて、何が前に進めるのか。',
       examples: [
         'この仕事を実際に止めているものは何ですか。',
@@ -259,6 +259,42 @@ export default {
         situation: { label: '今の状況', lead: '実際に目の前にあるもの。' },
         action:    { label: 'すべきこと',    lead: 'この状況が求めている動き。' },
         result:    { label: '行き着く先',    lead: 'その選択が連れていく場所。' },
+      },
+    },
+    hidden: {
+      title: '見えていなかったもの',
+      blurb: '目の前にあるものと、隠れていたものを分ける。',
+      pos: {
+        seen: { label: '見えているもの', lead: 'すでに分かっている側。' },
+        unseen: { label: '隠れているもの', lead: '視界の外にあった側。' },
+        know: { label: '知るべきこと', lead: 'それが見えたら変わること。' },
+      },
+    },
+    strength: {
+      title: 'あなたが持つもの',
+      blurb: '何が強みで、何が足りず、どこで活きるか。',
+      pos: {
+        have: { label: '持っている力', lead: 'すでにあなたの中にあるもの。' },
+        thin: { label: '足りないもの', lead: 'まだ育ちきっていない側。' },
+        use: { label: '活きる場所', lead: 'その力が実際に通じる場所。' },
+      },
+    },
+    residue: {
+      title: '残ったもの',
+      blurb: '終わったことが何を置いていったか。',
+      pos: {
+        was: { label: 'あの時あったもの', lead: 'その時間に実際にあったもの。' },
+        left: { label: '今も残るもの', lead: 'まだあなたの中に残っているもの。' },
+        learn: { label: 'ここから学ぶこと', lead: 'この出来事が教えたこと。' },
+      },
+    },
+    priority: {
+      title: '何が大事か',
+      blurb: '心が引かれるものと、実際に重いものを分ける。',
+      pos: {
+        pull: { label: '心が引かれるもの', lead: '今いちばん引っぱるもの。' },
+        real: { label: '本当に大事なもの', lead: '重みがかかっている側。' },
+        first: { label: '今やること', lead: 'まず手をつける一つ。' },
       },
     },
   },

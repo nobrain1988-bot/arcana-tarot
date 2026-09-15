@@ -219,7 +219,7 @@ export default {
       pos: { answer: { label: 'Cevap', lead: 'Bu cevabın arkasındaki sebep.' } },
     },
     love: {
-      title: 'Aşk açılımı',
+      title: 'İki kişi',
       blurb: 'Bir ilişki üzerine üç kart — sen, o ve aranızdaki.',
       examples: [
         'Şu anda bu ilişkiye ne katıyorum?',
@@ -233,7 +233,7 @@ export default {
       },
     },
     career: {
-      title: 'İş ve para',
+      title: 'Seni engelleyen şey',
       blurb: 'Nerede durduğun, seni ne tıkadığı ve neyin işi ilerlettiği.',
       examples: [
         'Bunu gerçekte ne engelliyor?',
@@ -259,6 +259,42 @@ export default {
         situation: { label: 'Durum', lead: 'Gerçekte önünüzde duran şey.' },
         action:    { label: 'Ne yapmalı',    lead: 'Bu durumun istediği hamle.' },
         result:    { label: 'Varacağı yer',    lead: 'Bu seçimin götürdüğü yer.' },
+      },
+    },
+    hidden: {
+      title: 'Göremediğiniz şey',
+      blurb: 'Önünüzdekini, gözden kaçanı ayırır.',
+      pos: {
+        seen: { label: 'Gördüğünüz', lead: 'Zaten bildiğiniz taraf.' },
+        unseen: { label: 'Gizli kalan', lead: 'Görüş alanınızın dışında kalan taraf.' },
+        know: { label: 'Bilmeniz gereken', lead: 'Bunu görünce değişecek olan.' },
+      },
+    },
+    strength: {
+      title: 'Elinizdekiler',
+      blurb: 'Neyin güçlü, neyin eksik olduğu ve nerede işe yaradığı.',
+      pos: {
+        have: { label: 'Gücünüz', lead: 'Zaten içinizde olan.' },
+        thin: { label: 'Eksik olan', lead: 'Henüz olgunlaşmamış taraf.' },
+        use: { label: 'Nerede işe yarar', lead: 'O gücün gerçekten geçtiği yer.' },
+      },
+    },
+    residue: {
+      title: 'Geriye kalan',
+      blurb: 'Biten bir şeyin ardında bıraktığı.',
+      pos: {
+        was: { label: 'O zaman olan', lead: 'O anda gerçekten var olan.' },
+        left: { label: 'Şimdi kalan', lead: 'Hâlâ içinizde duran.' },
+        learn: { label: 'Öğrettiği', lead: 'Bunun ne için olduğu.' },
+      },
+    },
+    priority: {
+      title: 'Ne önemli',
+      blurb: 'Sizi çekeni, gerçekten ağır basandan ayırır.',
+      pos: {
+        pull: { label: 'Sizi çeken', lead: 'Şu an en çok ses çıkaran.' },
+        real: { label: 'Asıl önemli olan', lead: 'Ağırlığın gerçekte durduğu yer.' },
+        first: { label: 'Nereden başlamalı', lead: 'Önce dokunulacak tek şey.' },
       },
     },
   },

@@ -188,7 +188,7 @@ export default {
       pos: { answer: { label: 'The answer', lead: 'The reason behind the answer.' } },
     },
     love: {
-      title: 'Love Reading',
+      title: 'Two People',
       blurb: 'Three cards on a relationship — yours, theirs, and what sits between you.',
       examples: [
         'What am I bringing into this right now?',
@@ -202,7 +202,7 @@ export default {
       },
     },
     career: {
-      title: 'Work & Money',
+      title: 'The Stuck Point',
       blurb: 'Where you stand, what is blocking you, and what moves it forward.',
       examples: [
         'What is actually blocking this?',
@@ -228,6 +228,42 @@ export default {
         situation: { label: 'The situation', lead: 'What is actually in front of you.' },
         action:    { label: 'What to do',    lead: 'The move this is asking for.' },
         result:    { label: 'Where it lands',    lead: 'Where that choice takes this.' },
+      },
+    },
+    hidden: {
+      title: 'What you could not see',
+      blurb: 'Separates what is in front of you from what is not.',
+      pos: {
+        seen: { label: 'What you see', lead: 'The part you already know about.' },
+        unseen: { label: 'What is hidden', lead: 'The part that stayed out of view.' },
+        know: { label: 'What to know', lead: 'What changes once you see it.' },
+      },
+    },
+    strength: {
+      title: 'What you have',
+      blurb: 'What is strong, what is thin, and where it belongs.',
+      pos: {
+        have: { label: 'Your strength', lead: 'What is already in you.' },
+        thin: { label: 'What is thin', lead: 'The part not grown in yet.' },
+        use: { label: 'Where it lands', lead: 'Where that strength actually works.' },
+      },
+    },
+    residue: {
+      title: 'What it left',
+      blurb: 'What a finished thing put down and walked away from.',
+      pos: {
+        was: { label: 'What it was', lead: 'What was actually there at the time.' },
+        left: { label: 'What remains', lead: 'What is still in you now.' },
+        learn: { label: 'What it taught', lead: 'What this was for.' },
+      },
+    },
+    priority: {
+      title: 'What matters',
+      blurb: 'Separates what pulls at you from what carries weight.',
+      pos: {
+        pull: { label: 'What pulls at you', lead: 'What is loudest right now.' },
+        real: { label: 'What actually matters', lead: 'Where the weight really sits.' },
+        first: { label: 'Where to start', lead: 'The one thing to touch first.' },
       },
     },
   },

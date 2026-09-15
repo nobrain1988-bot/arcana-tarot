@@ -221,7 +221,7 @@ export default {
       pos: { answer: { label: '답', lead: '그렇게 답한 이유.' } },
     },
     love: {
-      title: '연애 리딩',
+      title: '두 사람',
       blurb: '관계를 세 장으로 — 당신, 상대, 그리고 두 사람 사이.',
       examples: [
         '지금 나는 이 관계에 무엇을 보태고 있나요?',
@@ -235,7 +235,7 @@ export default {
       },
     },
     career: {
-      title: '일과 돈',
+      title: '막힌 곳 찾기',
       blurb: '지금 어디에 있고, 무엇이 막고 있으며, 무엇이 길을 여는가.',
       examples: [
         '이 일을 실제로 막고 있는 건 뭔가요?',
@@ -261,6 +261,42 @@ export default {
         situation: { label: '지금 상황', lead: '실제로 눈앞에 놓인 것.' },
         action:    { label: '해야 할 일',    lead: '이 상황이 요구하는 움직임.' },
         result:    { label: '그 결과',    lead: '그렇게 했을 때 닿는 곳.' },
+      },
+    },
+    hidden: {
+      title: '보이지 않던 것',
+      blurb: '눈앞에 있는 것과 가려진 것을 나눠 본다.',
+      pos: {
+        seen: { label: '보이는 것', lead: '당신이 이미 알고 있는 쪽.' },
+        unseen: { label: '가려진 것', lead: '시야에서 벗어나 있던 쪽.' },
+        know: { label: '알아야 할 것', lead: '이걸 알고 나면 달라지는 것.' },
+      },
+    },
+    strength: {
+      title: '내가 가진 것',
+      blurb: '무엇이 힘이고 무엇이 모자란지, 어디에 쓰이는지.',
+      pos: {
+        have: { label: '가진 힘', lead: '이미 당신 안에 있는 것.' },
+        thin: { label: '모자란 것', lead: '아직 여물지 않은 쪽.' },
+        use: { label: '쓰일 곳', lead: '그 힘이 실제로 통하는 자리.' },
+      },
+    },
+    residue: {
+      title: '남은 것',
+      blurb: '끝난 일이 무엇을 두고 갔는지 본다.',
+      pos: {
+        was: { label: '그때 있던 것', lead: '그 시간에 실제로 있었던 것.' },
+        left: { label: '지금 남은 것', lead: '아직 당신 안에 남아 있는 것.' },
+        learn: { label: '여기서 배울 것', lead: '이 일이 가르친 것.' },
+      },
+    },
+    priority: {
+      title: '무엇이 중요한가',
+      blurb: '마음이 쏠리는 것과 실제로 중요한 것을 가른다.',
+      pos: {
+        pull: { label: '마음이 쏠린 것', lead: '지금 당신을 가장 잡아끄는 것.' },
+        real: { label: '실제로 중요한 것', lead: '무게가 실려 있는 쪽.' },
+        first: { label: '지금 할 것', lead: '먼저 손대야 할 하나.' },
       },
     },
   },

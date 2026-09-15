@@ -219,7 +219,7 @@ export default {
       pos: { answer: { label: 'La réponse', lead: 'La raison derrière la réponse.' } },
     },
     love: {
-      title: 'Tirage amour',
+      title: 'Deux personnes',
       blurb: 'Trois cartes sur une relation — la vôtre, la sienne, et ce qui se trouve entre vous.',
       examples: [
         'Qu’est-ce que j’apporte à cette relation en ce moment ?',
@@ -233,7 +233,7 @@ export default {
       },
     },
     career: {
-      title: 'Travail et argent',
+      title: 'Le blocage',
       blurb: 'Où vous en êtes, ce qui bloque, et ce qui fait avancer les choses.',
       examples: [
         'Qu’est-ce qui bloque vraiment cela ?',
@@ -259,6 +259,42 @@ export default {
         situation: { label: 'La situation', lead: 'Ce qui se trouve réellement devant vous.' },
         action:    { label: 'Quoi faire',    lead: 'Le geste que cela demande.' },
         result:    { label: 'Où cela mène',    lead: 'Là où ce choix vous conduit.' },
+      },
+    },
+    hidden: {
+      title: 'Ce que vous ne voyiez pas',
+      blurb: 'Sépare ce qui est devant vous de ce qui vous échappe.',
+      pos: {
+        seen: { label: 'Ce que vous voyez', lead: 'La part que vous connaissez déjà.' },
+        unseen: { label: 'Ce qui est caché', lead: 'La part restée hors de votre champ.' },
+        know: { label: 'Ce qu’il faut savoir', lead: 'Ce qui change une fois que vous le voyez.' },
+      },
+    },
+    strength: {
+      title: 'Ce que vous avez',
+      blurb: 'Ce qui est solide, ce qui manque, et où cela sert.',
+      pos: {
+        have: { label: 'Votre force', lead: 'Ce qui est déjà en vous.' },
+        thin: { label: 'Ce qui manque', lead: 'La part qui n’a pas encore mûri.' },
+        use: { label: 'Où cela porte', lead: 'Là où cette force agit vraiment.' },
+      },
+    },
+    residue: {
+      title: 'Ce qui reste',
+      blurb: 'Ce qu’une chose terminée a laissé derrière elle.',
+      pos: {
+        was: { label: 'Ce qu’il y avait', lead: 'Ce qui était réellement là à l’époque.' },
+        left: { label: 'Ce qui reste aujourd’hui', lead: 'Ce qui est encore en vous.' },
+        learn: { label: 'Ce que cela a appris', lead: 'À quoi tout cela a servi.' },
+      },
+    },
+    priority: {
+      title: 'Ce qui compte',
+      blurb: 'Sépare ce qui vous tire de ce qui pèse vraiment.',
+      pos: {
+        pull: { label: 'Ce qui vous tire', lead: 'Ce qui fait le plus de bruit en ce moment.' },
+        real: { label: 'Ce qui compte vraiment', lead: 'Là où le poids se trouve réellement.' },
+        first: { label: 'Par où commencer', lead: 'La seule chose à toucher en premier.' },
       },
     },
   },

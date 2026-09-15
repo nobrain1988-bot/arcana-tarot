@@ -219,7 +219,7 @@ export default {
       pos: { answer: { label: 'A resposta', lead: 'O motivo por trás da resposta.' } },
     },
     love: {
-      title: 'Tiragem do amor',
+      title: 'Duas pessoas',
       blurb: 'Três cartas sobre uma relação — a sua, a da outra pessoa e o que existe entre vocês.',
       examples: [
         'O que eu estou trazendo para isso agora?',
@@ -233,7 +233,7 @@ export default {
       },
     },
     career: {
-      title: 'Trabalho e dinheiro',
+      title: 'O bloqueio',
       blurb: 'Onde você está, o que está travando e o que faz andar.',
       examples: [
         'O que está realmente travando isso?',
@@ -259,6 +259,42 @@ export default {
         situation: { label: 'A situação', lead: 'O que está realmente na sua frente.' },
         action:    { label: 'O que fazer',    lead: 'O movimento que isso pede.' },
         result:    { label: 'Onde isso vai dar',    lead: 'Aonde essa escolha leva.' },
+      },
+    },
+    hidden: {
+      title: 'O que você não via',
+      blurb: 'Separa o que está à sua frente do que escapou.',
+      pos: {
+        seen: { label: 'O que você vê', lead: 'A parte que você já conhece.' },
+        unseen: { label: 'O que está escondido', lead: 'A parte que ficou fora do campo de visão.' },
+        know: { label: 'O que precisa saber', lead: 'O que muda depois que você vê.' },
+      },
+    },
+    strength: {
+      title: 'O que você tem',
+      blurb: 'O que é forte, o que falta e onde isso serve.',
+      pos: {
+        have: { label: 'Sua força', lead: 'O que já está em você.' },
+        thin: { label: 'O que falta', lead: 'A parte que ainda não amadureceu.' },
+        use: { label: 'Onde isso serve', lead: 'Onde essa força funciona de verdade.' },
+      },
+    },
+    residue: {
+      title: 'O que ficou',
+      blurb: 'O que uma coisa encerrada deixou para trás.',
+      pos: {
+        was: { label: 'O que houve', lead: 'O que realmente havia ali.' },
+        left: { label: 'O que restou', lead: 'O que ainda está em você.' },
+        learn: { label: 'O que ensinou', lead: 'Para que isso serviu.' },
+      },
+    },
+    priority: {
+      title: 'O que importa',
+      blurb: 'Separa o que te puxa do que realmente pesa.',
+      pos: {
+        pull: { label: 'O que te puxa', lead: 'O que grita mais alto agora.' },
+        real: { label: 'O que pesa', lead: 'Onde está o peso de verdade.' },
+        first: { label: 'Por onde começar', lead: 'A única coisa a tocar primeiro.' },
       },
     },
   },

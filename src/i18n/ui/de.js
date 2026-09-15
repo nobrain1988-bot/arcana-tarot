@@ -219,7 +219,7 @@ export default {
       pos: { answer: { label: 'Die Antwort', lead: 'Der Grund hinter der Antwort.' } },
     },
     love: {
-      title: 'Liebeslegung',
+      title: 'Zwei Menschen',
       blurb: 'Drei Karten zu einer Beziehung – deine, seine oder ihre, und was zwischen euch liegt.',
       examples: [
         'Was bringe ich gerade in diese Beziehung ein?',
@@ -233,7 +233,7 @@ export default {
       },
     },
     career: {
-      title: 'Arbeit und Geld',
+      title: 'Was dich aufhält',
       blurb: 'Wo du stehst, was blockiert, und was es wirklich voranbringt.',
       examples: [
         'Was blockiert das wirklich?',
@@ -259,6 +259,42 @@ export default {
         situation: { label: 'Die Lage', lead: 'Was wirklich vor dir liegt.' },
         action:    { label: 'Was zu tun ist',    lead: 'Der Schritt, den das verlangt.' },
         result:    { label: 'Wohin es führt',    lead: 'Wohin diese Entscheidung führt.' },
+      },
+    },
+    hidden: {
+      title: 'Was du nicht gesehen hast',
+      blurb: 'Trennt das Offensichtliche von dem, was verdeckt blieb.',
+      pos: {
+        seen: { label: 'Was du siehst', lead: 'Der Teil, den du schon kennst.' },
+        unseen: { label: 'Was verdeckt ist', lead: 'Der Teil, der außerhalb deines Blicks blieb.' },
+        know: { label: 'Was du wissen solltest', lead: 'Was sich ändert, sobald du es siehst.' },
+      },
+    },
+    strength: {
+      title: 'Was du hast',
+      blurb: 'Was stark ist, was fehlt und wo es hingehört.',
+      pos: {
+        have: { label: 'Deine Stärke', lead: 'Was schon in dir steckt.' },
+        thin: { label: 'Was fehlt', lead: 'Der Teil, der noch nicht gewachsen ist.' },
+        use: { label: 'Wo es greift', lead: 'Wo diese Stärke wirklich wirkt.' },
+      },
+    },
+    residue: {
+      title: 'Was geblieben ist',
+      blurb: 'Was eine abgeschlossene Sache zurückgelassen hat.',
+      pos: {
+        was: { label: 'Was damals war', lead: 'Was zu der Zeit wirklich da war.' },
+        left: { label: 'Was jetzt bleibt', lead: 'Was immer noch in dir ist.' },
+        learn: { label: 'Was es gelehrt hat', lead: 'Wozu das Ganze gut war.' },
+      },
+    },
+    priority: {
+      title: 'Was zählt',
+      blurb: 'Trennt das, was an dir zieht, von dem, was Gewicht hat.',
+      pos: {
+        pull: { label: 'Was an dir zieht', lead: 'Was gerade am lautesten ist.' },
+        real: { label: 'Was wirklich zählt', lead: 'Wo das Gewicht tatsächlich liegt.' },
+        first: { label: 'Womit anfangen', lead: 'Das eine, das zuerst dran ist.' },
       },
     },
   },
