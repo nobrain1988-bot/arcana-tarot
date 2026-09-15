@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 // cardById 는 기록 화면이 쓴다 — 저장된 id 로 카드를 되찾는다
 import { draw, cardById, todayKey } from './lib/deck.js'
-import { SPREADS, SPREAD_LIST, ASKS_QUESTION, spreadText } from './lib/spreads.js'
+import { SPREADS, spreadText } from './lib/spreads.js'
 import { CATEGORIES, CAT_EMOJI, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
 import { initAds, showBanner, showInterstitialBeforeResult } from './lib/ads.js'
@@ -14,7 +14,7 @@ import ChooseCards from './components/ChooseCards.jsx'
 import Ambience from './components/Ambience.jsx'
 import Intro from './components/Intro.jsx'
 import Settings from './components/Settings.jsx'
-import { IconCards, IconMoonList, IconBack, IconSpread } from './components/icons.jsx'
+import { IconCards, IconMoonList, IconBack } from './components/icons.jsx'
 
 // 출시 후 실제 스토어 주소로 바꾼다. 공유 문구 끝에 붙는다.
 const STORE_URL = 'https://play.google.com/store/apps/details?id=com.obok.arcana'
@@ -166,12 +166,12 @@ function ReadingsView({ reversals }) {
   const t = useText()
   const [spread, setSpread] = useState(null)
   const [question, setQuestion] = useState('')
-  const [phase, setPhase] = useState('pick')   // pick | ask | shuffling | choosing | result
+  const [phase, setPhase] = useState('pick')   // pick | shuffling | choosing | result
   const [drawn, setDrawn] = useState(null)
-  // 고르는 화면의 두 가지 모드.
-  //   topics  — 주제별 질문 목록 (기본). 국내 앱들이 쓰는 방식이고 처음 온 사람이 고를 수 있다.
-  //   spreads — 스프레드를 직접 고르고 질문을 직접 쓴다. 타로를 아는 사람용.
-  //   today   — 오늘의 카드 (목록 맨 위 줄에서 들어온다)
+  // 고르는 화면의 두 모드.
+  //   topics — 주제별 질문 목록. 이 앱의 유일한 입구다.
+  //   today  — 오늘의 카드 (목록 맨 위 줄에서 들어온다)
+  // 예전에는 spreads(스프레드를 직접 고르고 질문을 타이핑) 가 하나 더 있었는데 뺐다.
   const [mode, setMode] = useState('topics')
   const [cat, setCat] = useState(CATEGORIES[0])
 
@@ -203,12 +203,6 @@ function ReadingsView({ reversals }) {
     setDrawn(list)
     setPhase('result')
   }, [spread, reversals])
-
-  const start = (s) => {
-    setSpread(s)
-    if (ASKS_QUESTION.has(s.id)) setPhase('ask')
-    else runDraw(s)
-  }
 
   // 주제를 고른 경우 — 질문은 이미 정해졌으니 질문칸을 건너뛰고 바로 섞는다.
   // 고른 질문은 결과 화면 위에 그대로 보여서 무엇을 물었는지 남는다.
@@ -288,93 +282,19 @@ function ReadingsView({ reversals }) {
               )
             })}
           </div>
-
-          <button className="btn ghost" style={{ marginTop: 6 }} onClick={() => setMode('spreads')}>
-            {ui.read.ownQuestion}
-          </button>
         </div>
       )
     }
 
-    // 스프레드를 직접 고르는 화면 — 타로를 아는 사람용. 질문도 직접 쓴다.
-    return (
-      <div className="screen">
-        <button className="link row" onClick={() => setMode('topics')} style={{ marginBottom: 14 }}>
-          <IconBack /> {ui.common.back}
-        </button>
-        <div className="eyebrow">{ui.read.eyebrow}</div>
-        <h1 style={{ marginBottom: 6 }}>{ui.read.title}</h1>
-        <p className="small muted" style={{ margin: '0 0 20px' }}>{ui.read.blurb}</p>
-        {/* 오늘의 카드는 Today 탭이 담당하므로 목록에서 뺀다 */}
-        {SPREAD_LIST.filter((s) => s.id !== 'daily').map((s) => {
-          const st = spreadText(ui, s)
-          return (
-            <button key={s.id} className="tile" onClick={() => start(s)}>
-              <span className="t-icon" style={{ color: 'var(--ink)' }}><IconSpread n={s.count} /></span>
-              <span style={{ minWidth: 0 }}>
-                <span className="t-title">{st.title}</span>
-                <span className="t-sub" style={{ display: 'block' }}>{st.blurb}</span>
-              </span>
-            </button>
-          )
-        })}
-      </div>
-    )
-  }
-
-  if (phase === 'ask') {
-    const yesno = spread.id === 'yesno'
-    const examples = (ui.spreads?.[spread.id]?.examples) || []
-    return (
-      <div className="screen">
-        <button className="link row" onClick={reset} style={{ marginBottom: 14 }}>
-          <IconBack /> {ui.common.back}
-        </button>
-        <div className="eyebrow">{spreadText(ui, spread).title}</div>
-        <h1 style={{ marginBottom: 6 }}>{yesno ? ui.read.askTitle : ui.read.focusTitle}</h1>
-        <p className="small muted" style={{ margin: '0 0 16px' }}>
-          {yesno ? ui.read.askBlurb : ui.read.focusBlurb}
-        </p>
-        <textarea
-          className="field" rows={3} maxLength={200} value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder={yesno ? ui.read.askPlaceholder : ui.read.focusPlaceholder}
-        />
-
-        {/* 질문 던지는 법 안내.
-            해외 타로 교육(Biddy Tarot·Labyrinthos)이 공통으로 가장 강조하는 것이
-            "언제/~될까요" 가 아니라 "무엇을/어떻게" 로 물으라는 것이다.
-            닫힌 질문에서는 짐작밖에 안 나온다.
-
-            설명만 적어두면 아무도 안 읽는다. 눌러서 바로 입력되는 예시가 훨씬 잘 가르치고,
-            빈 입력칸 앞에서 뭘 쓸지 몰라 이탈하는 것도 같이 막는다. */}
-        <p className="small muted" style={{ margin: '10px 2px 0' }}>
-          {yesno ? ui.read.askTip : ui.read.focusTip}
-        </p>
-
-        {examples.length > 0 && (
-          <>
-            <div className="eyebrow" style={{ margin: '18px 0 8px' }}>{ui.read.tryAsking}</div>
-            <div className="q-examples">
-              {examples.map((q, i) => (
-                <button key={i} type="button" className="q-example" onClick={() => setQuestion(q)}>
-                  {q}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-
-        <div style={{ height: 18 }} />
-        <button className="btn" onClick={() => runDraw(spread)}>{ui.read.draw}</button>
-        {/* 실제 타로는 고민을 '머릿속으로' 떠올릴 뿐 적지 않는다.
-            비워둬도 뽑히지만, 입력칸만 있으면 써야 하는 줄 알고 여기서 이탈한다. */}
-        <button className="link center" style={{ display: 'block', margin: '14px auto 0' }}
-                onClick={() => { setQuestion(''); runDraw(spread) }}>
-          {ui.read.skip}
-        </button>
-      </div>
-    )
+    // 주제별 질문 목록이 유일한 입구다. 예전에는 여기 아래에 '직접 물어보기' 가 있어서
+    // 스프레드를 직접 고르고 질문을 타이핑하는 화면으로 갈 수 있었는데, 그걸 뺐다.
+    //
+    // 왜 뺐나: 그 화면은 타로를 아는 사람의 언어였다. '과거·현재·미래' 와 '상황·행동·결과'
+    // 중에 뭘 고를지는 타로를 배운 사람만 판단할 수 있다. 처음 온 사람에게는 고를 근거가
+    // 없는 두 이름일 뿐이라, 거기서 멈추거나 아무거나 누르고 엉뚱한 자리의 답을 받는다.
+    // 질문 36개는 이미 그 사람이 궁금해할 만한 것을 덮고 있고, 질문마다 맞는 자리가
+    // 붙어 있다. 입구가 둘이면 좋은 쪽이 희석된다.
+    return null
   }
 
   if (phase === 'shuffling') {
