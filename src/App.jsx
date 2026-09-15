@@ -4,7 +4,7 @@ import { draw, cardById, todayKey } from './lib/deck.js'
 import { SPREADS, SPREAD_LIST, ASKS_QUESTION, spreadText } from './lib/spreads.js'
 import { CATEGORIES, CAT_EMOJI, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
-import { initAds, showInterstitialBeforeResult } from './lib/ads.js'
+import { initAds, showBanner, showInterstitialBeforeResult } from './lib/ads.js'
 import * as ambient from './lib/ambient.js'
 import * as store from './lib/storage.js'
 import { useLang } from './i18n/context.jsx'
@@ -521,6 +521,13 @@ export default function App() {
   const [dataVersion, setDataVersion] = useState(0)
 
   useEffect(() => { initAds() }, [])
+
+  // 배너는 시작 화면이 완전히 걷힌 뒤에 띄운다.
+  // 시작 화면 맨 아래가 '들어가기' 자리라, 거기 배너가 깔리면 누르기가 애매해진다.
+  // 걷히는 도중(leaving)이 아니라 다 걷힌 뒤(in)에 켜야 연출 중에 툭 끼어들지 않는다.
+  useEffect(() => {
+    if (phase === 'in') showBanner()
+  }, [phase])
 
   // 배경음은 **시작 화면부터** 켠다. 문을 열고 들어가는 순간이 이 화면인데
   // 그때 아무 소리도 안 나면 분위기의 절반이 빈다.

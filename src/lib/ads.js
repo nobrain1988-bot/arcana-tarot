@@ -60,7 +60,13 @@ async function admob() {
   return mod
 }
 
-// 앱 시작 시 1회: 초기화 → 하단 배너 → 첫 전면광고 미리 로드
+// 앱 시작 시 1회: 초기화 + 첫 전면광고 미리 로드.
+//
+// **배너는 여기서 띄우지 않는다.** 시작 화면(리더와 촛불)은 화면을 꽉 채우는 그림이고,
+// 맨 아래에 '들어가기' 글자가 있다. 거기에 배너가 깔리면 두 가지가 한꺼번에 망가진다 —
+// 누르려는 버튼을 가려서 입장이 어려워지고, '타로 보러 들어가는 순간'을 만들려고
+// 지은 화면에 광고가 끼어들어 분위기가 깨진다.
+// 배너는 App 이 들어간 뒤에 showBanner() 로 켠다.
 export async function initAds() {
   if (!isNative() || started) return
   started = true
@@ -68,7 +74,6 @@ export async function initAds() {
     const { AdMob } = await admob()
     await AdMob.initialize({})
     await wireBannerHeight()
-    await showBanner()
     prepareInterstitial()
   } catch (e) { /* 광고 실패가 앱 동작을 막으면 안 된다 */ }
 }
