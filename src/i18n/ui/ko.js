@@ -126,6 +126,16 @@ export default {
 
     loveGo: '이 사람과 계속 가도 될까요?',
 
+    loveNeed: '우리 사이에 지금 필요한 건 뭔가요?',
+
+    loveMiss: '내가 이 관계에서 놓치고 있는 건?',
+
+    loveClash: '요즘 왜 자꾸 어긋날까요?',
+
+    loveHonest: '솔직하게 말해도 괜찮을까요?',
+
+    loveLast: '우리, 오래 갈 수 있을까요?',
+
     crushApproach: '먼저 다가가도 괜찮을까요?',
 
     crushHeart: '이 마음, 어떻게 해야 하나요?',
@@ -133,6 +143,16 @@ export default {
     crushAgain: '우리 다시 만날 수 있을까요?',
 
     crushLearn: '이 인연이 나에게 남긴 것은?',
+
+    crushThink: '그 사람도 나를 생각하고 있을까요?',
+
+    crushConfess: '고백하면 어떻게 될까요?',
+
+    crushLetGo: '이제 그만 놓아줘야 할까요?',
+
+    crushSilence: '왜 연락이 없는 걸까요?',
+
+    crushSettle: '이 마음을 정리하려면 뭘 해야 하나요?',
 
     workBlock: '지금 이 일, 뭐가 막고 있나요?',
 
@@ -142,13 +162,35 @@ export default {
 
     workAhead: '이번 일은 어떻게 풀릴까요?',
 
+    workTalent: '나는 무엇을 잘하는 사람인가요?',
+
+    workStay: '지금 자리에 더 머물러야 할까요?',
+
+    workPeople: '그 사람과의 관계, 어떻게 봐야 하나요?',
+
+    workExam: '시험·면접, 뭘 보완해야 하나요?',
+
+    workLearn: '지금 배우는 것이 나에게 맞나요?',
+
     lifeMoney: '돈 문제, 뭐부터 풀어야 하나요?',
 
     lifeChoice: '이 선택, 해도 될까요?',
 
-    lifeAdvice: '오늘 나에게 필요한 한마디는?',
-
     lifeFlow: '요즘 내 흐름은 어떤가요?',
+
+    lifeSpend: '이 지출, 해도 괜찮을까요?',
+
+    lifeImportant: '지금 나에게 가장 중요한 건 뭔가요?',
+
+    lifeMove: '이사·이동을 하면 어떻게 될까요?',
+
+    lifeSave: '왜 자꾸 돈이 안 모일까요?',
+
+    lifeStart: '새로 시작하려는 이것, 어떻게 될까요?',
+
+    lifeHold: '내가 놓지 못하고 있는 건 뭔가요?',
+
+    lifeAdvice: '오늘 나에게 필요한 한마디는?',
 
   },
 

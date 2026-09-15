@@ -124,6 +124,16 @@ export default {
 
     loveGo: 'Soll ich mit dieser Person weitermachen?',
 
+    loveNeed: 'Was braucht unsere Beziehung jetzt?',
+
+    loveMiss: 'Was übersehe ich dabei?',
+
+    loveClash: 'Warum reden wir gerade aneinander vorbei?',
+
+    loveHonest: 'Soll ich es offen ansprechen?',
+
+    loveLast: 'Hält das auf Dauer?',
+
     crushApproach: 'Soll ich den ersten Schritt machen?',
 
     crushHeart: 'Wohin mit diesen Gefühlen?',
@@ -131,6 +141,16 @@ export default {
     crushAgain: 'Gibt es einen Weg zurück?',
 
     crushLearn: 'Was ist mir davon geblieben?',
+
+    crushThink: 'Denkt die Person überhaupt an mich?',
+
+    crushConfess: 'Was passiert, wenn ich es sage?',
+
+    crushLetGo: 'Ist es Zeit loszulassen?',
+
+    crushSilence: 'Warum kommt nichts mehr zurück?',
+
+    crushSettle: 'Wie sortiere ich das in meinem Kopf?',
 
     workBlock: 'Was blockiert meine Arbeit?',
 
@@ -140,13 +160,35 @@ export default {
 
     workAhead: 'Wie geht das aus?',
 
+    workTalent: 'Worin bin ich wirklich gut?',
+
+    workStay: 'Soll ich bleiben, wo ich bin?',
+
+    workPeople: 'Wie deute ich diese Person im Job?',
+
+    workExam: 'Was soll ich vor der Prüfung festigen?',
+
+    workLearn: 'Lerne ich gerade das Richtige?',
+
     lifeMoney: 'Wo fange ich beim Geld an?',
 
     lifeChoice: 'Soll ich es wagen?',
 
-    lifeAdvice: 'Was brauche ich heute zu hören?',
-
     lifeFlow: 'Wie läuft es gerade für mich?',
+
+    lifeSpend: 'Lohnt sich diese Ausgabe?',
+
+    lifeImportant: 'Was zählt für mich gerade am meisten?',
+
+    lifeMove: 'Was passiert, wenn ich umziehe?',
+
+    lifeSave: 'Warum bleibt nie etwas übrig?',
+
+    lifeStart: 'Wie läuft das Neue, das ich anfange?',
+
+    lifeHold: 'Woran halte ich fest?',
+
+    lifeAdvice: 'Was brauche ich heute zu hören?',
 
   },
 

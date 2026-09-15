@@ -124,6 +124,16 @@ export default {
 
     loveGo: 'Bu kişiyle devam edeyim mi?',
 
+    loveNeed: 'Şu an ilişkimizin neye ihtiyacı var?',
+
+    loveMiss: 'Burada neyi göremiyorum?',
+
+    loveClash: 'Neden sürekli ters düşüyoruz?',
+
+    loveHonest: 'Açık açık söyleyeyim mi?',
+
+    loveLast: 'Bunun geleceği var mı?',
+
     crushApproach: 'İlk adımı ben mi atayım?',
 
     crushHeart: 'Bu duygularla ne yapmalıyım?',
@@ -131,6 +141,16 @@ export default {
     crushAgain: 'Bize dönüş var mı?',
 
     crushLearn: 'Bu bana ne bıraktı?',
+
+    crushThink: 'O da beni düşünüyor mu?',
+
+    crushConfess: 'İtiraf edersem ne olur?',
+
+    crushLetGo: 'Artık bırakmanın zamanı mı?',
+
+    crushSilence: 'Neden sessizliğe büründü?',
+
+    crushSettle: 'Bu duyguları nasıl toparlarım?',
 
     workBlock: 'İşimi ne engelliyor?',
 
@@ -140,13 +160,35 @@ export default {
 
     workAhead: 'Bu iş nasıl sonuçlanacak?',
 
+    workTalent: 'Gerçekte neyde iyiyim?',
+
+    workStay: 'Bulunduğum yerde kalayım mı?',
+
+    workPeople: 'İşteki bu kişiyi nasıl okumalıyım?',
+
+    workExam: 'Sınav öncesi neyi güçlendirmeliyim?',
+
+    workLearn: 'Doğru şeyi mi öğreniyorum?',
+
     lifeMoney: 'Paraya nereden başlamalıyım?',
 
     lifeChoice: 'Atılayım mı, atılmayayım mı?',
 
-    lifeAdvice: 'Bugün neyi duymam gerek?',
-
     lifeFlow: 'Şu sıralar işler nasıl gidiyor?',
+
+    lifeSpend: 'Bu harcamaya değer mi?',
+
+    lifeImportant: 'Şu an benim için en önemlisi ne?',
+
+    lifeMove: 'Taşınırsam ne olur?',
+
+    lifeSave: 'Para neden hiç birikmiyor?',
+
+    lifeStart: 'Başlayacağım bu iş nasıl gider?',
+
+    lifeHold: 'Neyi bırakamıyorum?',
+
+    lifeAdvice: 'Bugün neyi duymam gerek?',
 
   },
 

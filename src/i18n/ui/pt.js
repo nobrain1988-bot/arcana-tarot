@@ -124,6 +124,16 @@ export default {
 
     loveGo: 'Continuo com essa pessoa?',
 
+    loveNeed: 'O que a gente precisa agora?',
+
+    loveMiss: 'O que eu não estou enxergando?',
+
+    loveClash: 'Por que a gente vive se desencontrando?',
+
+    loveHonest: 'Falo isso abertamente?',
+
+    loveLast: 'Isso tem futuro mesmo?',
+
     crushApproach: 'Dou o primeiro passo?',
 
     crushHeart: 'O que faço com o que sinto?',
@@ -131,6 +141,16 @@ export default {
     crushAgain: 'Existe volta para nós dois?',
 
     crushLearn: 'O que isso me deixou?',
+
+    crushThink: 'Será que pensa em mim?',
+
+    crushConfess: 'O que acontece se eu me declarar?',
+
+    crushLetGo: 'Já é hora de soltar?',
+
+    crushSilence: 'Por que sumiu assim?',
+
+    crushSettle: 'Como eu organizo o que sinto?',
 
     workBlock: 'O que está travando meu trabalho?',
 
@@ -140,13 +160,35 @@ export default {
 
     workAhead: 'Como isso vai acabar?',
 
+    workTalent: 'No que eu sou bom de verdade?',
+
+    workStay: 'Fico onde estou?',
+
+    workPeople: 'Como eu leio essa pessoa no trabalho?',
+
+    workExam: 'O que reforçar antes da prova?',
+
+    workLearn: 'É isso que eu deveria estar estudando?',
+
     lifeMoney: 'Por onde começo com dinheiro?',
 
     lifeChoice: 'Vou nessa ou não?',
 
-    lifeAdvice: 'O que eu preciso ouvir hoje?',
-
     lifeFlow: 'Como está minha fase agora?',
+
+    lifeSpend: 'Vale a pena esse gasto?',
+
+    lifeImportant: 'O que é mais importante agora?',
+
+    lifeMove: 'O que acontece se eu me mudar?',
+
+    lifeSave: 'Por que o dinheiro nunca sobra?',
+
+    lifeStart: 'Como vai ser essa coisa nova?',
+
+    lifeHold: 'Do que eu não estou conseguindo soltar?',
+
+    lifeAdvice: 'O que eu preciso ouvir hoje?',
 
   },
 

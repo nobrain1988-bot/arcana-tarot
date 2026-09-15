@@ -124,6 +124,16 @@ export default {
 
     loveGo: 'この人と続けていい？',
 
+    loveNeed: '今、二人に必要なものは？',
+
+    loveMiss: '私が見えていないことは？',
+
+    loveClash: '最近すれ違うのはなぜ？',
+
+    loveHonest: '正直に言ってもいい？',
+
+    loveLast: 'この関係、長く続く？',
+
     crushApproach: '私から動いてもいい？',
 
     crushHeart: 'この気持ち、どうすれば？',
@@ -131,6 +141,16 @@ export default {
     crushAgain: 'もう一度会える？',
 
     crushLearn: 'この縁が残したものは？',
+
+    crushThink: 'あの人も私を思ってる？',
+
+    crushConfess: '告白したらどうなる？',
+
+    crushLetGo: 'もう手放すとき？',
+
+    crushSilence: 'なぜ連絡が来ないの？',
+
+    crushSettle: 'この気持ちを整理するには？',
 
     workBlock: '今の仕事、何が詰まってる？',
 
@@ -140,13 +160,35 @@ export default {
 
     workAhead: 'この件はどう転ぶ？',
 
+    workTalent: '私は何が得意な人？',
+
+    workStay: '今の場所に留まるべき？',
+
+    workPeople: '職場のあの人とはどう付き合う？',
+
+    workExam: '試験・面接、何を補えばいい？',
+
+    workLearn: '今学んでいることは私に合ってる？',
+
     lifeMoney: 'お金、何から手をつける？',
 
     lifeChoice: 'この選択、してもいい？',
 
-    lifeAdvice: '今日の私に必要な一言は？',
-
     lifeFlow: '最近の流れはどう？',
+
+    lifeSpend: 'この出費、していい？',
+
+    lifeImportant: '今の私に一番大事なものは？',
+
+    lifeMove: '引っ越したらどうなる？',
+
+    lifeSave: 'なぜお金が貯まらないの？',
+
+    lifeStart: '新しく始めるこれ、どうなる？',
+
+    lifeHold: '私が手放せずにいるものは？',
+
+    lifeAdvice: '今日の私に必要な一言は？',
 
   },
 

@@ -124,6 +124,16 @@ export default {
 
     loveGo: 'Est-ce que je continue avec cette personne ?',
 
+    loveNeed: 'De quoi notre relation a-t-elle besoin ?',
+
+    loveMiss: 'Qu’est-ce que je ne vois pas ?',
+
+    loveClash: 'Pourquoi on se rate en ce moment ?',
+
+    loveHonest: 'Est-ce que je le dis franchement ?',
+
+    loveLast: 'Est-ce que ça peut durer ?',
+
     crushApproach: 'Est-ce à moi de faire le premier pas ?',
 
     crushHeart: 'Que faire de ce que je ressens ?',
@@ -131,6 +141,16 @@ export default {
     crushAgain: 'Y a-t-il un retour possible ?',
 
     crushLearn: 'Que m’a laissé cette histoire ?',
+
+    crushThink: 'Pense-t-elle seulement à moi ?',
+
+    crushConfess: 'Que se passe-t-il si je me déclare ?',
+
+    crushLetGo: 'Est-il temps de lâcher ?',
+
+    crushSilence: 'Pourquoi ce silence ?',
+
+    crushSettle: 'Comment mettre de l’ordre dans tout ça ?',
 
     workBlock: 'Qu’est-ce qui bloque mon travail ?',
 
@@ -140,13 +160,35 @@ export default {
 
     workAhead: 'Comment cela va-t-il tourner ?',
 
+    workTalent: 'Dans quoi suis-je vraiment bon ?',
+
+    workStay: 'Est-ce que je reste où je suis ?',
+
+    workPeople: 'Comment comprendre cette personne au travail ?',
+
+    workExam: 'Que renforcer avant l’examen ?',
+
+    workLearn: 'Est-ce la bonne chose à apprendre ?',
+
     lifeMoney: 'Par où commencer côté argent ?',
 
     lifeChoice: 'Je me lance ou pas ?',
 
-    lifeAdvice: 'Qu’ai-je besoin d’entendre aujourd’hui ?',
-
     lifeFlow: 'Comment ça se présente en ce moment ?',
+
+    lifeSpend: 'Cette dépense en vaut-elle la peine ?',
+
+    lifeImportant: 'Qu’est-ce qui compte le plus pour moi ?',
+
+    lifeMove: 'Que se passe-t-il si je déménage ?',
+
+    lifeSave: 'Pourquoi l’argent ne reste jamais ?',
+
+    lifeStart: 'Comment va tourner ce que je commence ?',
+
+    lifeHold: 'À quoi je m’accroche ?',
+
+    lifeAdvice: 'Qu’ai-je besoin d’entendre aujourd’hui ?',
 
   },
 
