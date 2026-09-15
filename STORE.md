@@ -38,51 +38,55 @@ Draw your daily tarot card. 78-card readings in 9 languages. No sign-up.
 
 ## 3. 전체 설명 (Full description)
 
-제한 4000자 / 아래 원고 약 2,450자
+제한 4000자 / 아래 원고 약 2,300자
+
+> ⚠️ 2026-09-15 전면 교체. 이전 원고에는 앱에 없는 기능이 세 개 적혀 있었다 —
+> 삭제한 '카드 보관함' 탭, 직접 그린 벡터 그림(실제로는 1909년 라이더-웨이트
+> 카드 그림이다), 스프레드 5종(지금은 10종 + 질문 36개).
+> **스토어 설명은 앱이 바뀔 때마다 같이 고쳐야 한다.** 없는 기능을 적으면
+> 리뷰에서 바로 지적당하고 심사에서도 걸린다.
 
 ```
-Arcana is a complete tarot deck in your pocket — all 78 cards, drawn and read the traditional way.
+Arcana is a full tarot deck in your pocket — all 78 cards of the classic 1909 Rider-Waite-Smith deck, drawn and read the way a reader does it.
 
 No account. No subscription. No paywall in the middle of a reading.
+
+■ YOU PICK THE CARDS
+The deck shuffles, then spreads face down in front of you. You choose. Nothing is decided until your finger lands — the same as sitting across a table from a reader.
+
+■ ASK BY QUESTION, NOT BY SPREAD
+"Past, Present and Future" means nothing if you have never read tarot. So Arcana asks what you want to know, and picks the spread for you. 36 questions across four areas:
+
+• Love — where you stand, what they are thinking, what this needs
+• Crush & Exes — first moves, silence, letting go, what it left you
+• Work & Study — what is blocking you, what you are good at, what is coming
+• Money & Choices — what to untangle first, what actually matters
+
+The card positions are matched to the question. Ask what you are not seeing, and the cards land on What you see / What was hidden / What to know — not on Past, Present, Future.
 
 ■ ONE CARD, EVERY DAY
 Your Daily Card is fixed for the day. Draw it in the morning, come back at night, and it is still your card — not a new random one. A day deserves one answer, not endless re-rolls.
 
-■ FIVE CLASSIC SPREADS
-• Daily Card — one card for today
-• Past · Present · Future — the classic three-card spread
-• Yes or No — a single card and the reasoning behind it
-• Love Reading — You / The other / Between you
-• Work & Money — where you are / what is blocking / how it opens
-
 ■ READINGS THAT ARE CALCULATED, NOT INVENTED
 Most tarot apps pick a sentence at random. Arcana does not. Every reading is built from what was actually drawn: the card and its orientation, the position it landed in, how many Major Arcana appeared, how many cards are reversed, and the balance of the four elements across the spread. Yes-or-No answers come from the traditional polarity of each card, not a coin flip.
-
-The interpretations follow the Rider-Waite tradition — the meanings that tarot readers have used for over a century.
 
 ■ NINE LANGUAGES, FULLY TRANSLATED
 English, Spanish, Portuguese, Korean, Japanese, Russian, Turkish, French, German.
 
-Not just the buttons — every one of the 78 cards is translated in both upright and reversed meanings. Card names follow each language's own grammar. The app detects your phone's language on first launch, and you can change it any time.
+Not just the buttons — all 78 cards are written in each language, upright and reversed. Card names follow each language's own grammar. The app follows your phone's language on first launch, and you can change it any time.
 
-■ 78 CARDS, DRAWN BY HAND
-Every card is original vector artwork in deep indigo and gold. Nothing is a photograph, nothing is scraped. The whole deck weighs only a few hundred kilobytes.
+■ THE ROOM, NOT A TOOL
+Arcana opens on a reader's table by candlelight, with quiet generative music — chords that drift, a slow melody, starlight falling. No audio files, nothing streamed. You can turn it off with one tap.
 
 ■ YOUR JOURNAL
-Your last 60 readings are kept so you can look back. Your typed question is never saved.
-
-■ THE FULL LIBRARY
-Browse all 78 cards any time, filtered by suit — Major Arcana, Wands, Cups, Swords, Pentacles. Upright and reversed meanings for every one.
-
-■ SHARE
-Share a card as clean text for your story or your group chat. Only the card name and its keywords go out. Your question never does.
+Your last 60 readings are kept so you can look back. The question you typed is never saved.
 
 ■ PRIVACY BY DESIGN
-There is no server. There is no login. Your daily card, your journal, and your settings live on your phone and nowhere else. The question you type is never written to storage and never sent anywhere. You can erase everything from Settings at any time.
+There is no server. There is no login. Your daily card, your journal and your settings live on your phone and nowhere else. The question you type is never written to storage and never sent anywhere. You can erase everything from Settings at any time.
 
 Works offline. Readings need no connection.
 
-Arcana is made for reflection and entertainment. It is not a substitute for professional medical, legal, or financial advice.
+Arcana is made for reflection and entertainment. It is not a substitute for professional medical, legal or financial advice.
 ```
 
 ---
