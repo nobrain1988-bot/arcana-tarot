@@ -541,8 +541,23 @@ export default function App() {
   const { ui, lang } = useLang()
   // 앱을 켤 때마다 시작 화면을 거친다. 저장하지 않는 이유 —
   // 이건 '한 번 보고 마는 안내'가 아니라 매번 거치는 문이다. 들어가는 데 탭 한 번이면 된다.
-  const [entered, setEntered] = useState(false)
+  //
+  // 세 단계로 나눈 이유: 시작 화면이 걷히는 것과 앱이 다가오는 것이 **같이** 일어나야 한다.
+  // 시작 화면만 사라지게 하면 뒤에 멈춰 있던 화면이 툭 드러나서 컷이 튄다.
+  //   intro   — 시작 화면만 보인다
+  //   leaving — 시작 화면은 앞으로 밀려나며 흐려지고, 앱은 안쪽에서 다가온다 (겹치는 구간)
+  //   in      — 시작 화면을 걷어낸다
+  const [phase, setPhase] = useState('intro')
+  const entered = phase !== 'intro'
   const [sound, setSound] = useState(() => store.getSettings().sound !== false)
+
+  const enter = useCallback(() => {
+    setPhase((p) => (p === 'intro' ? 'leaving' : p))
+    // 브라우저는 사용자가 누르기 전에는 소리를 못 내게 막는다. 이 탭이 그 '한 번'이다.
+    if (store.getSettings().sound !== false) ambient.start()
+    // 나가는 연출(0.95초)이 끝난 뒤에 걷어낸다. 더 일찍 지우면 도중에 끊긴다.
+    setTimeout(() => setPhase('in'), 1000)
+  }, [])
   const [tab, setTab] = useState('today')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [reversals, setReversals] = useState(() => store.getSettings().reversals)
@@ -581,23 +596,25 @@ export default function App() {
                         <JournalView key="journal" reversals={reversals} refreshKey={dataVersion} />
 
   return (
-    <div className="app">
-      <Ambience />
-
-      {/* 시작 화면은 앱 위에 덮인다. 뒤쪽 화면은 이미 그려져 있어서
-          장막이 걷히는 순간 바로 준비된 상태로 나타난다. */}
-      {!entered && (
+    <>
+      {/* 시작 화면은 .app 바깥에 둔다. 안에 두면 들어올 때 .app 에 거는 애니메이션이
+          시작 화면에도 같이 걸려서 두 움직임이 겹쳐 버린다. 화면 전체를 덮는
+          position:fixed 라 밖에 있어도 보이는 자리는 똑같다. */}
+      {phase !== 'in' && (
         <Intro
+          leaving={phase === 'leaving'}
           sound={sound}
           onSound={changeSound}
-          onEnter={() => {
-            setEntered(true)
-            // 브라우저는 사용자가 누르기 전에는 소리를 못 내게 막는다.
-            // 이 탭이 그 '한 번'이라 여기서 켠다.
-            if (sound) ambient.start()
-          }}
+          onEnter={enter}
         />
       )}
+
+      {/* arriving 은 들어오는 동안에만 붙였다 뗀다.
+          .screen 같은 자식에 걸면 안 된다 — 탭을 바꿀 때마다 .screen 이 새로 마운트돼서
+          매번 이 무거운 연출(0.95초 + 흐림)이 다시 걸린다. .app 은 한 번 만들어지면
+          다시 안 만들어지므로 여기 걸어야 딱 한 번만 돈다. */}
+      <div className={`app${phase === 'leaving' ? ' arriving' : ''}`}>
+      <Ambience />
 
       {/* 톱니바퀴가 아니라 '지금 언어'를 띄운다.
           이 버튼의 실제 용도는 언어 변경이다. 그런데 톱니바퀴는 '설정'으로 읽히고,
@@ -629,6 +646,7 @@ export default function App() {
         onSound={changeSound}
         onClearData={clearData}
       />
-    </div>
+      </div>
+    </>
   )
 }

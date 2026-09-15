@@ -13,7 +13,7 @@
 // 그림은 화면을 꽉 채운다. 처음엔 아치 안에 넣었는데, 받은 그림이 인물만이 아니라
 // 촛불·카드·방까지 한 장면이라 액자에 가두면 그 분위기가 다 잘려나갔다.
 
-import { useState, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useLang } from '../i18n/context.jsx'
 
 const IMG = `${import.meta.env.BASE_URL}intro/reader.webp`
@@ -36,14 +36,16 @@ function IconSound({ on }) {
   )
 }
 
-export default function Intro({ onEnter, sound, onSound }) {
+// leaving 은 App 이 준다. 시작 화면이 걷히는 동안 앱도 같이 다가와야 하는데,
+// 그 두 동작이 한 박자로 맞으려면 시점을 한 곳에서 쥐고 있어야 한다.
+// 이 컴포넌트가 혼자 상태를 들고 있으면 앱은 아무것도 모른 채 가만히 있어서
+// 시작 화면만 사라지고 뒤 화면이 툭 드러나는, 컷이 튀는 느낌이 된다.
+export default function Intro({ onEnter, leaving, sound, onSound }) {
   const { ui } = useLang()
-  const [leaving, setLeaving] = useState(false)
 
   const go = useCallback(() => {
     if (leaving) return
-    setLeaving(true)
-    setTimeout(onEnter, 620)   // 장막이 걷히는 연출을 끝까지 보여주고 넘긴다
+    onEnter()
   }, [leaving, onEnter])
 
   return (
