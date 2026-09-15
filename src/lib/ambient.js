@@ -50,7 +50,10 @@ const SHIM_PEAK = 0.040
 // 0.85 로 올려 놓고 재 보니 파형 최고치가 0.432 — 쓸 수 있는 크기의 절반도
 // 안 쓰고 있었다. 리미터가 뒤를 받치고 있으므로 더 올린다. 이 값에서 최고치는
 // 0.63 쯤이고, 별빛과 화음이 겹치는 드문 순간에만 리미터가 살짝 눌러 준다.
-const MASTER = 1.25
+// 1.25 에서는 리미터가 자주 걸렸고, 그게 저음을 찌그러뜨렸다.
+// 리미터는 어쩌다 한 번 막아 주는 보험이어야지 상시로 일하면 안 된다.
+// 1.0 이어도 처음(0.5)보다 두 배다.
+const MASTER = 1.0
 
 // A 자연단음계를 계단으로 펴 둔다. 가락은 이 계단의 '칸 번호'로만 적는다.
 // 반음을 직접 적으면 손댈 때마다 음이 어긋난다.
@@ -254,7 +257,10 @@ function star(freq, peak, attack, decay, pan, at) {
   g.gain.exponentialRampToValueAtTime(peak, t + attack)
   g.gain.exponentialRampToValueAtTime(0.000001, t + decay)
 
-  const parts = [[1, 1], [2, 0.10], [3, 0.04]]
+  // 배음을 셋에서 둘로 줄였다. 별 30알 × 3 = 90개가 한꺼번에 울리면
+  // 폰 CPU 가 못 따라가서 소리가 끊기고, 그것도 "탁탁" 으로 들린다.
+  // 3배음은 원래도 0.04 라 거의 안 들렸다 — 빼도 소리가 달라지지 않는다.
+  const parts = [[1, 1], [2, 0.11]]
   const oscs = parts.map(([ratio, amt]) => {
     const o = ctx.createOscillator()
     o.type = 'sine'
@@ -283,7 +289,7 @@ function star(freq, peak, attack, decay, pan, at) {
 // 한 줄기 = 별 22~30알이 120~240ms 간격으로 위에서 아래로 흘러내린다.
 export function sparkle() {
   if (!running || !ctx || !shimBus) return
-  const n = 22 + Math.floor(Math.random() * 9)
+  const n = 16 + Math.floor(Math.random() * 7)   // 알 수를 줄여 CPU 부담을 덜었다
   const gap = 0.12 + Math.random() * 0.12
   const t0 = now() + 0.05
   const phase = Math.random() * Math.PI * 2
@@ -394,14 +400,20 @@ function build() {
     // 리미터는 그 순간에만 눌러 주므로, 평소 음량은 키우면서 찢어짐은 막는다.
     // 폰 스피커는 여유가 적어서 이게 특히 중요하다.
     const limiter = ctx.createDynamicsCompressor()
-    limiter.threshold.value = -3
-    limiter.knee.value = 3
-    limiter.ratio.value = 14
-    limiter.attack.value = 0.003
-    limiter.release.value = 0.22
+    // 처음엔 반응 속도를 3ms 로 뒀는데, 그게 "탁탁" 튀는 소리의 원인이었다.
+    // 패드의 가장 낮은 음이 110Hz 다 — 파동 하나가 9ms 다. 3ms 만에 눌러 버리면
+    // 파동이 끝나기도 전에 모양이 꺾여서 파형 자체가 깨진다. 그게 잡음으로 들린다.
+    // 저음을 다루는 리미터는 파동 몇 개는 지나가게 두고 눌러야 한다.
+    limiter.threshold.value = -2
+    limiter.knee.value = 10      // 갑자기 걸리지 않고 서서히
+    limiter.ratio.value = 6
+    limiter.attack.value = 0.02  // 20ms — 110Hz 파동 두 개쯤
+    limiter.release.value = 0.4
     master.connect(limiter).connect(ctx.destination)
 
-    const rev = makeReverb(3.2, 2.4)
+    // 3.2초짜리 울림은 폰에서 계산이 무겁다(합성곱 비용은 길이에 비례한다).
+    // 2초로 줄여도 '공간 안의 소리' 라는 느낌은 그대로다.
+    const rev = makeReverb(2.0, 2.2)
     const revOut = ctx.createGain()
     revOut.gain.value = 0.85
     rev.connect(revOut).connect(master)
