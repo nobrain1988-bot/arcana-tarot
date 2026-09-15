@@ -13,7 +13,7 @@ import ChooseCards from './components/ChooseCards.jsx'
 import Ambience from './components/Ambience.jsx'
 import Intro from './components/Intro.jsx'
 import Settings from './components/Settings.jsx'
-import { IconSun, IconCards, IconBook, IconMoonList, IconBack, IconSpread } from './components/icons.jsx'
+import { IconSun, IconCards, IconMoonList, IconBack, IconSpread } from './components/icons.jsx'
 
 // 출시 후 실제 스토어 주소로 바꾼다. 공유 문구 끝에 붙는다.
 const STORE_URL = 'https://play.google.com/store/apps/details?id=com.obok.arcana'
@@ -380,96 +380,6 @@ function ReadingsView({ reversals }) {
 }
 
 // ──────────────────────────────────────────────────────────────
-// 3) Library — 78장 사전. 스토어 검색 유입(ASO)에도 도움이 된다.
-// ──────────────────────────────────────────────────────────────
-function LibraryView() {
-  const { ui, cardName, cardFace } = useLang()
-  const [filter, setFilter] = useState('all')
-  const [open, setOpen] = useState(null)
-
-  const filters = [
-    { key: 'all', label: ui.lib.filterAll },
-    { key: 'major', label: ui.lib.filterMajor },
-    { key: 'wands', label: ui.engine.suits.wands.name },
-    { key: 'cups', label: ui.engine.suits.cups.name },
-    { key: 'swords', label: ui.engine.suits.swords.name },
-    { key: 'pentacles', label: ui.engine.suits.pentacles.name },
-  ]
-
-  const list = useMemo(() => DECK.filter((c) =>
-    filter === 'all' ? true : filter === 'major' ? c.arcana === 'major' : c.suit === filter), [filter])
-
-  const detail = open && {
-    name: cardName(open),
-    up: cardFace(open, false),
-    rev: cardFace(open, true),
-    sub: open.arcana === 'major'
-      ? `${ui.lib.majorArcana} · ${open.n}`
-      : `${ui.engine.suits[open.suit].name} — ${ui.engine.suits[open.suit].domain}`,
-  }
-
-  return (
-    <div className="screen">
-      <div className="eyebrow">{ui.lib.eyebrow}</div>
-      <h1 style={{ marginBottom: 14 }}>{ui.lib.title}</h1>
-
-      <div className="chips" style={{ marginBottom: 16 }}>
-        {filters.map((f) => (
-          <button key={f.key} className="chip" onClick={() => setFilter(f.key)}
-            style={{
-              border: 0, cursor: 'pointer', fontFamily: 'var(--sans)',
-              background: filter === f.key ? 'var(--ink)' : 'rgba(216,178,107,.1)',
-              color: filter === f.key ? '#241a05' : 'var(--ink)',
-              fontWeight: filter === f.key ? 700 : 400,
-            }}>
-            {f.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid">
-        {list.map((c) => (
-          <button key={c.id} className="grid-item" onClick={() => setOpen(c)}>
-            <div className="card-shell"><CardArt card={c} thumb showName={false} label={cardName(c)} /></div>
-            <div className="cap">{cardName(c)}</div>
-          </button>
-        ))}
-      </div>
-
-      {open && (
-        <div className="sheet-bg" onClick={() => setOpen(null)}>
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
-            <div className="sheet-grip" />
-            <div style={{ maxWidth: 150, margin: '0 auto 18px' }}>
-              <div className="card-shell"><CardArt card={open} label={detail.name} /></div>
-            </div>
-            <h2 className="center">{detail.name}</h2>
-            <p className="small muted center" style={{ margin: '4px 0 18px' }}>{detail.sub}</p>
-
-            <div className="panel">
-              <div className="eyebrow">{ui.common.upright}</div>
-              <div className="chips">
-                {String(detail.up.k).split(' · ').filter(Boolean).map((k) => <span className="chip" key={k}>{k}</span>)}
-              </div>
-              <p style={{ margin: 0 }}>{detail.up.t}</p>
-            </div>
-            <div className="panel">
-              <div className="eyebrow">{ui.common.reversed}</div>
-              <div className="chips">
-                {String(detail.rev.k).split(' · ').filter(Boolean).map((k) => <span className="chip" key={k}>{k}</span>)}
-              </div>
-              <p style={{ margin: 0 }}>{detail.rev.t}</p>
-            </div>
-
-            <button className="btn ghost" onClick={() => setOpen(null)}>{ui.common.close}</button>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ──────────────────────────────────────────────────────────────
 // 4) Journal — 내가 뽑은 기록 (이 기기 안에만 있다)
 // ──────────────────────────────────────────────────────────────
 function JournalView({ reversals, refreshKey }) {
@@ -530,10 +440,12 @@ function JournalView({ reversals, refreshKey }) {
 // ──────────────────────────────────────────────────────────────
 // 앱 껍데기 + 탭바
 // ──────────────────────────────────────────────────────────────
+// '카드'(78장 사전) 탭은 뺐다. 탭이 적을수록 처음 온 사람이 어디로 갈지 헤매지 않는다.
+// 사전은 스토어 검색(ASO)에 도움이 됐던 기능이라, 다시 넣고 싶으면
+// LibraryView 를 지운 커밋에서 되살리면 된다. 언어 팩의 tabs.library 문구도 남아 있다.
 const TABS = [
   { key: 'today',   Icon: IconSun,      label: (ui) => ui.tabs.today },
   { key: 'read',    Icon: IconCards,    label: (ui) => ui.tabs.readings },
-  { key: 'library', Icon: IconBook,     label: (ui) => ui.tabs.library },
   { key: 'journal', Icon: IconMoonList, label: (ui) => ui.tabs.journal },
 ]
 
@@ -555,8 +467,8 @@ export default function App() {
     setPhase((p) => (p === 'intro' ? 'leaving' : p))
     // 브라우저는 사용자가 누르기 전에는 소리를 못 내게 막는다. 이 탭이 그 '한 번'이다.
     if (store.getSettings().sound !== false) ambient.start()
-    // 나가는 연출(0.95초)이 끝난 뒤에 걷어낸다. 더 일찍 지우면 도중에 끊긴다.
-    setTimeout(() => setPhase('in'), 1000)
+    // 나가는 연출(1.5초)이 끝난 뒤에 걷어낸다. 더 일찍 지우면 도중에 끊긴다.
+    setTimeout(() => setPhase('in'), 1600)
   }, [])
   const [tab, setTab] = useState('today')
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -592,7 +504,6 @@ export default function App() {
   const screen =
     tab === 'today'   ? <TodayView key={`today-${dataVersion}`} reversals={reversals} /> :
     tab === 'read'    ? <ReadingsView key="read" reversals={reversals} /> :
-    tab === 'library' ? <LibraryView key="library" /> :
                         <JournalView key="journal" reversals={reversals} refreshKey={dataVersion} />
 
   return (

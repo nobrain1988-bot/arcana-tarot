@@ -43,7 +43,7 @@
 | 5 | Work & Money | 현재 / 막힌 것 / 뚫는 법 | 체류시간 |
 | 6 | **Share** | 카드명+키워드만 공유 (질문 내용은 절대 안 나감) | **바이럴** |
 | 7 | Journal | 뽑은 기록 최근 60개 (localStorage) | 재방문 |
-| 8 | Library | 78장 전체 사전 + 수트 필터 | ASO 키워드 |
+| 8 | ~~Library~~ | 78장 사전 — **탭에서 제거**(2026-09-15). 되살리려면 LibraryView 를 지운 커밋 참조 |
 | 9 | **9개 국어** | 폰 언어 자동 감지 + 설정에서 변경 | **글로벌 도달** |
 | 10 | 설정 | 언어 / 역방향 사용 여부 / 데이터 삭제 | 사용자 통제권 |
 
@@ -136,7 +136,7 @@ src/
     ResultView.jsx 결과 화면
     Settings.jsx   설정 시트 (언어·역방향·데이터)
     icons.jsx      탭바 아이콘
-  App.jsx        4개 탭 + 리딩 플로우
+  App.jsx        3개 탭(오늘·리딩·기록) + 리딩 플로우
   styles.css     다크 + 골드 디자인
 tools/
   check-i18n.mjs    번역 검사기 (npm run check:i18n)
