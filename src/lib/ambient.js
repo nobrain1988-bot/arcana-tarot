@@ -42,7 +42,7 @@ const MEL_PEAK = 0.17   // 가락 종 한 번
 const DEEP_PEAK = 0.11  // 아주 가끔 울리는 낮은 종
 // 별빛 한 알. 열두 개가 겹치므로 한 알은 작아야 하지만, 0.055 로 뒀더니
 // 패드보다 21dB 아래라 재 봐야 겨우 보이는 수준이었다. 들으라고 넣은 소리다.
-const SHIM_PEAK = 0.14
+const SHIM_PEAK = 0.075
 
 // 전체 음량. 0.5 로 뒀다가 "사운드를 높여 달라" 는 요청을 받았다.
 // 뒤에 리미터를 물려 뒀으므로 올려도 찢어지지 않는다.
@@ -235,19 +235,25 @@ function bell(freq, peak, decay) {
   osc.onended = () => { try { g.disconnect() } catch {} }
 }
 
-// ── 별빛 한 줄기 ────────────────────────────────────────────
-// 종(bell)과 따로 만드는 이유: 종은 '한 번 치고 길게 운다'이고
-// 이건 '짧게 여러 번을 쓸어내린다'라서 소리의 성격이 반대다.
-// 배음도 다르다 — 종은 옥타브(2배)를 얹지만, 쇠막대·관은 2.76배·5.4배처럼
-// 옥타브에 안 맞는 배음이 난다. 그 어긋남이 '금속이 반짝이는' 느낌을 만든다.
-function chime(freq, peak, decay, pan, at) {
+// ── 은하수 한 줄기 ──────────────────────────────────────────
+// 처음엔 윈드차임(마크트리)으로 만들었다 — 40ms 간격으로 쓸어내리는 '촤라랑'.
+// 그건 끊기는 소리라서 별이 쏟아지는 느낌이 아니었다.
+// 은하수는 끊기지 않는다. 그래서 셋을 반대로 바꿨다.
+//
+//   빠르기 — 알 간격을 40ms 에서 150ms 안팎으로. 한 줄기가 0.5초가 아니라 4초쯤 흐른다.
+//   맺힘   — 때리지 않고 부풀어 오르게 한다(0.05~0.12초). '땅' 이 아니라 '스…' 하고 맺힌다.
+//   배음   — 쇠막대 배음(2.76·5.4)을 뺐다. 그게 금속성을 만든다.
+//            옥타브와 12도만 아주 옅게 얹어 유리처럼 맑게 둔다.
+//
+// 꼬리가 3~6초라 알들이 서로 겹쳐 하나의 흐름이 된다 — 그게 '촤라라라라~' 다.
+function star(freq, peak, attack, decay, pan, at) {
   const t = at
   const g = ctx.createGain()
   g.gain.setValueAtTime(0.000001, t)
-  g.gain.exponentialRampToValueAtTime(peak, t + 0.008)   // 거의 즉시 — 쓸어내리는 소리라 붙어야 한다
+  g.gain.exponentialRampToValueAtTime(peak, t + attack)
   g.gain.exponentialRampToValueAtTime(0.000001, t + decay)
 
-  const parts = [[1, 1], [2.76, 0.16], [5.4, 0.05]]
+  const parts = [[1, 1], [2, 0.10], [3, 0.04]]
   const oscs = parts.map(([ratio, amt]) => {
     const o = ctx.createOscillator()
     o.type = 'sine'
@@ -256,50 +262,58 @@ function chime(freq, peak, decay, pan, at) {
     vg.gain.value = amt
     o.connect(vg).connect(g)
     o.start(t)
-    o.stop(t + decay + 0.3)
+    o.stop(t + decay + 0.4)
     return o
   })
 
   // 좌우로 흘려 보낸다. 한가운데서만 나면 '쏟아진다'가 아니라 '울린다'가 된다.
   let tail = g
   if (ctx.createStereoPanner) {
-    const p = ctx.createStereoPanner()
-    p.pan.value = Math.max(-1, Math.min(1, pan))
-    g.connect(p)
-    tail = p
+    const pn = ctx.createStereoPanner()
+    pn.pan.value = Math.max(-1, Math.min(1, pan))
+    g.connect(pn)
+    tail = pn
   }
   tail.connect(shimBus)
   tail.connect(shimWet)
   oscs[0].onended = () => { try { g.disconnect() } catch {} }
 }
 
-// 한 줄기 = 높은 음 9~14개를 40~80ms 간격으로 쏟는다.
-// 가운데가 제일 세고 양끝이 여린 모양이라 '촤르르를~' 하고 부풀었다 사라진다.
+// 한 줄기 = 별 22~30알이 120~240ms 간격으로 위에서 아래로 흘러내린다.
 export function sparkle() {
   if (!running || !ctx || !shimBus) return
-  const n = 9 + Math.floor(Math.random() * 6)
-  const up = Math.random() < 0.78                 // 대개 올라간다. 가끔 내려오면 덜 질린다
-  const room = SPARKLE.length - n
-  const from = Math.floor(Math.random() * (room + 1))
-  const gap = 0.028 + Math.random() * 0.028
-  const t0 = now() + 0.03
+  const n = 22 + Math.floor(Math.random() * 9)
+  const gap = 0.12 + Math.random() * 0.12
+  const t0 = now() + 0.05
+  const phase = Math.random() * Math.PI * 2
+
+  // 위에서 시작해 아래로 흐른다. 곧게 내려오면 음계 연습처럼 들리므로
+  // 다섯에 한 번쯤 거슬러 올라가게 둔다 — 그래야 '흐른다'가 된다.
+  let ix = SPARKLE.length - 1 - Math.floor(Math.random() * 3)
+
   for (let i = 0; i < n; i++) {
-    const semi = SPARKLE[up ? from + i : from + n - 1 - i]
+    const semi = SPARKLE[Math.max(0, Math.min(SPARKLE.length - 1, ix))]
     const f = hz(semi)
-    // 가운데가 부풀어 오르는 모양
-    const shape = 0.55 + 0.45 * Math.sin((Math.PI * i) / (n - 1))
-    // 높은 음일수록 빨리 사라진다 — 실제 쇠막대가 그렇다
-    const decay = Math.max(1.1, Math.min(3.2, 3.0 * Math.pow(620 / f, 0.35)))
-    const pan = (up ? -0.55 : 0.55) + (up ? 1 : -1) * 1.1 * (i / (n - 1))
-    chime(f, SHIM_PEAK * shape, decay, pan, t0 + i * gap)
+    // 가운데가 가장 굵고 양끝이 스러진다 — 몰려왔다 빠져나가는 모양
+    const shape = 0.35 + 0.65 * Math.sin((Math.PI * i) / (n - 1))
+    // 높은 별일수록 빨리 사라진다. 낮은 쪽이 오래 남아 바닥을 만든다.
+    const decay = Math.max(2.2, Math.min(6, 5.5 * Math.pow(620 / f, 0.28)))
+    const attack = 0.05 + Math.random() * 0.07
+    // 좌우로 천천히 쓸고 지나간다(알마다 튀지 않게 부드러운 곡선으로)
+    const pan = 0.62 * Math.sin((i / (n - 1)) * Math.PI * 1.6 + phase)
+    star(f, SHIM_PEAK * shape, attack, decay, pan, t0 + i * gap)
+
+    ix += Math.random() < 0.8 ? -(1 + (Math.random() < 0.3 ? 1 : 0)) : 1
+    // 바닥까지 내려오면 다시 위쪽 어딘가에서 이어 흐른다
+    if (ix < 0) ix = Math.floor(SPARKLE.length * (0.55 + Math.random() * 0.45))
   }
 }
 
 function scheduleSparkle() {
   if (!running) return
   sparkle()
-  // 11~24초에 한 번. 자주 나오면 특별하지 않고, 뜸하면 있는 줄도 모른다.
-  later(scheduleSparkle, 11000 + Math.random() * 13000)
+  // 16~34초에 한 번. 한 줄기가 4초쯤 흐르므로 앞보다 사이를 띄웠다.
+  later(scheduleSparkle, 16000 + Math.random() * 18000)
 }
 
 // 악구 하나를 친다 — 네 음을 천천히, 그러고 나서 한참 쉰다.

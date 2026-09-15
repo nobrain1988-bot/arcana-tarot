@@ -104,6 +104,23 @@ export function setSettings(patch) {
   return next
 }
 
+// ── 한 번만 도는 손질 ─────────────────────────────────────────
+// 시작 화면의 스피커 버튼에 버그가 있었다. 브라우저가 소리를 막아서
+// '켜져 있는데 조용한' 상태일 때 그 버튼을 누르면, 소리가 켜지는 게 아니라
+// 꺼진 채로 저장됐다. 누른 사람 입장에서는 "소리를 켜려고" 누른 건데
+// 정반대로 저장된 것이다. 그러고 나면 그 기기는 계속 조용하다 —
+// 앱을 아무리 고쳐도 저장된 '꺼짐'이 이기기 때문에 증상이 안 사라진다.
+//
+// 본인이 끈 게 아니라 버그로 꺼진 것이므로 딱 한 번 되돌린다.
+// 표시를 남겨 두므로, 이 뒤로 직접 끈 것은 그대로 지킨다.
+const SOUND_FIX = 2
+try {
+  const s = read(K.settings, null)
+  if (s && typeof s === 'object' && s.soundFix !== SOUND_FIX) {
+    write(K.settings, { ...s, sound: true, soundFix: SOUND_FIX })
+  }
+} catch { /* localStorage 를 못 쓰는 환경 — 어차피 기본값이 '켜짐'이다 */ }
+
 // 설정창의 '저장된 것 전부 지우기' — 설정(언어)은 남긴다.
 // 언어까지 초기화하면 사용자가 방금 고른 언어가 풀려서 화면이 갑자기 영어로 바뀐다.
 export function clearUserData() {
