@@ -4,6 +4,7 @@ import { SPREADS, SPREAD_LIST, ASKS_QUESTION, spreadText } from './lib/spreads.j
 import { CATEGORIES, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
 import { initAds, showInterstitialBeforeResult } from './lib/ads.js'
+import * as ambient from './lib/ambient.js'
 import * as store from './lib/storage.js'
 import { useLang } from './i18n/context.jsx'
 import { CardArt, CardBack } from './components/CardArt.jsx'
@@ -541,6 +542,7 @@ export default function App() {
   // 앱을 켤 때마다 시작 화면을 거친다. 저장하지 않는 이유 —
   // 이건 '한 번 보고 마는 안내'가 아니라 매번 거치는 문이다. 들어가는 데 탭 한 번이면 된다.
   const [entered, setEntered] = useState(false)
+  const [sound, setSound] = useState(() => store.getSettings().sound !== false)
   const [tab, setTab] = useState('today')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [reversals, setReversals] = useState(() => store.getSettings().reversals)
@@ -551,6 +553,25 @@ export default function App() {
 
   const changeReversals = (v) => { setReversals(v); store.setSettings({ reversals: v }) }
   const clearData = () => { store.clearUserData(); setDataVersion((n) => n + 1); setSettingsOpen(false) }
+
+  const changeSound = (v) => {
+    setSound(v)
+    store.setSettings({ sound: v })
+    // 시작 화면에서 끄는 경우엔 아직 안 켜져 있으니 start 는 들어갈 때 판단한다.
+    if (!v) ambient.stop()
+    else if (entered) ambient.start()
+  }
+
+  // 앱을 벗어나면 배경음을 멈춘다. 다른 앱을 쓰는데 뒤에서 계속 울리면 안 된다.
+  // 돌아오면 설정이 켜져 있고 이미 들어와 있을 때만 다시 켠다.
+  useEffect(() => {
+    const off = ambient.bindVisibility()
+    const back = () => {
+      if (!document.hidden && sound && entered) ambient.start()
+    }
+    document.addEventListener('visibilitychange', back)
+    return () => { off(); document.removeEventListener('visibilitychange', back) }
+  }, [sound, entered])
 
   // key 를 바꿔 탭 전환 시 화면이 새로 마운트되게 한다(진입 애니메이션 + 상태 초기화)
   const screen =
@@ -565,7 +586,18 @@ export default function App() {
 
       {/* 시작 화면은 앱 위에 덮인다. 뒤쪽 화면은 이미 그려져 있어서
           장막이 걷히는 순간 바로 준비된 상태로 나타난다. */}
-      {!entered && <Intro onEnter={() => setEntered(true)} />}
+      {!entered && (
+        <Intro
+          sound={sound}
+          onSound={changeSound}
+          onEnter={() => {
+            setEntered(true)
+            // 브라우저는 사용자가 누르기 전에는 소리를 못 내게 막는다.
+            // 이 탭이 그 '한 번'이라 여기서 켠다.
+            if (sound) ambient.start()
+          }}
+        />
+      )}
 
       {/* 톱니바퀴가 아니라 '지금 언어'를 띄운다.
           이 버튼의 실제 용도는 언어 변경이다. 그런데 톱니바퀴는 '설정'으로 읽히고,
@@ -593,6 +625,8 @@ export default function App() {
         onClose={() => setSettingsOpen(false)}
         reversals={reversals}
         onReversals={changeReversals}
+        sound={sound}
+        onSound={changeSound}
         onClearData={clearData}
       />
     </div>

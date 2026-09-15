@@ -91,7 +91,7 @@ export const markSeen = () => write(K.seen, true)
 // ── 설정 ──────────────────────────────────────────────────────
 // lang 이 null 이면 '아직 고른 적 없음' = 폰 언어를 따라간다.
 // 사용자가 한 번이라도 직접 고르면 그 뒤로는 폰 언어가 바뀌어도 고른 값을 지킨다.
-const SETTINGS_DEFAULT = { lang: null, reversals: true }
+const SETTINGS_DEFAULT = { lang: null, reversals: true, sound: true }
 
 export function getSettings() {
   const s = read(K.settings, null)

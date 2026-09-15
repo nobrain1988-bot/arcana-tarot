@@ -24,7 +24,7 @@ function Row({ children, onClick, selected }) {
   )
 }
 
-export default function Settings({ open, onClose, reversals, onReversals, onClearData }) {
+export default function Settings({ open, onClose, reversals, onReversals, sound, onSound, onClearData }) {
   const { ui, lang, setLang } = useLang()
   if (!open) return null
 
@@ -77,6 +77,32 @@ export default function Settings({ open, onClose, reversals, onReversals, onClea
                 display: 'block', width: 24, height: 24, borderRadius: '50%',
                 background: reversals ? '#241a05' : 'var(--muted)',
                 transform: `translateX(${reversals ? 20 : 0}px)`,
+                transition: 'transform .18s ease',
+              }} />
+            </button>
+          </div>
+        </div>
+
+        {/* ── 배경음 ──
+            시작 화면에도 끄는 버튼이 있지만, 들어온 뒤에 거슬릴 수도 있으니 여기에도 둔다. */}
+        <div className="panel">
+          <div className="between">
+            <div style={{ minWidth: 0 }}>
+              <div className="eyebrow" style={{ marginBottom: 6 }}>{ui.common.sound}</div>
+              <p className="small muted" style={{ margin: 0 }}>{ui.set.soundBlurb}</p>
+            </div>
+            <button
+              role="switch" aria-checked={sound} aria-label={ui.common.sound}
+              onClick={() => onSound(!sound)}
+              style={{
+                flex: '0 0 50px', width: 50, height: 30, borderRadius: 999, border: 0,
+                cursor: 'pointer', padding: 3, transition: 'background .18s ease',
+                background: sound ? 'var(--ink)' : 'var(--line)',
+              }}>
+              <span style={{
+                display: 'block', width: 24, height: 24, borderRadius: '50%',
+                background: sound ? '#241a05' : 'var(--muted)',
+                transform: `translateX(${sound ? 20 : 0}px)`,
                 transition: 'transform .18s ease',
               }} />
             </button>
