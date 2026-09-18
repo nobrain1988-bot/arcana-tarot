@@ -54,7 +54,8 @@ for (const topic of list) {
     }
     if (r.close) {
       line('─'.repeat(92))
-      line(`[${ui.result.together || 'together'}]`)
+      // 앱과 같은 규칙 — 한 장이면 '이 한 장을 읽으면', 여러 장이면 '세 장을 합치면'
+      line(`[${(r.cards.length === 1 ? ui.result.togetherOne : ui.result.together) || 'together'}]`)
       line('   ' + wrap(r.close).split('\n').join('\n   '))
     }
     if (r.summary.length) {

@@ -131,6 +131,10 @@ export function interpret(spread, drawn, ui, t, topicId = null) {
       keywords: String(f.k || '').split(' · ').filter(Boolean),
       text: f.t || '',
       lead: (topicLead && topicLead[pos.key]) || pos.lead,
+      // 이 lead 가 질문 전용인가. 화면이 한 장짜리(예/아니오)에서도 그 줄을 그릴지 정할 때 쓴다 —
+      // 스프레드 공용 lead("그렇게 답한 이유.")는 한 장에서 굳이 보일 이유가 없지만,
+      // 질문 전용 lead 는 그 한 장을 '이 질문의 답' 으로 읽게 하는 렌즈라 반드시 보여야 한다.
+      topicLead: !!(topicLead && topicLead[pos.key]),
       domain: suit ? `${suit.name} — ${suit.domain}` : null,
       polarity: polarity(d),
     }

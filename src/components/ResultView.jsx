@@ -60,7 +60,10 @@ function CardBlock({ c, showPosition, ui }) {
       <div className="chips">
         {c.keywords.map((k) => <span className="chip" key={k}>{k}</span>)}
       </div>
-      {showPosition && c.lead && (
+      {/* 자리 설명. 세 장짜리에서는 항상, 한 장짜리(예/아니오)에서는 질문 전용 문장일 때만.
+          전에는 showPosition 에만 묶여 있어서 예/아니오 결과에 질문 전용 문장이 있어도
+          한 줄도 안 보였다 — 열 개 질문의 답이 '판정 + 카드 본문' 뿐이라 질문과 겉돌았다. */}
+      {(showPosition || c.topicLead) && c.lead && (
         <p className="small" style={{ color: 'var(--ink)', margin: '0 0 8px' }}>{c.lead}</p>
       )}
       <p style={{ margin: 0 }}>{c.text}</p>
@@ -102,7 +105,8 @@ export default function ResultView({ reading, onShare, onAgain, reveal = false }
             패널이라 요약(셀 수 있는 값)보다 앞에 둔다. 주제별 질문에서 왔을 때만 있다. */}
         {reading.close && (
           <div className="panel">
-            <div className="eyebrow">{ui.result.together}</div>
+            {/* 한 장짜리(예/아니오)에 '세 장을 합치면' 이 찍히면 화면이 스스로를 의심하게 만든다 */}
+            <div className="eyebrow">{multi ? ui.result.together : ui.result.togetherOne}</div>
             <p style={{ margin: 0 }}>{reading.close}</p>
           </div>
         )}
