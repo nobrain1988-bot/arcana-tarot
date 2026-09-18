@@ -205,7 +205,6 @@ export default {
     healthWaitBaby: "Bebek sahibi olmaya çalışırken birbirimize nasıl yakın kalırız?",
     healthExpecting: "Hamileyken asıl önemli olan ne?",
     healthBirth: "Doğuma giderken içimde zaten var olan güç ne?",
-    healthLoss: "Bebeğimi kaybettikten sonra içimde ne kalıyor?",
   },
 
 
@@ -404,7 +403,6 @@ export default {
     healthWaitBaby: { you: "Söylemiş olun ya da olmayın, bu bekleyişe sizin taşıdığınız şey.", them: "Eşinizin aynı bekleyişteki tarafı — sizinkiyle örtüşmeyebilir.", between: "Bekleyişin aranızdaki bağa yaptığı şey." },
     healthExpecting: { pull: "Bebek yoldayken kafanızda en yüksek sesle konuşan şey.", real: "Hamileyken gerçekten ağırlık taşıyan şey.", first: "Bebek gelmeden önce ilk gözetilecek tek şey." },
     healthBirth: { have: "Doğuma girerken zaten içinizde taşıdığınız güç.", thin: "Doğum yaklaşırken hâlâ eksik kaldığınız taraf.", use: "Doğum geldiğinde o gücün sizi gerçekten tutacağı yer." },
-    healthLoss: { was: "Bebekle geçen o zamanı dolduran şey.", left: "O zamandan bugün hâlâ içinizde duran şey.", learn: "Bu çocuğu sevmenin size öğrettiği." },
   },
 
   // ── 질문별 마무리 한 줄 — 세 장이 이 질문에 어떻게 하나의 답이 되는지, 어느 장을 오래 볼지 ──
@@ -458,7 +456,6 @@ export default {
     healthWaitBaby: "İlk kart bu bekleyişteki siz, ikincisi aynı bekleyişteki eşiniz, üçüncüsü bekleyişin ikinize yaptığı şey. En uzun üçüncüde durun — nasıl yakın kalırız diye sordunuz ve yakınlık ya orada korunuyor ya da sessizce harcanıyor.",
     healthExpecting: "İlk kart hamileyken en gürültülü olan, ikincisi gerçekten ağırlık taşıyan, üçüncüsü önce gözetilecek tek şey. En uzun ikincisinde durun — bu aylarda çok şey gürültü çıkarır ve sesi yüksek olanı ağır olandan ayırmanın yolu o kartta.",
     healthBirth: "İlk kart doğuma girerken zaten sahip olduğunuz güç, ikincisi hâlâ eksik kaldığınız taraf, üçüncüsü doğum geldiğinde o gücün sizi tutacağı yer. En uzun ilk kartta durun — sorduğunuzun cevabı o ve zaten içinizde; ikincisi yalnızca o gün yaklaşırken kendinize nerede yumuşak davranacağınızı gösterir.",
-    healthLoss: "Sırayla okununca üç kart bebekle geçen o zamanın neyle dolu olduğunu, ondan neyin hâlâ içinizde olduğunu ve bu çocuğu sevmenin size ne öğrettiğini söyler — bir araya gelince kalan şey budur. En uzun ikincisinde durun: içinizde ne kalıyor diye sordunuz, cevap orada; üçüncüsü ise kaybın değil, sevginin bıraktığıdır.",
   },
 
   // Sayı kartlarında iyelik eki kullanılır: "Değnek Ası", "Kupa Kraliçesi"

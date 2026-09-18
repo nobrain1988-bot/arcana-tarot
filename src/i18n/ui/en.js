@@ -175,7 +175,6 @@ export default {
     healthWaitBaby: "How do we stay close while trying for a baby?",
     healthExpecting: "What matters most while I'm expecting?",
     healthBirth: "What strength do I already have going into the birth?",
-    healthLoss: "After losing the baby, what stays with me?",
   },
 
   spreads: {
@@ -378,7 +377,6 @@ export default {
     healthWaitBaby: { you: "What you are carrying into this wait for a baby, said or not.", them: "Your partner's side of the wait for a baby, which may not match yours.", between: "What the waiting is doing to the space between you." },
     healthExpecting: { pull: "What is loudest in your head with a baby on the way.", real: "What actually carries weight while you are expecting.", first: "The one thing to look after first before the baby comes." },
     healthBirth: { have: "The strength you are already carrying into the birth.", thin: "What you are still short on as the birth gets close.", use: "Where that strength will actually hold you when the birth comes." },
-    healthLoss: { was: "What that time with the baby was made of.", left: "What from that time with the baby is still in you now.", learn: "What loving this child taught you." },
   },
 
   // ── 질문별 마무리 한 줄 — 세 장이 이 질문에 어떻게 하나의 답이 되는지, 어느 장을 오래 볼지 ──
@@ -432,7 +430,6 @@ export default {
     healthWaitBaby: "The first card is you in this wait for a baby, the second is your partner in the same wait, and the third is what the waiting is doing to the two of you. Stay longest with the third — you asked how to stay close, and that is where closeness is either being kept or quietly spent.",
     healthExpecting: "The first card is what is loudest while you are expecting, the second is what actually carries weight, and the third is the one thing to look after first. Stay longest with the second — plenty gets loud in these months, and that card is how you tell loud from heavy.",
     healthBirth: "The first card is the strength you already have going into the birth, the second is what you are still short on, and the third is where that strength will hold you when the birth comes. Stay longest with the first — that is the answer to what you asked, and it is already in you; the second only shows you where to go easy on yourself as the day gets close.",
-    healthLoss: "Read in order, the three cards say what that time with the baby was made of, what from it is still in you, and what loving this child taught you — put together, that is what stays. Sit longest with the second: you asked what stays with you, and the answer is there; the third is about the love, not the loss.",
   },
 
   // ── 분류 아래 안내 한 줄. 지금은 건강 분류에만 있다 — 진단이 아니라 들여다보는 자리라는 것. ──

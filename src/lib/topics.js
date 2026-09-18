@@ -113,7 +113,6 @@ export const TOPICS = [
   { id: 'healthWaitBaby', cat: 'health', spread: 'love', card: 'p07' },  // B. 임신 ① 준비·기다림. 임신 준비 초안 4벌 중 A PregnancyReady·C ConceivePrep 은 priori
   { id: 'healthExpecting', cat: 'health', spread: 'priority', card: 'm03' },  // B. 임신 ② 임신 중. 심사 1·2 모두 '임신 중' 질문 3벌 중 유일하게 안전한 스프레드로 꼽음 — A Pregnancy
   { id: 'healthBirth', cat: 'health', spread: 'strength', card: 'm19' },  // 임신 ③ 출산 앞둔 마음. 출산 질문 3벌 중 C 는 outcome 이라 result 라벨 '그 결과' 가 출산 결과 예측이 
-  { id: 'healthLoss', cat: 'health', spread: 'residue', card: 'c05' },  // 임신 ④ 상실. 상실 질문 3벌 중 C AfterLoss 는 '떠나보낸 뒤' 만으로는 crushLearn 과 구분이 안 되고 
 ]
 
 export const topicsIn = (cat) => (cat === 'all' ? TOPICS : TOPICS.filter((t) => t.cat === cat))

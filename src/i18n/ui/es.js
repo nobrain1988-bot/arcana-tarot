@@ -205,7 +205,6 @@ export default {
     healthWaitBaby: "¿Cómo seguimos unidos mientras buscamos un bebé?",
     healthExpecting: "¿Qué es lo que más importa durante mi embarazo?",
     healthBirth: "¿Con qué fuerza cuento ya para el parto?",
-    healthLoss: "¿Qué se queda conmigo después de perder al bebé?",
   },
 
 
@@ -403,7 +402,6 @@ export default {
     healthWaitBaby: { you: "Lo que traes tú a esta espera del bebé, lo digas o no.", them: "El lado de tu pareja en esta espera, que puede no ser el tuyo.", between: "Lo que la espera le está haciendo al espacio entre los dos." },
     healthExpecting: { pull: "Lo que más ruido hace en tu cabeza con un bebé en camino.", real: "Lo que pesa de verdad mientras esperas al bebé.", first: "Lo único que cuidar primero antes de que llegue el bebé." },
     healthBirth: { have: "La fuerza que ya llevas contigo de cara al parto.", thin: "Lo que aún te falta mientras el parto se acerca.", use: "Dónde te va a sostener de verdad esa fuerza cuando llegue el parto." },
-    healthLoss: { was: "De qué estaba hecho ese tiempo con el bebé.", left: "Lo que de ese tiempo con el bebé sigue en ti ahora.", learn: "Lo que te enseñó haber querido a ese bebé." },
   },
 
   // ── 질문별 마무리 한 줄 — 세 장이 이 질문에 어떻게 하나의 답이 되는지, 어느 장을 오래 볼지 ──
@@ -457,7 +455,6 @@ export default {
     healthWaitBaby: "La primera carta eres tú en esta espera del bebé, la segunda tu pareja en la misma espera y la tercera lo que la espera les está haciendo a los dos. Quédate más con la tercera: preguntaste cómo seguir unidos, y ahí es donde la cercanía se está cuidando o se está gastando sin que se note.",
     healthExpecting: "La primera carta es lo que más ruido hace durante el embarazo, la segunda lo que pesa de verdad y la tercera lo único que cuidar primero. Quédate más con la segunda: en estos meses muchas cosas hacen ruido, y esa carta es cómo distinguir lo ruidoso de lo que pesa.",
     healthBirth: "La primera carta es la fuerza con la que ya cuentas para el parto, la segunda lo que aún te falta y la tercera dónde te va a sostener esa fuerza cuando llegue el momento. Quédate más con la primera: es la respuesta a lo que preguntaste y ya está en ti; la segunda solo te enseña dónde tratarte con más suavidad a medida que se acerca el día.",
-    healthLoss: "Leídas en orden, las tres cartas dicen de qué estaba hecho ese tiempo con el bebé, qué de ello sigue en ti y qué te enseñó quererlo; juntas, eso es lo que se queda. Quédate más con la segunda: preguntaste qué se queda contigo, y la respuesta está ahí; la tercera habla del amor, no de la pérdida.",
   },
 
   ranks: {

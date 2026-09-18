@@ -205,7 +205,6 @@ export default {
     healthWaitBaby: "Wie bleiben wir uns nah, während wir auf ein Kind hoffen?",
     healthExpecting: "Was zählt in der Schwangerschaft wirklich?",
     healthBirth: "Welche Kraft habe ich für die Geburt schon in mir?",
-    healthLoss: "Was bleibt in mir, nachdem ich mein Kind verloren habe?",
   },
 
 
@@ -403,7 +402,6 @@ export default {
     healthWaitBaby: { you: "Was du in dieses Warten auf ein Kind mitbringst, ausgesprochen oder nicht.", them: "Wie der Mensch an deiner Seite dasselbe Warten erlebt, vielleicht anders als du.", between: "Was das Warten mit dem Raum zwischen euch macht." },
     healthExpecting: { pull: "Was in deinem Kopf am lautesten ist, jetzt, wo ein Kind unterwegs ist.", real: "Was in der Schwangerschaft tatsächlich Gewicht hat.", first: "Das eine, worum du dich kümmerst, bevor das Kind kommt." },
     healthBirth: { have: "Die Kraft, die du schon in die Geburt mitbringst.", thin: "Was dir noch fehlt, während die Geburt näher rückt.", use: "Wo diese Kraft dich bei der Geburt wirklich hält." },
-    healthLoss: { was: "Woraus diese Zeit mit dem Kind gemacht war.", left: "Was von dieser Zeit mit dem Kind jetzt noch in dir ist.", learn: "Was es dich gelehrt hat, dieses Kind zu lieben." },
   },
 
   // ── 질문별 마무리 한 줄 — 세 장이 이 질문에 어떻게 하나의 답이 되는지, 어느 장을 오래 볼지 ──
@@ -457,7 +455,6 @@ export default {
     healthWaitBaby: "Die erste Karte bist du in diesem Warten auf ein Kind, die zweite der Mensch an deiner Seite im selben Warten, die dritte, was das Warten mit euch beiden macht. Bleib am längsten bei der dritten – du hast gefragt, wie ihr euch nah bleibt, und genau dort wird Nähe entweder bewahrt oder still aufgebraucht.",
     healthExpecting: "Die erste Karte ist, was in der Schwangerschaft am lautesten ist, die zweite, was wirklich Gewicht hat, die dritte das eine, um das du dich zuerst kümmerst. Bleib am längsten bei der zweiten – in diesen Monaten wird vieles laut, und diese Karte ist dein Maßstab dafür, was nur laut ist und was wirklich Gewicht hat.",
     healthBirth: "Die erste Karte ist die Kraft, die du schon für die Geburt hast, die zweite, was dir noch fehlt, die dritte, wo diese Kraft dich hält, wenn es losgeht. Bleib am längsten bei der ersten – das ist die Antwort auf deine Frage, und sie steckt schon in dir; die zweite zeigt nur, wo du bis zu dem Tag nachsichtig mit dir sein darfst.",
-    healthLoss: "Der Reihe nach sagen die drei Karten, woraus diese Zeit mit dem Kind gemacht war, was davon noch in dir ist und was es dich gelehrt hat, dieses Kind zu lieben – zusammen ist das, was bleibt. Bleib am längsten bei der zweiten: Du hast gefragt, was in dir bleibt, und dort steht die Antwort; die dritte handelt von der Liebe, nicht vom Verlust.",
   },
 
   ranks: {

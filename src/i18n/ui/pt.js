@@ -205,7 +205,6 @@ export default {
     healthWaitBaby: "Como a gente se mantém unido tentando um bebê?",
     healthExpecting: "O que importa mais agora que estou grávida?",
     healthBirth: "Que força eu já tenho para o parto?",
-    healthLoss: "Depois de perder o bebê, o que fica comigo?",
   },
 
 
@@ -403,7 +402,6 @@ export default {
     healthWaitBaby: { you: "O que você traz para essa espera pelo bebê, dito ou não.", them: "O lado de quem está com você nessa espera, que pode não bater com o seu.", between: "O que a espera está fazendo com o espaço entre vocês." },
     healthExpecting: { pull: "O que grita mais alto na sua cabeça com o bebê a caminho.", real: "O que tem peso de verdade enquanto você está grávida.", first: "A única coisa para cuidar primeiro, antes de o bebê chegar." },
     healthBirth: { have: "A força que você já leva para o parto.", thin: "O que ainda falta em você com o parto chegando.", use: "Onde essa força vai segurar você de verdade na hora do parto." },
-    healthLoss: { was: "Do que era feito o tempo que você teve com o bebê.", left: "O que daquele tempo com o bebê ainda está em você.", learn: "O que amar essa criança ensinou a você." },
   },
 
   // ── 질문별 마무리 한 줄 — 세 장이 이 질문에 어떻게 하나의 답이 되는지, 어느 장을 오래 볼지 ──
@@ -457,7 +455,6 @@ export default {
     healthWaitBaby: "A primeira carta é você nessa espera pelo bebê, a segunda é quem está com você na mesma espera, e a terceira é o que a espera está fazendo com vocês dois. Fique mais na terceira — você perguntou como se manter unidos, e é ali que a proximidade está sendo guardada ou gasta em silêncio.",
     healthExpecting: "A primeira carta é o que grita mais alto na gravidez, a segunda é o que tem peso de verdade, e a terceira é a única coisa para cuidar primeiro. Fique mais na segunda — muita coisa faz barulho nesses meses, e essa carta é como você separa o que é barulho do que é peso.",
     healthBirth: "A primeira carta é a força que você já tem para o parto, a segunda é o que ainda falta, e a terceira é onde essa força vai segurar você quando a hora chegar. Fique mais na primeira — é a resposta ao que você perguntou, e já está em você; a segunda só mostra onde pegar leve com você mesma conforme o dia se aproxima.",
-    healthLoss: "Lidas em ordem, as três cartas dizem do que era feito o tempo com o bebê, o que dele ainda está em você, e o que amar essa criança ensinou — juntas, é isso que fica. Demore mais na segunda: você perguntou o que fica com você, e a resposta está ali; a terceira é sobre o amor, não sobre a perda.",
   },
 
   ranks: {

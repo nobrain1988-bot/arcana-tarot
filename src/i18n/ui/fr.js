@@ -205,7 +205,6 @@ export default {
     healthWaitBaby: "Comment rester proches en espérant un enfant ?",
     healthExpecting: "Qu’est-ce qui compte le plus pendant ma grossesse ?",
     healthBirth: "Sur quelle force je peux déjà compter pour l’accouchement ?",
-    healthLoss: "Après la perte du bébé, qu’est-ce qui reste en moi ?",
   },
 
 
@@ -403,7 +402,6 @@ export default {
     healthWaitBaby: { you: "Ce que vous portez dans cette attente d’un enfant, dit ou non.", them: "Votre partenaire dans la même attente, pas forcément au même point que vous.", between: "Ce que l’attente fait à l’espace entre vous." },
     healthExpecting: { pull: "Ce qui fait le plus de bruit dans votre tête avec un bébé en route.", real: "Ce qui pèse vraiment pendant que vous attendez cet enfant.", first: "La seule chose dont prendre soin en premier avant l’arrivée du bébé." },
     healthBirth: { have: "La force que vous portez déjà en vous à l’approche de l’accouchement.", thin: "Ce qui vous manque encore alors que l’accouchement approche.", use: "Là où cette force vous tiendra vraiment quand l’accouchement viendra." },
-    healthLoss: { was: "Ce dont ce temps avec le bébé était fait.", left: "Ce qui, de ce temps avec le bébé, est encore en vous aujourd’hui.", learn: "Ce que vous avez appris en aimant cet enfant." },
   },
 
   // ── 질문별 마무리 한 줄 — 세 장이 이 질문에 어떻게 하나의 답이 되는지, 어느 장을 오래 볼지 ──
@@ -457,7 +455,6 @@ export default {
     healthWaitBaby: "La première carte, c’est vous dans cette attente d’un enfant ; la deuxième, votre partenaire dans la même attente ; la troisième, ce que l’attente fait de vous deux. Restez le plus longtemps sur la troisième — vous avez demandé comment rester proches, et c’est là que la proximité se garde ou s’use en silence.",
     healthExpecting: "La première carte, c’est ce qui fait le plus de bruit pendant la grossesse ; la deuxième, ce qui pèse vraiment ; la troisième, la seule chose dont prendre soin en premier. Restez le plus longtemps sur la deuxième — bien des choses font du bruit ces mois-ci, et cette carte est ce qui vous permet de distinguer le bruyant du lourd.",
     healthBirth: "La première carte, c’est la force que vous avez déjà pour l’accouchement ; la deuxième, ce qui vous manque encore ; la troisième, là où cette force vous tiendra le jour venu. Restez le plus longtemps sur la première — c’est la réponse à ce que vous avez demandé, et elle est déjà en vous ; la deuxième vous montre seulement où vous ménager à mesure que le jour approche.",
-    healthLoss: "Lues dans l’ordre, les trois cartes disent de quoi ce temps avec le bébé était fait, ce qui en est encore en vous, et ce qu’aimer cet enfant vous a appris — mis ensemble, c’est cela qui reste. Restez le plus longtemps sur la deuxième : vous avez demandé ce qui reste en vous, et la réponse est là ; la troisième parle de l’amour, pas de la perte.",
   },
 
   ranks: {
