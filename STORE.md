@@ -55,12 +55,13 @@ No account. No subscription. No paywall in the middle of a reading.
 The deck shuffles, then spreads face down in front of you. You choose. Nothing is decided until your finger lands — the same as sitting across a table from a reader.
 
 ■ ASK BY QUESTION, NOT BY SPREAD
-"Past, Present and Future" means nothing if you have never read tarot. So Arcana asks what you want to know, and picks the spread for you. 36 questions across four areas:
+"Past, Present and Future" means nothing if you have never read tarot. So Arcana asks what you want to know, and picks the spread for you. 50 questions across five areas:
 
 • Love — where you stand, what they are thinking, what this needs
 • Crush & Exes — first moves, silence, letting go, what it left you
 • Work & Study — what is blocking you, what you are good at, what is coming
 • Money & Choices — what to untangle first, what actually matters
+• Health — what your body is telling you, sleep, anxiety, habits, waiting for a baby, expecting, the birth ahead. For reflection, never diagnosis.
 
 The card positions are matched to the question. Ask what you are not seeing, and the cards land on What you see / What was hidden / What to know — not on Past, Present, Future.
 

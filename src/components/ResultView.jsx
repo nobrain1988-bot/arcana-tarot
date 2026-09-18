@@ -97,6 +97,16 @@ export default function ResultView({ reading, onShare, onAgain, reveal = false }
 
         {reading.cards.map((c, i) => <CardBlock key={i} c={c} showPosition={multi} ui={ui} />)}
 
+        {/* 마무리 — 이 질문에 세 장이 어떻게 하나의 답이 되는지.
+            카드 세 장을 따로 읽고 나면 "그래서 답이 뭔데" 가 남는다. 그 빈자리를 메우는
+            패널이라 요약(셀 수 있는 값)보다 앞에 둔다. 주제별 질문에서 왔을 때만 있다. */}
+        {reading.close && (
+          <div className="panel">
+            <div className="eyebrow">{ui.result.together}</div>
+            <p style={{ margin: 0 }}>{reading.close}</p>
+          </div>
+        )}
+
         {/* 전체 요약 — 전부 셀 수 있는 값(메이저 수·역방향 수·원소)에서 나온 문장이다 */}
         {reading.summary.length > 0 && (
           <div className="panel">

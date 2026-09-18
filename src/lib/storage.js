@@ -76,6 +76,9 @@ export function addJournal(entry) {
   list.unshift({
     at: Date.now(),
     spreadId: entry.spreadId,
+    // 어느 질문에서 왔는지(id 만). 사용자가 타이핑한 글이 아니라 목록의 질문이라 민감하지 않고,
+    // 나중에 기록을 다시 열 때 그 질문의 말로 자리 설명을 되살릴 수 있다.
+    topicId: entry.topicId || null,
     // 질문 원문은 저장하지 않는다 — 민감할 수 있고, 없어도 기록의 목적은 달성된다
     cards: entry.cards.map((c) => ({ id: c.card.id, reversed: c.reversed })),
   })

@@ -13,12 +13,14 @@
 // 9개 국어를 지원하므로 글자가 여기 섞이면 언어를 바꿔도 한국어가 남는다.
 
 // 분류 — 화면 위쪽 가로 스크롤 칩. 'all' 은 전부 보여준다.
-export const CATEGORIES = ['all', 'love', 'crush', 'work', 'life']
+export const CATEGORIES = ['all', 'love', 'crush', 'work', 'life', 'health']
 
 // 분류마다 붙는 그림문자. 언어와 무관하므로 코드에 둔다 — 9개 언어 파일에
 // 같은 이모지를 아홉 번 적어 넣을 이유가 없다.
+// 건강은 🌿 — 🩺 같은 의료 기호를 쓰면 '진단하는 앱' 으로 읽힌다. 이 분류는 몸과 마음을
+// 들여다보는 자리이지 병원이 아니다.
 export const CAT_EMOJI = {
-  all: '🔮', love: '💕', crush: '💔', work: '✏️', life: '🍀',
+  all: '🔮', love: '💕', crush: '💔', work: '✏️', life: '🍀', health: '🌿',
 }
 
 // 질문 하나 = 어떤 분류에 속하고, 어떤 스프레드로 뽑을 것인가.
@@ -94,6 +96,24 @@ export const TOPICS = [
   // '오늘 필요한 한마디'(lifeAdvice)는 뺐다. daily 스프레드를 쓰면 결과 머리말이
   // '오늘의 카드'로 나오는데, 그건 목록 맨 위 줄의 이름이다. 같은 이름 화면이
   // 두 개가 되고 한쪽은 매번 바뀌니 사용자가 헷갈린다. 언어 팩의 문구는 남겨뒀다.
+
+  // ── 건강: 몸과 마음 ────────────────────────────────────
+  // 진단이 아니라 들여다보는 자리다. 질문 문구가 진단·치료·임신 판정으로 읽히면 안 된다 —
+  // 앱은 의료 도구가 아니고, 스토어 정책에도 걸린다. 그래서 전부 마음·준비·주의할 점의 언어다.
+  { id: 'healthSignal', cat: 'health', spread: 'hidden', card: 'w09' },  // 세 초안 공통, 심사 1·2 모두 유지. '놓치고 있는 것' 질문이라 hidden(보이는/가려진/알 것)과 자리가 같다. ko
+  { id: 'healthBurnout', cat: 'health', spread: 'career', card: 'w10' },  // A healthTired 와 en 이 글자 그대로 같아 하나만(심사 1·2). id 는 뜻이 분명한 C 것, ko 는 C 의 
+  { id: 'healthSleep', cat: 'health', spread: 'career', card: 's09' },  // 심사가 갈린 항목 — 심사 1 은 A 의 outcome 판('잠을 되찾으려면 뭘 해야 하나요'), 심사 2 는 B 의 care
+  { id: 'healthAnxious', cat: 'health', spread: 'hidden', card: 's11' },  // B 에만 있던 세계 공통 웰빙 주제, 심사 1·2 모두 필수로 봄. 불안은 겉 이유와 밑 이유가 달라 hidden(보이는/가려
+  { id: 'healthRest', cat: 'health', spread: 'yesno', card: 'm12' },  // 세 초안 공통, 심사 1·2 모두 유지. 건강 분류의 유일한 yesno — '습관·시도' 층위까지만 허용되는 판정의 대표. 문
+  { id: 'healthHabit', cat: 'health', spread: 'outcome', card: 'p12' },  // A·B 의 yesno 판을 버리고 C 의 outcome 판. yesno 는 'No' 가 크게 찍히면 '습관 끊지 마라' 로 읽
+  { id: 'healthSlipBack', cat: 'health', spread: 'career', card: 's07' },  // A healthRelapse 를 id 만 바꿔 유지. 심사 1: 다이어트·금주·금연·운동 중단 등 실제로 가장 많이 겪는 실패
+  { id: 'healthMind', cat: 'health', spread: 'strength', card: 'c03' },  // A, 심사 1·2 모두 유지. 내 자원을 묻는 질문 ↔ strength(가진 힘/모자란 것/쓰일 곳). '기댈 곳' 이라 관계
+  { id: 'healthBody', cat: 'health', spread: 'outcome', card: 'm08' },  // B, 심사 1·2 모두 유지 — 몸 이미지·자기수용은 타로 주 이용층(젊은 여성)과 9개 언어권 공통의 큰 주제인데 B 에만 
+  { id: 'healthBeside', cat: 'health', spread: 'love', card: 'c13' },  // C. A healthFamily·B healthCarer 와 같은 돌봄 질문이라 하나만(심사 1·2). A 의 en 'How 
+  { id: 'healthWaitBaby', cat: 'health', spread: 'love', card: 'p07' },  // B. 임신 ① 준비·기다림. 임신 준비 초안 4벌 중 A PregnancyReady·C ConceivePrep 은 priori
+  { id: 'healthExpecting', cat: 'health', spread: 'priority', card: 'm03' },  // B. 임신 ② 임신 중. 심사 1·2 모두 '임신 중' 질문 3벌 중 유일하게 안전한 스프레드로 꼽음 — A Pregnancy
+  { id: 'healthBirth', cat: 'health', spread: 'strength', card: 'm19' },  // 임신 ③ 출산 앞둔 마음. 출산 질문 3벌 중 C 는 outcome 이라 result 라벨 '그 결과' 가 출산 결과 예측이 
+  { id: 'healthLoss', cat: 'health', spread: 'residue', card: 'c05' },  // 임신 ④ 상실. 상실 질문 3벌 중 C AfterLoss 는 '떠나보낸 뒤' 만으로는 crushLearn 과 구분이 안 되고 
 ]
 
 export const topicsIn = (cat) => (cat === 'all' ? TOPICS : TOPICS.filter((t) => t.cat === cat))

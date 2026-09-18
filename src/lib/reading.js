@@ -106,9 +106,18 @@ function summarise(t, ui, fill) {
 //   ui     : 언어 팩의 ui
 //   t      : { cardName, cardFace, fill } — 언어 팩에서 글자를 꺼내는 함수 묶음
 // ─────────────────────────────────────────────────────────────
-export function interpret(spread, drawn, ui, t) {
+//   topicId: 주제별 질문에서 왔으면 그 id. 없으면(오늘의 카드) null.
+//
+// topicId 가 있으면 자리 설명(lead)을 그 질문 전용 문장으로 바꾼다.
+// 스프레드 단위 lead("지금 상황 그대로.")는 어느 질문에나 붙는 말이라, 카드 본문이
+// 아무리 맞아도 결과가 질문과 상관없어 보인다 — "왜 연락이 없을까" 를 물었으면
+// "연락이 끊긴 지금, 두 사람이 서 있는 자리." 라고 그 질문의 말로 읽어 줘야 한다.
+// 마무리(close)도 같다 — 세 장이 이 질문에 어떻게 하나의 답이 되는지 한 줄.
+// 문장은 전부 언어 팩(ui.topicLeads / ui.topicClose)에 있고, 없으면 스프레드 것으로 떨어진다.
+export function interpret(spread, drawn, ui, t, topicId = null) {
   const tal = tally(drawn)
   const st = spreadText(ui, spread)
+  const topicLead = (topicId && ui.topicLeads && ui.topicLeads[topicId]) || null
 
   const cards = drawn.map((d, i) => {
     const pos = st.positions[i] || st.positions[st.positions.length - 1]
@@ -121,7 +130,7 @@ export function interpret(spread, drawn, ui, t) {
       // 키워드는 가운뎃점으로 이어붙인 한 줄이다. 화면에서는 칩 여러 개로 쪼개 보여준다.
       keywords: String(f.k || '').split(' · ').filter(Boolean),
       text: f.t || '',
-      lead: pos.lead,
+      lead: (topicLead && topicLead[pos.key]) || pos.lead,
       domain: suit ? `${suit.name} — ${suit.domain}` : null,
       polarity: polarity(d),
     }
@@ -154,6 +163,8 @@ export function interpret(spread, drawn, ui, t) {
     verdict,
     tally: tal,
     summary: summarise(tal, ui, t.fill),
+    // 이 질문에 대한 마무리 한 줄. 세 장이 어떻게 하나의 답이 되는지, 어느 장을 오래 볼지.
+    close: (topicId && ui.topicClose && ui.topicClose[topicId]) || null,
     headline,
     // 공유 문구 — 카드 이름과 키워드만 나간다. 질문 내용은 절대 내보내지 않는다.
     shareLine: `${headline} — ${lead.keywords.join(', ')}`,

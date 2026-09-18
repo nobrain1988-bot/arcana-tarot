@@ -4,7 +4,7 @@ import { draw, cardById, todayKey } from './lib/deck.js'
 import { SPREADS, spreadText } from './lib/spreads.js'
 import { CATEGORIES, CAT_EMOJI, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
-import { initAds, showBanner, showInterstitialBeforeResult } from './lib/ads.js'
+import { initAds, showBanner, showInterstitialOnExit } from './lib/ads.js'
 import * as ambient from './lib/ambient.js'
 import * as store from './lib/storage.js'
 import { useLang } from './i18n/context.jsx'
@@ -122,13 +122,21 @@ function TodayView({ reversals, onBack }) {
   // 이미 본 날 앱을 다시 켰는데 매번 뒤집히면 연출이 아니라 방해가 된다.
   const [justRevealed, setJustRevealed] = useState(false)
 
+  // 전면광고는 여기서 띄우지 않는다. 뒤집기 직전에 띄우던 것을 뺐다 —
+  // 기다리던 결과를 광고가 가로막는 자리는 구글이 막는 자리(ads.js 참고)이고,
+  // 사용자는 광고를 보는 게 아니라 앱을 지운다. 결과를 다 보고 나갈 때 띄운다.
   const reveal = useCallback(async () => {
-    await showInterstitialBeforeResult()
     setRevealed(true)
     setJustRevealed(true)
     store.markDailyRevealed()
     if (drawn) store.addJournal({ spreadId: 'daily', cards: drawn })
   }, [drawn])
+
+  // 결과를 본 뒤 나갈 때만 전면광고. 안 뒤집고 나가면 본 게 없으니 띄우지 않는다.
+  const leave = useCallback(async () => {
+    if (revealed) await showInterstitialOnExit()
+    onBack()
+  }, [revealed, onBack])
 
   if (!reading) return null
 
@@ -136,7 +144,7 @@ function TodayView({ reversals, onBack }) {
 
   return (
     <div className="screen">
-      <button className="link row" onClick={onBack} style={{ marginBottom: 14 }}>
+      <button className="link row" onClick={leave} style={{ marginBottom: 14 }}>
         <IconBack /> {ui.common.back}
       </button>
       <div className="eyebrow">{today}</div>
@@ -174,13 +182,21 @@ function ReadingsView({ reversals }) {
   // 예전에는 spreads(스프레드를 직접 고르고 질문을 타이핑) 가 하나 더 있었는데 뺐다.
   const [mode, setMode] = useState('topics')
   const [cat, setCat] = useState(CATEGORIES[0])
+  // 어느 질문에서 왔는지. 해석 엔진이 이걸로 자리 설명과 마무리를 그 질문의 말로 바꾼다.
+  // 이게 없던 동안 결과는 질문을 전혀 모른 채 그려졌고, 그래서 답이 질문과 상관없어 보였다.
+  const [topicId, setTopicId] = useState(null)
 
   const reading = useMemo(
-    () => (drawn && spread ? interpret(spread, drawn, ui, t) : null),
-    [drawn, spread, ui, t]
+    () => (drawn && spread ? interpret(spread, drawn, ui, t, topicId) : null),
+    [drawn, spread, ui, t, topicId]
   )
 
-  const reset = () => { setSpread(null); setQuestion(''); setPhase('pick'); setDrawn(null) }
+  // 결과를 다 보고 나갈 때 전면광고. '결과 직전' 에서 여기로 옮겼다 —
+  // 기다리던 걸 광고가 가로막는 자리는 구글이 막는 자리다(ads.js 참고).
+  const reset = async () => {
+    if (phase === 'result') await showInterstitialOnExit()
+    setSpread(null); setQuestion(''); setTopicId(null); setPhase('pick'); setDrawn(null)
+  }
 
   // 의식은 세 박자다: 섞는다 → 펼친 카드에서 직접 고른다 → 순서대로 뒤집힌다.
   // 앱이 알아서 뽑아주면 '내가 고른 카드'라는 감각이 없어서 그냥 랜덤 화면이 된다.
@@ -198,11 +214,11 @@ function ReadingsView({ reversals }) {
   const onChosen = useCallback(async () => {
     if (!spread) return
     const list = draw(spread.count, { reversals })
-    await showInterstitialBeforeResult()
-    store.addJournal({ spreadId: spread.id, cards: list })
+    // 전면광고는 여기(결과 직전)가 아니라 결과를 보고 나갈 때(reset) 띄운다.
+    store.addJournal({ spreadId: spread.id, topicId, cards: list })
     setDrawn(list)
     setPhase('result')
-  }, [spread, reversals])
+  }, [spread, reversals, topicId])
 
   // 주제를 고른 경우 — 질문은 이미 정해졌으니 질문칸을 건너뛰고 바로 섞는다.
   // 고른 질문은 결과 화면 위에 그대로 보여서 무엇을 물었는지 남는다.
@@ -211,6 +227,7 @@ function ReadingsView({ reversals }) {
   const startTopic = (topic) => {
     const s = SPREADS[topic.spread]
     setSpread(s)
+    setTopicId(topic.id)
     setQuestion(topicText(ui, topic.id))
     runDraw(s)
   }
@@ -255,6 +272,13 @@ function ReadingsView({ reversals }) {
               </button>
             ))}
           </div>
+
+          {/* 분류 아래 한 줄 안내. 지금은 건강 분류에만 있다 — "진단이 아니라 마음을 보는 자리".
+              타로가 의료 도구로 읽히면 스토어 정책에 걸리고, 무엇보다 사용자에게 해롭다.
+              문구는 언어 팩(catNote)에 있고, 없는 분류에는 아무것도 안 뜬다. */}
+          {ui.catNote && ui.catNote[cat] && (
+            <p className="small muted" style={{ margin: '2px 0 12px' }}>{ui.catNote[cat]}</p>
+          )}
 
           {/* 한 줄에 제목 · 해시태그 · 오른쪽 그림. 국내 앱들이 쓰는 형태다.
               그림은 그 질문의 분위기를 한눈에 주는 역할만 하고, 실제로 뽑히는 카드와는
