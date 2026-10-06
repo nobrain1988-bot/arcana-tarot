@@ -10,7 +10,7 @@ export const MAJORS = [
     up:  { k: 'new beginnings · innocence · leap of faith',
            t: 'A road opens in front of you and you have no map for it. That is not a problem to solve — it is the point. The Fool moves before feeling ready, and that is exactly why the Fool gets anywhere at all. Say yes to the thing you keep circling.' },
     rev: { k: 'recklessness · naivety · hesitation',
-           t: 'Either you are about to leap without looking, or you have stood at the edge so long the moment is going stale. Both are this same card. Ask which one is actually you right now, and be honest about the answer.' } },
+           t: 'Either you are about to leap without looking, or you have stood at the edge so long the moment is going stale. Both are this card. Ask which one is actually you right now, and be honest about the answer.' } },
 
   { n: 1, name: 'The Magician', el: 'air',
     up:  { k: 'manifestation · resourcefulness · focused will',
@@ -22,7 +22,7 @@ export const MAJORS = [
     up:  { k: 'intuition · hidden knowledge · stillness',
            t: 'You already know. Not logically — underneath that. Something is being shown to you in a form that will not survive being explained to other people yet, so do not put it up for debate. Sit with it. The answer surfaces in quiet, not in discussion.' },
     rev: { k: 'secrets · ignored instincts · disconnection',
-           t: 'Either information is being kept from you, or you are keeping something from yourself. You had a gut feeling and you talked yourself out of it. Go back to the first instinct — the one you had before you started reasoning.' } },
+           t: 'Either information is being kept from you, or you are keeping something from yourself. You had a gut feeling and you talked yourself out of it. Go back to your first instinct — the one you had before you started thinking it through.' } },
 
   { n: 3, name: 'The Empress', el: 'earth',
     up:  { k: 'abundance · nurturing · creativity',
@@ -38,13 +38,13 @@ export const MAJORS = [
 
   { n: 5, name: 'The Hierophant', el: 'earth',
     up:  { k: 'tradition · guidance · learning the rules',
-           t: 'There is an established way of doing this and it works. Find the teacher, the institution, the proven method. This is not the moment to reinvent — it is the moment to learn properly from someone who went first.' },
+           t: 'There is an established way of doing this and it works. Find the teacher, the institution, the proven method. This is not the moment to reinvent anything — it is the moment to learn properly from someone who went first.' },
     rev: { k: 'rebellion · outgrown beliefs · your own path',
-           t: 'The convention no longer fits and you know it. A rule you inherited without ever choosing it is up for review. Breaking it will cost something socially — decide whether the price is worth the honesty.' } },
+           t: 'The convention no longer fits and you know it. A rule you inherited without ever choosing it is up for review. Breaking it will cost you something socially — decide whether the price is worth the honesty.' } },
 
   { n: 6, name: 'The Lovers', el: 'air',
     up:  { k: 'union · alignment · choice',
-           t: 'This is a card about values before it is a card about romance. Two things are lining up — people, or a decision and what you actually believe. When the choice matches your values you will feel it as relief, not as excitement.' },
+           t: 'This is a card about values before it is a card about romance. Two things are lining up — two people, or a decision and what you actually believe. When the choice matches your values you will feel it as relief, not as excitement.' },
     rev: { k: 'misalignment · avoidance · conflicting values',
            t: 'Something is out of step. You want two things that cannot both be true, or you are with someone whose values quietly contradict yours. Refusing to choose is also a choice, and it is the one costing you most.' } },
 
@@ -52,7 +52,7 @@ export const MAJORS = [
     up:  { k: 'willpower · momentum · victory through control',
            t: 'You win this by steering, not by speeding up. Two opposing forces are pulling and the job is to hold both reins rather than pick one. Keep your eyes on the destination and the tension becomes propulsion.' },
     rev: { k: 'loss of direction · forcing it · stalled',
-           t: 'All engine, no steering. You are pushing hard in a direction you never actually checked, or the momentum has drained out entirely. Stop and re-aim before you spend another week of effort.' } },
+           t: 'All engine, no steering. You are pushing hard in a direction you never actually checked, or the momentum has drained away entirely. Stop and re-aim before you spend another week on it.' } },
 
   { n: 8, name: 'Strength', el: 'fire',
     up:  { k: 'courage · patience · gentle power',
@@ -68,13 +68,13 @@ export const MAJORS = [
 
   { n: 10, name: 'Wheel of Fortune', el: 'fire',
     up:  { k: 'turning point · luck · cycles',
-           t: 'Something moves that you did not move. Timing, coincidence, an unexpected turn — the wheel is going up. This is not a card about effort; it is about recognising a window and stepping through it fast.' },
+           t: 'Something moves that you did not move. Timing, coincidence, an unexpected turn — the wheel is going up. This is not a card about effort — it is about recognising a window and stepping through it fast.' },
     rev: { k: 'downturn · resistance · repeating a cycle',
-           t: 'The turn is going the other way, or you are back at a point you have already stood on before. The second one matters more. If this feels familiar, the pattern is yours, and it repeats until you change your part in it.' } },
+           t: 'The turn is going the other way, or you are back at a point you have stood on before. The second one matters more. If this feels familiar, the pattern is yours, and it repeats until you change your part in it.' } },
 
   { n: 11, name: 'Justice', el: 'air',
     up:  { k: 'truth · fairness · consequence',
-           t: 'Cause and effect are catching up, and that is neutral — it can land in your favour. Be scrupulously honest, especially about your own share of the situation. Decisions made on accurate information hold up.' },
+           t: 'Cause and effect are catching up with you, and that is neutral — it can land in your favour. Be scrupulously honest, especially about your own part in the situation. Decisions made on accurate information hold up.' },
     rev: { k: 'imbalance · dodged accountability · bias',
            t: 'Something here is not being weighed honestly. Someone is dodging responsibility, or you are arguing a version of events edited in your own favour. Unfair outcomes usually start as unexamined assumptions.' } },
 
@@ -86,7 +86,7 @@ export const MAJORS = [
 
   { n: 13, name: 'Death', el: 'water',
     up:  { k: 'ending · transformation · clearing space',
-           t: 'This card almost never means literal death. It means something is genuinely over, and pretending otherwise is the only thing still hurting. Let it end cleanly. What comes next cannot arrive while the old thing occupies the space.' },
+           t: 'This card almost never means literal death. It means something is genuinely over, and pretending otherwise is the only thing still hurting you. Let it end cleanly. What comes next cannot arrive while the old thing occupies the space.' },
     rev: { k: 'clinging on · stalled change · fear of letting go',
            t: 'You are holding the door shut on a change that is already happening. Delaying it does not cancel it — it just makes the ending messier and longer. Name the thing that is over.' } },
 
@@ -94,11 +94,11 @@ export const MAJORS = [
     up:  { k: 'balance · moderation · patient blending',
            t: 'The answer is in the middle and it takes time to mix. Not all of one thing or all of the other — the right proportion, found slowly. Whatever you are rushing, halve the speed and it will actually work.' },
     rev: { k: 'excess · imbalance · impatience',
-           t: 'Too much of something. Work, spending, intensity, or swinging between extremes with nothing steady in between. Nothing here is fixed by one dramatic correction — it is fixed by a smaller amount, repeated.' } },
+           t: 'Too much of something. Work, spending, intensity or swinging between extremes with nothing steady in between. Nothing here is fixed by one dramatic correction — it is fixed by a smaller amount, repeated.' } },
 
   { n: 15, name: 'The Devil', el: 'earth',
     up:  { k: 'attachment · dependency · the thing you excuse',
-           t: 'Look at what you have been justifying. A habit, a person, a job, a story about yourself — something has more hold on you than you admit, and the chains in this card are loose. You are freer than you have decided to be.' },
+           t: 'Look at what you have been justifying. A habit, a person, a job, a story about yourself — something has more of a hold on you than you admit, and the chains in this card are loose. You are freer than you have decided to be.' },
     rev: { k: 'breaking free · seeing the pattern · reclaiming power',
            t: 'The grip is loosening. You are starting to see the mechanism of the thing that had you, and seeing it is most of the work. Do not go back to test whether it still has power over you.' } },
 
@@ -117,14 +117,14 @@ export const MAJORS = [
   { n: 18, name: 'The Moon', el: 'water',
     up:  { k: 'illusion · anxiety · the unclear path',
            t: 'You do not have the full picture, and your mind is filling the gaps with fear. Not everything you are imagining is real. Do not act on a story you assembled at three in the morning — wait for actual information.' },
-    rev: { k: 'clarity returning · fear releasing · truth surfacing',
+    rev: { k: 'clarity returning · fear easing · truth surfacing',
            t: 'The fog is lifting. Something you were confused or anxious about is resolving into its real shape, and it is smaller than it looked in the dark. Confusion was the phase, not the destination.' } },
 
   { n: 19, name: 'The Sun', el: 'fire',
     up:  { k: 'joy · clarity · success',
-           t: 'The plainest good card in the deck. Things work, warmth returns, the answer is yes. There is no hidden catch to hunt for — the only work is letting yourself enjoy it without waiting for the other shoe.' },
+           t: 'The plainest good card in the deck. Things work, warmth returns, the answer is yes. There is no hidden catch to hunt for — the only work is letting yourself enjoy it without waiting for the other shoe to drop.' },
     rev: { k: 'dimmed joy · false optimism · temporary cloud',
-           t: 'The good thing is real, but something is blocking the feeling of it — exhaustion, comparison, or a forced brightness covering something unresolved. The sun has not gone anywhere. Find what is standing in front of it.' } },
+           t: 'The good thing is real, but something is blocking the feeling of it — exhaustion, comparison or a forced brightness covering something unresolved. The sun has not gone anywhere. Find what is standing in front of it.' } },
 
   { n: 20, name: 'Judgement', el: 'fire',
     up:  { k: 'reckoning · calling · rebirth',
@@ -136,5 +136,5 @@ export const MAJORS = [
     up:  { k: 'completion · wholeness · arrival',
            t: 'A cycle closes properly. Not just finishing but integrating — you arrive somewhere and you are different for the journey. Mark it. Acknowledging completion is what lets the next thing begin cleanly.' },
     rev: { k: 'unfinished business · delayed closure · shortcuts',
-           t: 'You are almost there and something in you wants to skip the last part. Loose ends left now become the thing that follows you into the next chapter. Finish it properly, even the dull final ten percent.' } },
+           t: 'You are almost there and something in you wants to skip the last part. Loose ends you leave now follow you into the next chapter. Finish it properly, even the dull final ten percent.' } },
 ]
