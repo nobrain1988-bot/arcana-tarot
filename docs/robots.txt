@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nobrain1988-bot.github.io/arcana-tarot/sitemap.xml

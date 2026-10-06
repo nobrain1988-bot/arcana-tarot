@@ -3,8 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arcana — Daily Tarot Reading</title>
-<meta name="description" content="A complete 78-card tarot deck. Daily card, five classic spreads, nine languages. No account, no server, works offline.">
+
+<title>Arcana — Daily Tarot Reading | Free 78-card tarot app</title>
+<meta name="description" content="A complete 78-card Rider-Waite tarot deck. Pick your own cards, ask by question — love, work, money, health — and get a daily card that stays fixed. Nine languages, no account, works offline.">
+
+<!-- 검색엔진이 이 페이지를 하나로 묶어 보게 한다. 같은 내용이 /ko/ 에도 있어서,
+     canonical 과 hreflang 이 없으면 둘이 서로의 순위를 깎아먹는다. -->
+<link rel="canonical" href="https://nobrain1988-bot.github.io/arcana-tarot/">
+<link rel="alternate" hreflang="en" href="https://nobrain1988-bot.github.io/arcana-tarot/">
+<link rel="alternate" hreflang="ko" href="https://nobrain1988-bot.github.io/arcana-tarot/ko/">
+<link rel="alternate" hreflang="x-default" href="https://nobrain1988-bot.github.io/arcana-tarot/">
+
+<!-- 링크를 공유했을 때 카드로 펼쳐지게 한다. 이게 없으면 카톡·트위터·슬랙에서
+     제목 없는 맨 링크로 보이고, 클릭률이 눈에 띄게 떨어진다. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Arcana">
+<meta property="og:title" content="Arcana — Daily Tarot Reading">
+<meta property="og:description" content="All 78 cards. You pick them yourself. Nine languages, no account, works offline.">
+<meta property="og:url" content="https://nobrain1988-bot.github.io/arcana-tarot/">
+<meta property="og:image" content="https://nobrain1988-bot.github.io/arcana-tarot/og.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- 구글이 '앱' 으로 알아보게 하는 구조화 데이터. 검색 결과에 평점·가격·플랫폼이 붙는다. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Arcana: Daily Tarot Reading",
+  "operatingSystem": "Android 7.0+",
+  "applicationCategory": "LifestyleApplication",
+  "inLanguage": ["en","es","pt","ko","ja","ru","tr","fr","de"],
+  "description": "A complete 78-card Rider-Waite tarot deck. Pick your own cards, ask by question, and get a daily card that stays fixed. Nine languages, no account, works offline.",
+  "url": "https://nobrain1988-bot.github.io/arcana-tarot/",
+  "installUrl": "https://play.google.com/store/apps/details?id=com.obok.arcana",
+  "downloadUrl": "https://play.google.com/store/apps/details?id=com.obok.arcana",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "JBRO Company" }
+}
+</script>
+
 <style>
   :root {
     --bg: #0b0918; --lift: #16123099; --line: #2e2757;
@@ -19,14 +58,22 @@
     background-repeat: no-repeat;
   }
   main { max-width: 680px; margin: 0 auto; padding: 72px 20px 64px; }
-  header { text-align: center; margin-bottom: 64px; }
+  header { text-align: center; margin-bottom: 44px; }
   .icon { width: 104px; height: 104px; margin-bottom: 22px; }
   h1 {
     font-size: 42px; margin: 0 0 10px; letter-spacing: .01em; font-weight: 600;
     background: linear-gradient(135deg, var(--gold-hi), var(--gold-dim));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .tagline { color: var(--muted); font-size: 17px; margin: 0; }
+  .tagline { color: var(--muted); font-size: 17px; margin: 0 0 26px; }
+  .cta {
+    display: inline-block; padding: 14px 30px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold-hi), #c9a15c);
+    color: #16122a; font-weight: 700; text-decoration: none; font-size: 16px;
+    box-shadow: 0 10px 30px rgba(216,178,107,.22);
+  }
+  .cta:hover { color: #0b0918; filter: brightness(1.06); }
+  .cta-sub { display: block; margin-top: 10px; font-size: 13.5px; color: var(--muted); }
   h2 {
     font-size: 13px; text-transform: uppercase; letter-spacing: .14em;
     color: var(--gold-dim); margin: 48px 0 16px; font-weight: 600;
@@ -40,15 +87,19 @@
   }
   .card h3 { margin: 0 0 5px; font-size: 15px; color: var(--gold); font-weight: 600; }
   .card p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
-  .langs {
-    display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0;
+  .shots { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; margin: 0 -2px; }
+  .shots img {
+    width: 168px; flex: 0 0 auto; border-radius: 12px;
+    border: 1px solid var(--line); background: #140f2c;
   }
+  .langs { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
   .langs li {
     border: 1px solid var(--line); border-radius: 999px;
     padding: 5px 13px; font-size: 14px; color: #bfb8db;
   }
   a { color: var(--gold); }
   a:hover { color: var(--gold-hi); }
+  .note { font-size: 14px; color: var(--muted); }
   footer {
     margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line);
     color: var(--muted); font-size: 13.5px; line-height: 1.8;
@@ -63,7 +114,7 @@
 <main>
 
   <header>
-    <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-label="Arcana">
+    <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Arcana">
       <defs>
         <radialGradient id="bg" cx="50%" cy="42%" r="72%">
           <stop offset="0%" stop-color="#2a1f57"/><stop offset="100%" stop-color="#0b0918"/>
@@ -80,34 +131,51 @@
     </svg>
     <h1>Arcana</h1>
     <p class="tagline">A complete tarot deck in your pocket.</p>
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.obok.arcana">Get it on Google Play</a>
+    <span class="cta-sub">Free · Android 7.0+ · no account</span>
   </header>
 
-  <p class="lead">All 78 cards, drawn and read the traditional way. No account, no subscription,
-    no paywall in the middle of a reading. Your daily card is fixed for the day — draw it in the
-    morning, come back at night, and it is still your card.</p>
+  <p class="lead">All 78 cards of the classic 1909 Rider-Waite-Smith deck, drawn and read the way
+    a reader does it. No account, no subscription, no paywall in the middle of a reading.</p>
 
-  <h2>Five spreads</h2>
+  <h2>You pick the cards</h2>
+  <p>The deck shuffles, then spreads face down in front of you. You choose. Nothing is decided
+    until your finger lands — the same as sitting across a table from a reader.</p>
+
+  <div class="shots">
+    <img src="shots/01-intro.png" alt="Arcana opening screen — a reader's table by candlelight" loading="lazy" width="168">
+    <img src="shots/02-questions.png" alt="Ask by question — 49 questions across five areas" loading="lazy" width="168">
+    <img src="shots/03-choose.png" alt="Pick your own cards from a shuffled spread" loading="lazy" width="168">
+    <img src="shots/04-reading.png" alt="A three-card reading with position meanings" loading="lazy" width="168">
+  </div>
+
+  <h2>Ask by question, not by spread</h2>
+  <p>“Past, Present and Future” means nothing if you have never read tarot. So Arcana asks what
+    you want to know and picks the spread for you — and the card positions are matched to the
+    question. Ask what you are not seeing, and the cards land on
+    <em>What you see / What was hidden / What to know</em>, not on Past, Present, Future.</p>
+
   <div class="grid">
-    <div class="card"><h3>Daily Card</h3><p>One card for today, fixed until tomorrow.</p></div>
-    <div class="card"><h3>Past · Present · Future</h3><p>The classic three-card spread.</p></div>
-    <div class="card"><h3>Yes or No</h3><p>A single card, and the reasoning behind it.</p></div>
-    <div class="card"><h3>Love Reading</h3><p>You / The other / Between you.</p></div>
-    <div class="card"><h3>Work &amp; Money</h3><p>Where you are, what blocks it, how it opens.</p></div>
+    <div class="card"><h3>Love</h3><p>Where you stand, what they are thinking, what this needs.</p></div>
+    <div class="card"><h3>Crush &amp; Exes</h3><p>First moves, silence, letting go, what it left you.</p></div>
+    <div class="card"><h3>Work &amp; Study</h3><p>What is blocking you, what you are good at, what is coming.</p></div>
+    <div class="card"><h3>Money &amp; Choices</h3><p>What to untangle first, what actually matters.</p></div>
+    <div class="card"><h3>Health</h3><p>Your body's signals, sleep, anxiety, habits, expecting a baby. For reflection, never diagnosis.</p></div>
+    <div class="card"><h3>Daily card</h3><p>Fixed for the day. Draw it in the morning, it is still yours at night.</p></div>
   </div>
 
   <h2>Calculated, not invented</h2>
   <p>Most tarot apps pick a sentence at random. Arcana builds every reading from what was
     actually drawn — the card and its orientation, the position it landed in, how many Major
     Arcana appeared, how many cards are reversed, and the balance of the four elements across
-    the spread. Yes-or-No answers follow each card's traditional polarity, not a coin flip.
-    Interpretations follow the Rider–Waite tradition.</p>
+    the spread. Yes-or-No answers follow each card's traditional polarity, not a coin flip.</p>
 
   <h2>Nine languages, fully translated</h2>
   <ul class="langs">
     <li>English</li><li>Español</li><li>Português</li><li>한국어</li><li>日本語</li>
     <li>Русский</li><li>Türkçe</li><li>Français</li><li>Deutsch</li>
   </ul>
-  <p>Not just the buttons — all 78 cards are translated in both upright and reversed meanings,
+  <p>Not just the buttons — all 78 cards are written in each language, upright and reversed,
     with card names following each language's own grammar.</p>
 
   <h2>Privacy by design</h2>
@@ -116,11 +184,16 @@
     your device.</strong> Readings work with no connection at all.</p>
   <p><a href="privacy.html">Read the full privacy policy →</a></p>
 
+  <p class="note">한국어 안내는 <a href="ko/">이쪽</a>에 있습니다.</p>
+
   <footer>
     Arcana · <code>com.obok.arcana</code><br>
     Published by JBRO Company (주식회사 제이브로컴패니) · Incheon, Republic of Korea<br>
     <a href="mailto:leejiwon44@nate.com">leejiwon44@nate.com</a> ·
-    <a href="privacy.html">Privacy Policy</a>
+    <a href="privacy.html">Privacy Policy</a> ·
+    <a href="https://play.google.com/store/apps/details?id=com.obok.arcana">Google Play</a><br>
+    Arcana is made for reflection and entertainment. It is not a substitute for professional
+    medical, legal or financial advice.
   </footer>
 
 </main>
