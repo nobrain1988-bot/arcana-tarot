@@ -20,15 +20,15 @@ export const MAJORS = [
 
   { n: 2, name: 'The High Priestess', el: 'water',
     up:  { k: 'intuition · hidden knowledge · stillness',
-           t: 'You already know. Not logically — underneath that. Something is being shown to you in a form that will not survive being explained to other people yet, so do not put it up for debate. Sit with it. The answer surfaces in quiet, not in discussion.' },
+           t: 'You already know. Not logically — underneath that. Something is being shown to you in a form that will not survive explanation yet, so do not put it up for debate. Sit with it. The answer surfaces in quiet, not in discussion.' },
     rev: { k: 'secrets · ignored instincts · disconnection',
            t: 'Either information is being kept from you, or you are keeping something from yourself. You had a gut feeling and you talked yourself out of it. Go back to your first instinct — the one you had before you started thinking it through.' } },
 
   { n: 3, name: 'The Empress', el: 'earth',
     up:  { k: 'abundance · nurturing · creativity',
-           t: 'Something is growing and it is growing well. Comfort, creative work, a relationship, a body finally being looked after — this card says feed it rather than push it. Growth here responds to care, not force.' },
+           t: 'Something is growing and it is growing well. Comfort, creative work, a relationship, your body finally being looked after — this card says feed it rather than push it. Growth here responds to care, not force.' },
     rev: { k: 'creative block · smothering · self-neglect',
-           t: 'You are pouring into everyone except yourself, or holding something so tightly it cannot breathe. Creative block and burnout are the same symptom here: the source has not been refilled. Take care of the source first.' } },
+           t: 'You are pouring everything into everyone except yourself, or holding something so tightly it cannot breathe. Creative block and burnout are the same symptom here: the source has not been refilled. Take care of the source first.' } },
 
   { n: 4, name: 'The Emperor', el: 'fire',
     up:  { k: 'structure · authority · discipline',
@@ -57,7 +57,7 @@ export const MAJORS = [
   { n: 8, name: 'Strength', el: 'fire',
     up:  { k: 'courage · patience · gentle power',
            t: 'The lion is not defeated, it is calmed. Whatever you are facing — a difficult person, a fear, your own temper — force will make it worse and steadiness will make it manageable. Soft hands, firm intention.' },
-    rev: { k: 'self-doubt · raw nerve · forced composure',
+    rev: { k: 'self-doubt · raw emotion · forced composure',
            t: 'The strength is there but you cannot feel it, or you are white-knuckling a calm you do not have. Pretending not to be afraid costs more energy than admitting it. Put the effort somewhere useful.' } },
 
   { n: 9, name: 'The Hermit', el: 'earth',
@@ -97,7 +97,7 @@ export const MAJORS = [
            t: 'Too much of something. Work, spending, intensity or swinging between extremes with nothing steady in between. Nothing here is fixed by one dramatic correction — it is fixed by a smaller amount, repeated.' } },
 
   { n: 15, name: 'The Devil', el: 'earth',
-    up:  { k: 'attachment · dependency · the thing you excuse',
+    up:  { k: 'attachment · dependency · the thing you keep excusing',
            t: 'Look at what you have been justifying. A habit, a person, a job, a story about yourself — something has more of a hold on you than you admit, and the chains in this card are loose. You are freer than you have decided to be.' },
     rev: { k: 'breaking free · seeing the pattern · reclaiming power',
            t: 'The grip is loosening. You are starting to see the mechanism of the thing that had you, and seeing it is most of the work. Do not go back to test whether it still has power over you.' } },
@@ -106,13 +106,13 @@ export const MAJORS = [
     up:  { k: 'sudden upheaval · revelation · collapse',
            t: 'Something built on a shaky foundation comes down fast, and it will not be gentle. But the Tower only takes what was never sound. This is the card of the truth arriving all at once — brutal, and ultimately in your favour.' },
     rev: { k: 'delayed collapse · fear of change · near miss',
-           t: 'You either dodged it or you are postponing it. Propping up something you know is unsound buys time at a rising price. If you can bring it down on your own terms, do it before it picks its own moment.' } },
+           t: 'You either dodged the collapse or you are postponing it. Propping up something you know is unsound buys time at a rising price. If you can bring it down on your own terms, do it before it picks its own moment.' } },
 
   { n: 17, name: 'The Star', el: 'air',
     up:  { k: 'hope · healing · renewed faith',
            t: 'After the wreckage, quiet light. This is the card of the hard part being over and the repair beginning. Nothing dramatic — just the return of the sense that things can be good again. Trust it and keep going gently.' },
     rev: { k: 'lost faith · discouragement · disconnection',
-           t: 'The light is still there, you just cannot see it from where you are standing. Discouragement is telling you a story about permanence that is not true. Do not make long-term decisions from inside this feeling.' } },
+           t: 'The light is still there, you just cannot see it from where you are standing. Discouragement is telling you this is permanent. It is not. Do not make long-term decisions from inside this feeling.' } },
 
   { n: 18, name: 'The Moon', el: 'water',
     up:  { k: 'illusion · anxiety · the unclear path',

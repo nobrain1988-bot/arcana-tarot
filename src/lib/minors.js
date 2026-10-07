@@ -83,7 +83,7 @@ const CUPS = [
     'imbalance · broken communication · one-sided',
     'One person is carrying this. The connection is real but the effort is not shared. Say the thing that has gone unsaid.'],
   ['Three', 'friendship · celebration · belonging',
-    'Your people. Shared joy, a reunion, the relief of being genuinely known. Reach out — this card works when it is acted on rather than felt.',
+    'Your people. Shared joy, a reunion, the relief of being genuinely known. Reach out — the warmth only counts once you act on it.',
     'gossip · exclusion · crowded out',
     'The group dynamic has turned. Gossip, a third person in the way, or a slow drift out of a circle you used to belong to.'],
   ['Four', 'discontent · apathy · looking away',
@@ -128,7 +128,7 @@ const CUPS = [
     'Caring has tipped into absorbing. You are managing other people\'s feelings at the cost of your own. Boundaries are not a withdrawal of love.'],
   ['King', 'emotional mastery · calm · generous wisdom',
     'Feeling everything and being run by none of it. Steady, diplomatic, kind under pressure. This is the card for handling something delicate well.',
-    'volatility · manipulation · shut down',
+    'volatility · manipulation · shutting down',
     'Emotion is being used as a lever, or locked away entirely. Coldness and outbursts are the same failure here — the feeling is not being handled honestly.'],
 ]
 
@@ -136,9 +136,9 @@ const SWORDS = [
   ['Ace', 'breakthrough · clarity · the truth cuts',
     'A sudden clean insight. The confusion breaks and you can see the actual shape of things. Use it now — this kind of clarity has a short shelf life.',
     'confusion · clouded judgement · bad information',
-    'You are reasoning hard on top of a faulty fact. Go back and check the premise before you build another conclusion on it.'],
+    'You are reasoning hard on top of bad information. Go back and check the premise before you build another conclusion on it.'],
   ['Two', 'stalemate · blocked choice · not looking',
-    'Blindfolded with two blades up. You are refusing to choose because choosing means losing one option. Take the blindfold off first; the decision gets easier with information.',
+    'Blindfolded, with two blades up. You are refusing to choose because choosing means losing one option. Take the blindfold off first — the decision gets easier with information.',
     'indecision breaking · information revealed · overwhelm',
     'Something is about to be revealed that makes the choice for you. Or the pressure of not deciding has become worse than deciding.'],
   ['Three', 'heartbreak · painful truth · sorrow',
@@ -164,7 +164,7 @@ const SWORDS = [
   ['Eight', 'self-imposed limits · feeling trapped · powerlessness',
     'Bound and blindfolded, with the ropes loose and the way out unguarded. The trap is mostly built out of belief. Test one of the ropes.',
     'freeing yourself · new perspective · limits dissolve',
-    'You are working out that you were never actually tied. Small experiments in freedom now, not one grand escape.'],
+    'You are realising that you were never actually tied. Small experiments in freedom now, not one grand escape.'],
   ['Nine', 'anxiety · sleepless worry · dread',
     'The three-in-the-morning card. Fear well past the size of the facts. Say the worry out loud to someone — it shrinks dramatically in daylight.',
     'relief · asking for help · worry releasing',
@@ -247,7 +247,7 @@ const PENTACLES = [
   ['King', 'abundance · business sense · stability',
     'Proven, prosperous, unbothered. Sound judgement about money and resources. A good moment for a business decision or an investment of effort.',
     'materialism · stubbornness · controlling',
-    'Success measured only in what it produces. Or a refusal to change an approach that used to work and no longer does.'],
+    'Success measured only by what it produces. Or a refusal to change an approach that used to work and no longer does.'],
 ]
 
 // 위 5칸 배열 → { n, name, el, up, rev } 표준 카드 객체로 변환
