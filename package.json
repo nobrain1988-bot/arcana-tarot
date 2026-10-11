@@ -15,6 +15,7 @@
     "cards": "node tools/fetch-card-art.mjs",
     "shots": "node tools/shots.mjs",
     "shots:web": "node tools/web-shots.mjs",
+    "pages": "node tools/make-pages.mjs",
     "feature": "node tools/feature-graphic.mjs",
     "reading": "node tools/render-reading.mjs"
   },
