@@ -5,6 +5,7 @@ import { SPREADS, spreadText } from './lib/spreads.js'
 import { CATEGORIES, CAT_EMOJI, topicsIn, catText, topicText } from './lib/topics.js'
 import { interpret } from './lib/reading.js'
 import { initAds, showBanner, showInterstitialOnExit } from './lib/ads.js'
+import { shareReading } from './lib/share.js'
 import * as ambient from './lib/ambient.js'
 import * as store from './lib/storage.js'
 import { useLang } from './i18n/context.jsx'
@@ -16,28 +17,12 @@ import Intro from './components/Intro.jsx'
 import Settings from './components/Settings.jsx'
 import { IconCards, IconMoonList, IconBack } from './components/icons.jsx'
 
-// 출시 후 실제 스토어 주소로 바꾼다. 공유 문구 끝에 붙는다.
-const STORE_URL = 'https://play.google.com/store/apps/details?id=com.obok.arcana'
+// 공유는 lib/share.js 가 맡는다 — 글자가 아니라 카드 그림이 든 한 장을 내보낸다.
 
 // 날짜는 그 언어의 표기법으로 보여준다. 언어를 골랐다는 건 그 표기에 익숙하다는 뜻이다.
 // 다만 지원하지 않는 언어 코드가 들어오면 브라우저가 예외를 던지므로 감싼다.
 function formatDate(d, lang, opts) {
   try { return d.toLocaleDateString(lang, opts) } catch { return d.toLocaleDateString('en-US', opts) }
-}
-
-// ──────────────────────────────────────────────────────────────
-// 공유 — 안드로이드 기본 공유 시트를 띄우고, 안 되면 클립보드로 떨어진다.
-// 질문 내용은 절대 넣지 않는다. 나가는 건 카드 이름 + 키워드뿐.
-// ──────────────────────────────────────────────────────────────
-async function shareReading(reading, ui) {
-  const text = `${reading.spreadTitle}\n${reading.shareLine}\n\n${ui.share.tagline}\n${STORE_URL}`
-  try {
-    if (navigator.share) { await navigator.share({ title: 'Arcana', text }); return }
-  } catch { /* 사용자가 공유 시트를 닫은 경우 — 아무 것도 안 한다 */ return }
-  try {
-    await navigator.clipboard.writeText(text)
-    alert(ui.common.copied)
-  } catch { alert(text) }
 }
 
 // 언어 팩에서 글자를 꺼내는 함수 묶음. interpret() 에 통째로 넘긴다.
@@ -160,7 +145,7 @@ function TodayView({ reversals, onBack }) {
           <button className="btn" onClick={reveal}>{ui.today.reveal}</button>
         </>
       ) : (
-        <ResultView reading={reading} reveal={justRevealed} onShare={() => shareReading(reading, ui)} />
+        <ResultView reading={reading} reveal={justRevealed} onShare={() => shareReading(reading, ui, null)} />
       )}
     </div>
   )
@@ -357,7 +342,7 @@ function ReadingsView({ reversals }) {
       <ResultView
         reading={reading}
         reveal
-        onShare={() => shareReading(reading, ui)}
+        onShare={() => shareReading(reading, ui, question.trim() || null)}
         onAgain={() => runDraw(spread)}
       />
     </div>

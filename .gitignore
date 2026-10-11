@@ -11,3 +11,6 @@ android/local.properties
 .env.local
 .DS_Store
 .cache
+
+# 공유 그림 미리보기 (tools/share-preview.mjs 가 만든다)
+share-preview/
