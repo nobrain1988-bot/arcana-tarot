@@ -1,0 +1,9 @@
+플레이 콘솔 → 프로덕션 새 버전 → 출시 노트 → Português (Brasil)
+
+══════════════════════════════════════════════════════════════════
+(325/500)
+══════════════════════════════════════════════════════════════════
+• Ícone novo: cinco cartas abertas em leque com as cores dos quatro elementos
+• Novas perguntas de Saúde, incluindo tentativa de engravidar, gravidez e parto. Agora são 49 perguntas
+• Falantes nativos revisaram todas as frases nos nove idiomas e reescrevemos o que soava traduzido
+• As leituras combinam melhor com a pergunta

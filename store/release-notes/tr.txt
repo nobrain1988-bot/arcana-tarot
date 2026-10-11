@@ -1,0 +1,9 @@
+플레이 콘솔 → 프로덕션 새 버전 → 출시 노트 → Türkçe
+
+══════════════════════════════════════════════════════════════════
+(315/500)
+══════════════════════════════════════════════════════════════════
+• Yeni uygulama simgesi: dört elementin renklerinde yelpaze gibi açılmış beş kart
+• Sağlık kategorisi eklendi. Bebek beklemek, hamilelik ve doğum soruları dahil, toplam 49 soru
+• Dokuz dildeki tüm cümleler ana dili konuşanlarca okundu, çeviri gibi duran yerler yeniden yazıldı
+• Açılımlar soruyla daha iyi örtüşüyor
