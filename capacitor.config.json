@@ -1,6 +1,6 @@
 {
   "appId": "com.obok.arcana",
-  "appName": "Arcana",
+  "appName": "Tarot",
   "webDir": "dist",
   "android": {
     "backgroundColor": "#0b0918"
