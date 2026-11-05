@@ -17,6 +17,7 @@
     "shots:web": "node tools/web-shots.mjs",
     "pages": "node tools/make-pages.mjs",
     "share:preview": "node tools/share-preview.mjs",
+    "video": "node tools/make-video.mjs",
     "feature": "node tools/feature-graphic.mjs",
     "reading": "node tools/render-reading.mjs"
   },
